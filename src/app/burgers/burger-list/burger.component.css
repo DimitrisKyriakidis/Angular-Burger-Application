@@ -1,23 +1,32 @@
-
-.groups{
-height: 70vh;
-/* width: 45vw; */
+.groups {
+    height: 70vh;
+    /* width: 45vw; */
 }
+
 .burger-card {
     box-shadow: 0px 0px 7px 0px black;
 }
+
+::ng-deep .snackbarClass {
+    background: white;
+    color: green;
+    margin-top: 4rem!important;
+}
+
+
 /* .tabs{
   width: 45vw;
 } */
+
+
 /* .card{
 
 } */
+
 .course-actions {
     text-align: center;
-
 }
 
 .course-actions button {
-  margin-right: 10px;
+    margin-right: 10px;
 }
-

@@ -1,45 +1,58 @@
 <div class="w-full h-full">
-  <div class="flex justify-center">
-<button  mat-mini-fab>
-  <mat-icon class="add-course-btn " (click)="onAddCourse()">add</mat-icon>
-</button>
-</div>
-   <mat-tab-group *ngIf="burgers | async as list"  class="groups ">
-    <mat-tab  *ngFor="let tabLabel of matTabLabels" label="{{tabLabel.displayName}}" class="sticky tabs">
-      <mat-card *ngFor="let element of list[tabLabel.key]" class="space-y-4 burger-card card overflow-x-hidden">
-        <mat-card-header>
+    <div class="flex justify-center">
+        <button mat-mini-fab>
+      <mat-icon class="add-course-btn" (click)="onCreateBurger()">add</mat-icon>
+    </button>
+    </div>
+    <mat-tab-group *ngIf="burgers | async as list" class="groups">
+        <mat-tab *ngFor="let tabLabel of matTabLabels" label="{{ tabLabel.displayName }}" class="sticky tabs">
+            <mat-card *ngFor="let element of list[tabLabel.key]" class="space-y-4 burger-card card overflow-x-hidden">
+                <mat-card-header>
+                    <mat-card-title class="font-bold text-yellow-400">
+                        {{ element.category }}
+                    </mat-card-title>
+                </mat-card-header>
 
-          <mat-card-title class="font-bold text-yellow-400" >{{element.category}}</mat-card-title>
-  
-      </mat-card-header>
-  
-    
-      <div class="flex justify-center text-center items-center rounded-md shadow-md">
-      <img  class="w-32 h-full" mat-card-image [src]="element.iconUrl">
-    </div>
-    <div>
-      <mat-card-content>
-          <p class="text-gray-700 text-sm">{{element.description}}</p>
-      </mat-card-content>
-    </div>
-   
-      <mat-card-actions class="course-actions">
-  
-          <button mat-raised-button color="primary" (click)="view(element)">
-              VIEW
+                <div class="flex justify-center text-center items-center rounded-md shadow-md">
+                    <img class="w-32 h-full" mat-card-image [src]="element.iconUrl" />
+                </div>
+                <div>
+                    <mat-card-content>
+                        <p class="text-gray-700 text-sm">{{ element.description }}</p>
+                    </mat-card-content>
+                </div>
+
+                <mat-card-actions class="course-actions">
+                    <button mat-raised-button color="primary" (click)="view(element)">
+            VIEW
           </button>
-  
-        <button mat-mini-fab color="accent">
-          
-          <mat-icon class="add-course-btn" (click)="onEditBurger(element)">edit</mat-icon>
-        </button>
-  
-        <button mat-mini-fab color="warn">
-          <mat-icon class="add-course-btn" (click)="onDeleteBurger(element['id'])">delete</mat-icon>
-        </button>
-  
-      </mat-card-actions>
-      </mat-card>
-    </mat-tab>
-  </mat-tab-group>
+
+                    <button mat-mini-fab color="accent">
+            <mat-icon class="add-course-btn" (click)="onEditBurger(element)">
+              edit
+            </mat-icon>
+          </button>
+
+                    <button mat-mini-fab color="warn">
+            <mat-icon
+              class="add-course-btn"
+              (click)="onDeleteBurger(element['id'])"
+            >
+              delete
+            </mat-icon>
+          </button>
+                </mat-card-actions>
+                <div class="flex justify-center">
+                    <form [formGroup]="cartForm">
+                        <mat-form-field>
+                            <input matInput type="number" placeholder="Quantity" formControlName="quantity" min="1" max="100" />
+                        </mat-form-field>
+                    </form>
+                    <button class="bg-blue-500 ml-3 my-auto rounded-sm text-white h-8 w-28" (click)="addBurgerToCart(element)">
+            Add to cart
+          </button>
+                </div>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
 </div>
