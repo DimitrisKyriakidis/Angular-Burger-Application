@@ -12,6 +12,7 @@ import {
   setBurgerToState,
   editBurgerSuccess,
   addBurgerToCart,
+  removeBurgerFromCart,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
@@ -75,13 +76,11 @@ export const burgerReducer = createReducer(
     loading: false,
   })),
   on(addBurgerToCart, (state, action) => {
-    let products = []
+    let products: any = []
     products = [...state.cart.products]
     let foundIndex = products.findIndex(
       (product) => product.id === action.payload.id,
     )
-    console.log('foundIndex==', foundIndex)
-    console.log('productsFOundId==', products[foundIndex])
 
     if (foundIndex !== -1) {
       products[foundIndex] = {
@@ -89,40 +88,40 @@ export const burgerReducer = createReducer(
         category: action.payload.category,
         iconUrl: action.payload.iconUrl,
         description: action.payload.description,
-        price:
-          products[foundIndex].price *
-          (products[foundIndex].quantity + action.payload.quantity),
+        price: products[foundIndex].price,
         quantity: products[foundIndex].quantity += action.payload.quantity,
       }
     } else {
       products.push({
         ...action.payload,
         quantity: action.payload.quantity,
-        //  price: action.payload.price * action.payload.quantity,
+        price: action.payload.price,
       })
     }
 
-    console.log('products==', products)
-    console.log('action==', action)
+    return {
+      ...state,
+      loading: false,
+      cart: {
+        products: products,
+      },
+    }
+  }),
 
-    let totalCartItems = 0
-    let totalPrice = 0
+  on(removeBurgerFromCart, (state: any, action) => {
+    let products = []
+    products = [...state.cart.products]
 
     for (let product of products) {
-      totalCartItems += product.quantity
-      totalPrice += product.price * product.quantity
+      if (product.id === action.id) {
+        product.quantity -= 1
+      }
     }
-    console.log('priceTotal==', totalPrice)
-
-    console.log('total==', totalCartItems)
 
     return {
       ...state,
-
       loading: false,
       cart: {
-        totalPrice: totalPrice,
-        totalCartItems: totalCartItems,
         products: products,
       },
     }

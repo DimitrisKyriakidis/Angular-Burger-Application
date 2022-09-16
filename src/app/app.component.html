@@ -30,9 +30,9 @@
         shopping_cart
       </span>
       <span
-        class="inline-flex justify-center items-center -ml-1 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
+        class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
       >
-        {{ totalCartItems | async }}
+        {{ totalCartItems  }}
       </span>
     </button>
         <mat-menu #menu="matMenu">
@@ -42,11 +42,14 @@
                     <div class="flex flex-col">
                         <p class="ml-3">Quantity:{{ item.quantity }}</p>
                         <p class="ml-3">Price:{{ item.price }}</p>
+                        <button (click)="removeBurgerFromCart(item.id)">
+              <mat-icon class="text-red-600">delete</mat-icon>
+            </button>
                     </div>
                 </div>
             </div>
             <div class="flex justify-end mr-5">
-                <p>Total Price:{{ totalPrice | async }}</p>
+                <p>Total Price:{{ totalPrice }}</p>
             </div>
         </mat-menu>
     </div>
