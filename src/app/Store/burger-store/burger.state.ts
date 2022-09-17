@@ -1,17 +1,14 @@
-import { User } from "../../auth/model/user.model";
-import { Burgers } from "../../models/burger";
-
-export interface BurgersState{
-   
-burgers:{},
-burgerID:string
-theBurger:Burgers[]
+export interface BurgersState {
+  burgers: {}
+  burgerID: string
+  cart: {
+    products?: any[]
+  }
 }
-export const initialBurgersState:BurgersState={
-
-burgers:{},
-burgerID:'',
-theBurger:[],
-
-
+export const initialBurgersState: BurgersState = {
+  burgers: {},
+  burgerID: '',
+  cart: {
+    products: [],
+  },
 }

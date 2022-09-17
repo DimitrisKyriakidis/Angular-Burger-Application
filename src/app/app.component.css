@@ -1,6 +1,9 @@
-
->>> body {
+body {
     margin: 0;
+}
+
+.tool-div {
+    background: rgba(255, 170, 0, 0.76);
 }
 
 main {
@@ -11,14 +14,16 @@ main {
     background: rgba(255, 170, 0, 0.76);
     color: white;
     border: none;
-    cursor:pointer;
-    outline:none;
+    cursor: pointer;
+    outline: none;
 }
-
 
 .spinner-container {
-  width: 100%;
-  margin-top: 100px;
+    width: 100%;
+    margin-top: 100px;
 }
 
-
+.cartMenu {
+    min-height: 11rem;
+    overflow: auto;
+}

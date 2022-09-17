@@ -1,77 +1,45 @@
-
 <h2 *ngIf="createMode" mat-dialog-title>Create Burger</h2>
 <h2 *ngIf="editMode" mat-dialog-title>Edit Burger</h2>
 
 <mat-dialog-content>
+    <ng-container *ngIf="form">
+        <div class="spinner-container" *ngIf="loading$ | async">
+            <mat-spinner></mat-spinner>
+        </div>
 
-  <ng-container *ngIf="form">
+        <ng-container [formGroup]="form">
+            <ng-container *ngIf="createMode || editMode">
+                <mat-form-field>
+                    <input matInput placeholder="Burger Description" formControlName="description" />
+                </mat-form-field>
 
-    <div class="spinner-container" *ngIf="loading$ | async">
-
-      <mat-spinner></mat-spinner>
-
-    </div>
-
-    <ng-container [formGroup]="form">
-
-     
-
-      <ng-container *ngIf="createMode || editMode ">
-        <mat-form-field>
-
-          <input matInput
-                 placeholder="Burger Description"
-                 formControlName="description">
-  
-        </mat-form-field>
-       
-        <mat-form-field>
-
-          <input matInput
-                 placeholder="Burger Icon Url"
-                 formControlName="iconUrl">
-
-        </mat-form-field>
-        <mat-form-field>
-
-          <mat-select placeholder="Select category"
-                      formControlName="category">
-  
-            <mat-option value="SimpleBurger">
-              SimpleBurger</mat-option>
-            <mat-option value="CheeseBurger">
-              CheeseBurger</mat-option>
-            <mat-option value="DeluxeBurger">
-              DeluxeBurger</mat-option>
-  
-          </mat-select>
-  
-        </mat-form-field>
-      </ng-container>
-
-  
-
+                <mat-form-field>
+                    <input matInput placeholder="Burger Icon Url" formControlName="iconUrl" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Select category" formControlName="category">
+                        <mat-option value="SimpleBurger">
+                            SimpleBurger
+                        </mat-option>
+                        <mat-option value="CheeseBurger">
+                            CheeseBurger
+                        </mat-option>
+                        <mat-option value="DeluxeBurger">
+                            DeluxeBurger
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </ng-container>
     </ng-container>
-
-
-  </ng-container>
-
 </mat-dialog-content>
 
 <mat-dialog-actions>
-
-  <button mat-raised-button (click)="onClose()">
+    <button mat-raised-button (click)="onClose()">
     Close
   </button>
 
-  <button mat-raised-button color="primary"
-         
-          (click)="onSave()">
+    <button mat-raised-button color="primary" (click)="onSave()">
     Save
   </button>
- 
 </mat-dialog-actions>
-
-
-
-
