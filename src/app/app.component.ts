@@ -23,9 +23,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   productList: Observable<any[]>
 
-  totalCartItems = 0
+  totalCartItems: number = 0
 
-  totalPrice = 0
+  totalPrice: number = 0
 
   subscription: Subscription
 
