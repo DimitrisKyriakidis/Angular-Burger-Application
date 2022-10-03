@@ -1,6 +1,6 @@
 export interface AuthResponseData {
     idToken: string;
-    email: string;
+    username: string;
     id:string
     refreshToken: string;
     expiresIn: string;

@@ -4,7 +4,6 @@ import { HomeComponent } from '../home/home.component'
 import { BurgerComponent } from './burger-list/burger.component'
 import { EditBurgerComponent } from './burger-list/edit-burger-dialog/edit-burger.component'
 import { BurgerService } from '../services/burger.service'
-
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatInputModule } from '@angular/material/input'
@@ -21,13 +20,15 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { RouterModule, Routes } from '@angular/router'
-
+import { MatRadioModule } from '@angular/material/radio';
 import { BurgerEffects } from '../Store/burger-store/burger-effects'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { burgerReducer } from '../Store/burger-store/burger.reducers'
 import { CartComponent } from './shopping-cart/cart/cart.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import {MatCheckboxModule} from '@angular/material/checkbox' 
+import {MatChipsModule} from '@angular/material/chips';
 
 export const coursesRoutes: Routes = [
   {
@@ -39,6 +40,9 @@ export const coursesRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    MatRadioModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,

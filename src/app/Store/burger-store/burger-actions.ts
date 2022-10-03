@@ -25,12 +25,12 @@ export const enum ActionBurgerTypes {
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
-  props<{ burger: Burgers }>(),
+  props<{ }>(),
 )
 
 export const getAllBurgersSuccess = createAction(
   ActionBurgerTypes.getAllBurgersSuccess,
-  props<{ any }>(),
+  props<{ burgers:Burgers }>(),
 )
 
 export const getAllBurgersFail = createAction(
@@ -40,7 +40,7 @@ export const getAllBurgersFail = createAction(
 
 export const createBurger = createAction(
   ActionBurgerTypes.createBurger,
-  props<{ iconUrl: string; description: string; category: string }>(),
+  props<{ burger:any }>(),
 )
 
 export const createBurgerSuccess = createAction(

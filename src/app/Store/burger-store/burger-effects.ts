@@ -14,12 +14,12 @@ export class BurgerEffects {
   getAllBurgersEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ActionBurgerTypes.getAllBurgers),
-      mergeMap((payload: Burgers) =>
-        this.burgerService.findAllBurgers().pipe(
-          map((payload) => {
+      mergeMap(() =>
+        this.burgerService.getAllBurgers().pipe(
+          map((response) => {
             return {
               type: ActionBurgerTypes.getAllBurgersSuccess,
-              payload: payload['payload'],
+              burgers: response['data'],
             }
           }),
           catchError(() => {
@@ -33,21 +33,15 @@ export class BurgerEffects {
   createBurgersEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ActionBurgerTypes.createBurger),
-      mergeMap((payload: Burgers) =>
-        this.burgerService
-          .saveBurger(
-            payload['iconUrl'],
-            payload['description'],
-            payload['category'],
-          )
-          .pipe(
-            map(() => {
-              return { type: ActionBurgerTypes.getAllBurgers }
-            }),
-            catchError(() => {
-              return of({ type: ActionBurgerTypes.createBurgerFail })
-            }),
-          ),
+      mergeMap((payload) =>
+        this.burgerService.saveBurger(payload).pipe(
+          map(() => {
+            return { type: ActionBurgerTypes.getAllBurgers }
+          }),
+          catchError(() => {
+            return of({ type: ActionBurgerTypes.createBurgerFail })
+          }),
+        ),
       ),
     )
   })

@@ -13,7 +13,7 @@ export const enum ActionLoginTypes {
 
 export const login=createAction(
     ActionLoginTypes.loginAction,
-    props<{email:string;password:string}>()
+    props<{username:string;password:string}>()
 
 );
 

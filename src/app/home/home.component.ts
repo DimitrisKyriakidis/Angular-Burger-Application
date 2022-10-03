@@ -5,7 +5,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { compareCourses, Burgers } from '../models/burger'
+import { Burgers } from '../models/burger'
 import { Observable } from 'rxjs'
 import { defaultDialogConfig } from '../shared/default-dialog-config'
 import { EditBurgerComponent } from '../burgers/burger-list/edit-burger-dialog/edit-burger.component'

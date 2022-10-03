@@ -1,56 +1,51 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {EmailValidator, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+import {
+  EmailValidator,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms'
 
-import {Store} from "@ngrx/store";
+import { Store } from '@ngrx/store'
 
-import {AuthService} from "../auth.service";
-import {tap} from "rxjs/operators";
-import {noop, Observable} from "rxjs";
-import {Router} from "@angular/router";
-import { State } from '../../reducers';
-import { ActionLoginTypes, login } from '../../Store/login-store/login.actions';
-import { selectUser } from '../../Store/login-store/login.selector';
+import { AuthService } from '../auth.service'
+import { tap } from 'rxjs/operators'
+import { noop, Observable } from 'rxjs'
+import { Router } from '@angular/router'
+import { State } from '../../reducers'
+import { ActionLoginTypes, login } from '../../Store/login-store/login.actions'
+import { selectUser } from '../../Store/login-store/login.selector'
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
-  form: FormGroup;
-loggedIn:Observable<any>
+  form: FormGroup
+  loggedIn: Observable<any>
   constructor(
-     
-      private auth: AuthService,
-      private router:Router,
-      private store:Store<State>) {
-
-     
-
-  }
+    private auth: AuthService,
+    private router: Router,
+    private store: Store<State>,
+  ) {}
 
   ngOnInit() {
-    this.form =new FormGroup({
-      email: new FormControl ('user', [Validators.required]),
-      password:new FormControl ('123', [Validators.required])
-  });
-  this.loggedIn=this.store.select(selectUser)
-  console.log(this.loggedIn);
-  
+    this.form = new FormGroup({
+      username: new FormControl('admin', [Validators.required]),
+      password: new FormControl('1234', [Validators.required]),
+    })
+    this.loggedIn = this.store.select(selectUser)
+    console.log(this.loggedIn)
   }
 
-  login() { 
-    if(this.form.valid){
-      const email=this.form.value.email
-    const password=this.form.value.password
+  login() {
+    if (this.form.valid) {
+      const username = this.form.value.username
+      const password = this.form.value.password
 
-    
-    this.store.dispatch(login({email,password}))
-
+      this.store.dispatch(login({ username, password }))
     }
-   
   }
-
 }
-
