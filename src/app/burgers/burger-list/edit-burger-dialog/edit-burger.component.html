@@ -8,7 +8,96 @@
         </div>
 
         <ng-container [formGroup]="form">
-            <ng-container *ngIf="createMode || editMode">
+            <mat-tab-group>
+                <mat-tab label="Bun" class="flex flex-col items-center">
+                    <ng-container>
+                        <mat-radio-group (change)="onRadioChange($event)" formControlName="bread" class="flex flex-col mt-5">
+                            <mat-radio-button *ngFor="let element of ingredients?.Bun; let i = index" [value]="element">
+                                <div class="flex">
+                                    <div class="image-container">
+                                        <img class="w-2/3" src="{{ element.icon }}" />
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div>
+                                            <span class="text-md">{{ element.name }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-sm">{{ element.price }}€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </ng-container>
+                </mat-tab>
+                <mat-tab label="Cheese">
+                    <ng-container>
+                        <mat-radio-group (change)="onRadioChange($event)" formControlName="cheese" class="flex flex-col mt-5">
+                            <mat-radio-button *ngFor="let element of ingredients?.Cheese; let i = index" [value]="element">
+                                <div class="flex">
+                                    <div class="image-container">
+                                        <img class="w-2/3" src="{{ element.icon }}" />
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div>
+                                            <span class="text-md">{{ element.name }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-sm">{{ element.price }}€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </ng-container>
+                </mat-tab>
+                <mat-tab label="Vegetables">
+                    <ng-container *ngFor="let element of ingredients?.Vegetables; let i = index">
+                        <div class="flex flex-col">
+                            <mat-checkbox class="example-margin" (change)="onVegetablesChange($event, i)" [value]="element">
+                                <div class="flex flex-col items-center mt-10">
+                                    <div class="image-container">
+                                        <img class="w-2/3" src="{{ element.icon }}" />
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div>
+                                            <span class="text-md">{{ element.name }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-sm">{{ element.price }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-checkbox>
+                        </div>
+                    </ng-container>
+                </mat-tab>
+                <mat-tab label="Meat">
+                    <ng-container>
+                        <mat-radio-group (change)="onRadioChange($event)" formControlName="meat" class="flex flex-col mt-5 space-y-3">
+                            <mat-radio-button *ngFor="let element of ingredients?.Meat; let i = index" [value]="element">
+                                <div class="flex">
+                                    <div class="image-container">
+                                        <img class="w-2/3" src="{{ element.icon }}" />
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div>
+                                            <span class="text-md">{{ element.name }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-sm">{{ element.price }}€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </ng-container>
+                </mat-tab>
+                <!-- <mat-tab label="Sauce">Content 5</mat-tab> -->
+            </mat-tab-group>
+
+            <!-- <ng-container *ngIf="createMode || editMode">
+
                 <mat-form-field>
                     <input matInput placeholder="Burger Description" formControlName="description" />
                 </mat-form-field>
@@ -29,17 +118,31 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </ng-container>
+            </ng-container> -->
         </ng-container>
     </ng-container>
 </mat-dialog-content>
+<div>
+    <mat-chip-list>
+        <mat-chip *ngFor="let item of breadCheeseMeatChips; let i=index" [removable]="true" (removed)="onBreadCheeseMeatChipsRemoved(i)">
+            {{ item }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <mat-chip *ngFor="let item of vegetableChips; let i=index" [removable]="true" (removed)="onVegetableChipsRemoved(i)">
+            {{ item }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+</div>
 
-<mat-dialog-actions>
-    <button mat-raised-button (click)="onClose()">
-    Close
-  </button>
+<div class="flex justify-end mt-20">
+    <mat-dialog-actions>
+        <button mat-raised-button (click)="onClose()">
+      Close
+    </button>
 
-    <button mat-raised-button color="primary" (click)="onSave()">
-    Save
-  </button>
-</mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="onSave()">
+      Save
+    </button>
+    </mat-dialog-actions>
+</div>

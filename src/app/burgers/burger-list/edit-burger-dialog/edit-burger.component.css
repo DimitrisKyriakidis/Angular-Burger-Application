@@ -1,10 +1,19 @@
-
+.image-container {
+    display: flex;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    width: 5vw;
+    border-radius: 50%;
+    /* border: 1px solid rgb(171, 166, 166); */
+    overflow: hidden;
+}
 
 .mat-form-field {
-  display: block;
+    display: block;
 }
 
 textarea {
-  height: 100px;
-  resize: vertical;
+    height: 100px;
+    resize: vertical;
 }

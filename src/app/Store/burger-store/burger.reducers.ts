@@ -19,8 +19,8 @@ import { initialBurgersState } from './burger.state'
 export const burgerReducer = createReducer(
   initialBurgersState,
 
-  on(getAllBurgersSuccess, (state, action) => {
-    let allBurgers = action['payload']
+  on(getAllBurgersSuccess, (state, action:any) => {
+    let allBurgers = action['burgers']
     let deluxeBurgers = []
     let simpleBurgers = []
     let cheeseBurger = []

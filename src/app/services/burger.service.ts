@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { Burgers } from '../models/burger'
+import { element } from 'protractor'
 
 @Injectable()
 export class BurgerService {
@@ -12,15 +11,22 @@ export class BurgerService {
   public getBurgerId() {
     return this.burgerId
   }
-  public findAllBurgers() {
-    const apiUrl = '/api/burgers'
+  public getAllBurgers() {
+    const apiUrl = '/api/burgers/getAllBurgers'
     return this.http.get(apiUrl)
   }
 
-  public saveBurger(iconUrl: string, description: string, category: string) {
-    let body = { iconUrl, description, category }
-    const apiUrl = `api/burger`
-    return this.http.post(apiUrl, body)
+  public saveBurger(body) {
+    // let reqBody = body.burger
+    const { bread, cheese, meat } = body.burger
+    const finalReqBody = body.burger.vegetables.slice()
+    finalReqBody.push(bread, cheese, meat)
+    console.log('finalReqBody==', finalReqBody)
+
+    console.log('burgerService==', body.burger)
+
+    const apiUrl = `api/burgers/createOrder`
+    return this.http.post(apiUrl, finalReqBody)
   }
 
   public editBurger(
