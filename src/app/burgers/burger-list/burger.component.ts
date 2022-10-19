@@ -13,7 +13,10 @@ import { EditBurgerComponent } from './edit-burger-dialog/edit-burger.component'
 import { select, Store } from '@ngrx/store'
 import { State } from '../../reducers'
 import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
-import { selectBurger } from '../../Store/burger-store/burger.selector'
+import {
+  selectBurger,
+  selectTotalCartItems,
+} from '../../Store/burger-store/burger.selector'
 import { Observable, Subject } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import { filter } from '@angular-devkit/schematics'
@@ -23,7 +26,9 @@ import { BurgerService } from '../../services/burger.service'
 import { Router } from '@angular/router'
 import { CartComponent } from '../shopping-cart/cart/cart.component'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { AuthService } from '../../auth/auth.service'
+import { data } from 'autoprefixer'
 
 @Component({
   selector: 'app-burger',
@@ -39,20 +44,29 @@ export class BurgerComponent implements OnInit {
 
   cartForm: FormGroup
 
-  @Input()
-  burgers: Observable<{}>
+  burgers: Observable<any[]>
+
+  counter: number = 6
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
     private store: Store<State>,
     private burgerService: BurgerService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.authService.checkExpiration()
+    }
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
     this.burgers = this.store.select(selectBurger)
+    this.burgers.subscribe((data) => {
+      console.log('burgerData==', data)
+    })
+
     this.initCartForm()
   }
 
@@ -63,7 +77,13 @@ export class BurgerComponent implements OnInit {
       }),
     })
   }
+  showMore() {
+    this.counter += 6
+  }
 
+  showLess() {
+    this.counter -= 6
+  }
   onCreateBurger() {
     this.dialogInfo({ dialogTitle: '', create: true }, EditBurgerComponent)
   }
@@ -78,7 +98,7 @@ export class BurgerComponent implements OnInit {
         iconUrl: burger.iconUrl,
         category: burger.category,
       },
-      EditBurgerComponent,
+      EditBurgerComponent
     )
   }
 
@@ -103,8 +123,8 @@ export class BurgerComponent implements OnInit {
       duration: 3000,
       verticalPosition: 'top',
       horizontalPosition: 'right',
-      panelClass: ['snackbarClass']
-    });
+      panelClass: ['snackbarClass'],
+    })
   }
 
   dialogInfo(dialogData: any, Component) {

@@ -1,0 +1,32 @@
+#modal-body {
+    visibility: hidden;
+    opacity: 0;
+    &.open {
+        visibility: inherit;
+        opacity: 1;
+    }
+}
+
+.modal-width {
+    width: 60vw;
+}
+
+.svg-icon {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: gray;
+}
+
+.svg-icon circle {
+    stroke: gray;
+    stroke-width: 1;
+}
+
+.mHeight {
+    height: 20vw;
+}

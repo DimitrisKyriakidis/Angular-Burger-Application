@@ -24,6 +24,11 @@ main {
 }
 
 .cartMenu {
-    min-height: 11rem;
-    overflow: auto;
+    /* min-height: 11rem;
+    overflow: auto; */
 }
+
+
+/* .modal-class {
+    overflow-y: scroll;
+} */

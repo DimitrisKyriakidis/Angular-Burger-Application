@@ -1,12 +1,12 @@
 export interface BurgersState {
-  burgers: {}
+  burgers: any[]
   burgerID: string
   cart: {
     products?: any[]
   }
 }
 export const initialBurgersState: BurgersState = {
-  burgers: {},
+  burgers: [],
   burgerID: '',
   cart: {
     products: [],

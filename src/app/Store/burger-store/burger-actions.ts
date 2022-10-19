@@ -30,7 +30,7 @@ export const getAllBurgers = createAction(
 
 export const getAllBurgersSuccess = createAction(
   ActionBurgerTypes.getAllBurgersSuccess,
-  props<{ burgers:Burgers }>(),
+  props<{ burgers:any[] }>(),
 )
 
 export const getAllBurgersFail = createAction(

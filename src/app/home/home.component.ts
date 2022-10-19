@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   advancedCourses$: Observable<Burgers[]>
 
-  burgers: Observable<Burgers[]>
+  burgers: Observable<any[]>
 
   @Output()
   courseChanged = new EventEmitter()

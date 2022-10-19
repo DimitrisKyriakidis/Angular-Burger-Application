@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { Store } from '@ngrx/store'
 
 import { of } from 'rxjs'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { AuthService } from '../../auth/auth.service'
-import { ActionLoginTypes } from './login.actions'
+import { State } from '../../reducers'
+import { ActionLoginTypes, userLoggedIn } from './login.actions'
 
 @Injectable()
 export class LoginEffects {
@@ -18,8 +20,8 @@ export class LoginEffects {
             if (data) {
               this.router.navigateByUrl('burgers')
               const user = this.authService.formatUser(data)
-              this.authService.setUserInLocalStorage(user)
-              return { type: ActionLoginTypes.loginSuccess, user }
+              this.store.dispatch(userLoggedIn())
+              return { type: ActionLoginTypes.loginSuccess, user:user }
             }
           }),
           catchError(() => {
@@ -53,5 +55,6 @@ export class LoginEffects {
     private authService: AuthService,
     private actions$: Actions,
     private router: Router,
+    private store:Store<State>
   ) {}
 }

@@ -1,13 +1,26 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
+import { element } from 'protractor'
 import { BurgersState } from './burger.state'
 
 export const burgerState = createFeatureSelector<BurgersState>('burger')
 export const selectBurger = createSelector(
   burgerState,
-  (state) => state.burgers,
+  (state) => state.burgers
 )
 
 export const selectBurgerID = createSelector(
   burgerState,
-  (state) => state.burgerID,
+  (state) => state.burgerID
+)
+
+export const selectTotalCartItems = createSelector(burgerState, (state) =>
+  state.cart.products.reduce((acc, product) => {
+    return acc + product.quantity
+  }, 0)
+)
+
+export const selectCartTotalPrice = createSelector(burgerState, (state) =>
+  state.cart.products.reduce((acc, product) => {
+    return acc + product.orderPrice * product.quantity
+  }, 0)
 )

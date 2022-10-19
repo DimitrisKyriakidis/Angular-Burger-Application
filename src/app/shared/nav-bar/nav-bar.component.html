@@ -1,0 +1,66 @@
+<ng-container>
+    <nav *ngIf="isLoggedIn | async">
+        <div class="flex justify-between w-full tool-div p-3">
+            <div class="ml-20">
+                <button [matMenuTriggerFor]="normalMenu">
+          <mat-menu
+            #normalMenu="matMenu"
+            class="flex justify-center items-center"
+          >
+            <button mat-list-item (click)="logout()">
+              <mat-icon class="align-middle">exit_to_app</mat-icon>
+              Logout
+            </button>
+                </mat-menu>
+                <mat-icon class="text-white">menu</mat-icon>
+                </button>
+            </div>
+            <div class="mr-16">
+                <button (click)="openShoppingCart()" class="focus:outline-none flex justify-end mr-5">
+          <span class="material-icons text-white"> shopping_cart </span>
+          <span
+            class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
+          >
+            {{ totalCartItems | async }}
+          </span>
+        </button>
+                <modal [display]="isShoppingCartOpen" (closed)="isShoppingCartOpen = false" [width]="'25vw'" [height]="'25vw'">
+                    <div *ngFor="let item of productList | async" class="flex flex-col justify-between cartMenu">
+                        <div class="flex h-[2rem] overflow-y-auto">
+                            <img class="max-h-[2rem] w-32" src="{{ item.iconUrl }}" />
+                            <div class="flex flex-col">
+                                <p class="ml-3">Quantity:{{ item.quantity }}</p>
+                                <p class="ml-3">Price:{{ item.orderPrice }}</p>
+                                <button (click)="removeBurgerFromCart(item.id)">
+                  <mat-icon class="text-red-600">delete</mat-icon>
+                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mr-5">
+                        <p>Total Price:{{ totalPrice | async }}</p>
+                    </div>
+                    <ng-template #footer> </ng-template>
+                </modal>
+
+                <!-- <mat-menu #menu="matMenu">
+                    <div *ngFor="let item of productList | async" class="flex flex-col justify-between p-6 cartMenu">
+                        <div class="flex h-[2rem]">
+                            <img class="max-h-[2rem] w-32" src="{{ item.iconUrl }}" />
+                            <div class="flex flex-col">
+                                <p class="ml-3">Quantity:{{ item.quantity }}</p>
+                                <p class="ml-3">Price:{{ item.price }}</p>
+                                <button (click)="removeBurgerFromCart(item.id)">
+                  <mat-icon class="text-red-600">delete</mat-icon>
+                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mr-5">
+                        <p>Total Price:{{ totalPrice }}</p>
+                    </div>
+                </mat-menu> -->
+            </div>
+        </div>
+    </nav>
+</ng-container>

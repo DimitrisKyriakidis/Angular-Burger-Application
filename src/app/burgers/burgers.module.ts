@@ -20,15 +20,16 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { RouterModule, Routes } from '@angular/router'
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio'
 import { BurgerEffects } from '../Store/burger-store/burger-effects'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { burgerReducer } from '../Store/burger-store/burger.reducers'
 import { CartComponent } from './shopping-cart/cart/cart.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-import {MatCheckboxModule} from '@angular/material/checkbox' 
-import {MatChipsModule} from '@angular/material/chips';
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatChipsModule } from '@angular/material/chips'
+import { MatExpansionModule } from '@angular/material/expansion'
 
 export const coursesRoutes: Routes = [
   {
@@ -40,6 +41,7 @@ export const coursesRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MatExpansionModule,
     MatChipsModule,
     MatCheckboxModule,
     MatRadioModule,

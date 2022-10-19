@@ -124,11 +124,11 @@
 </mat-dialog-content>
 <div>
     <mat-chip-list>
-        <mat-chip *ngFor="let item of breadCheeseMeatChips; let i=index" [removable]="true" (removed)="onBreadCheeseMeatChipsRemoved(i)">
+        <mat-chip *ngFor="let item of breadCheeseMeatChips; let i = index" [removable]="true" (removed)="onBreadCheeseMeatChipsRemoved(i)">
             {{ item }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <mat-chip *ngFor="let item of vegetableChips; let i=index" [removable]="true" (removed)="onVegetableChipsRemoved(i)">
+        <mat-chip *ngFor="let item of vegetableChips; let i = index" [removable]="true" (removed)="onVegetableChipsRemoved(i)">
             {{ item }}
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
@@ -137,12 +137,8 @@
 
 <div class="flex justify-end mt-20">
     <mat-dialog-actions>
-        <button mat-raised-button (click)="onClose()">
-      Close
-    </button>
+        <button mat-raised-button (click)="onClose()">Close</button>
 
-        <button mat-raised-button color="primary" (click)="onSave()">
-      Save
-    </button>
+        <button mat-raised-button color="primary" (click)="onSave()">Save</button>
     </mat-dialog-actions>
 </div>
