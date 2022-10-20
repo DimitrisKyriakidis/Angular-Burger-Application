@@ -29,6 +29,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AuthService } from '../../auth/auth.service'
 import { data } from 'autoprefixer'
+import { element } from 'protractor'
 
 @Component({
   selector: 'app-burger',
@@ -105,6 +106,7 @@ export class BurgerComponent implements OnInit {
   view(burger) {
     // this.router.navigate(['/burgers',burger.id])
   }
+
   onDeleteBurger(id) {
     this.store.dispatch({
       type: ActionBurgerTypes.deleteBurger,
@@ -113,7 +115,6 @@ export class BurgerComponent implements OnInit {
   }
 
   addBurgerToCart(burger) {
-    // this.dialogInfo(burger, CartComponent)
     burger.quantity = this.cartForm.value.quantity //add quantity value to the object
     this.store.dispatch({
       type: ActionBurgerTypes.addBurgerToCart,
@@ -125,6 +126,7 @@ export class BurgerComponent implements OnInit {
       horizontalPosition: 'right',
       panelClass: ['snackbarClass'],
     })
+    this.cartForm.reset()
   }
 
   dialogInfo(dialogData: any, Component) {

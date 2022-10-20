@@ -28,6 +28,7 @@ import { BurgerEffects } from './Store/burger-store/burger-effects'
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component'
 import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
 import { ModalComponent } from './shared/modal/modal.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
     MatMenuModule,
     MatIconModule,
     MatSidenavModule,
+    MatTooltipModule,
     MatProgressSpinnerModule,
     MatListModule,
     MatToolbarModule,

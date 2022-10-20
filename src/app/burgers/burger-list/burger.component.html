@@ -59,7 +59,7 @@
         </mat-tab>
     </mat-tab-group> -->
 
-<div class="grid grid-cols-3 justify-center gap-10 mt-5 sm:grid grid-cols-2">
+<div class="grid grid-cols-3 justify-center gap-10 mt-5">
     <div *ngFor="let burger of burgers | async | slice: 0:counter; let i = index" class="w-2/3 mx-auto burger-card rounded bg-white border-gray-200 shadow-md overflow-hidden relative">
         <img src="../../../../assets/images/burgerIcon.jpg" alt="" class="h-32 sm:h-48 w-full object-cover" />
         <h3 class="font-bold flex justify-center">Ingredients</h3>

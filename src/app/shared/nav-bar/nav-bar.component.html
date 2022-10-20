@@ -24,22 +24,56 @@
             {{ totalCartItems | async }}
           </span>
         </button>
-                <modal [display]="isShoppingCartOpen" (closed)="isShoppingCartOpen = false" [width]="'25vw'" [height]="'25vw'">
-                    <div *ngFor="let item of productList | async" class="flex flex-col justify-between cartMenu">
-                        <div class="flex h-[2rem] overflow-y-auto">
-                            <img class="max-h-[2rem] w-32" src="{{ item.iconUrl }}" />
-                            <div class="flex flex-col">
-                                <p class="ml-3">Quantity:{{ item.quantity }}</p>
-                                <p class="ml-3">Price:{{ item.orderPrice }}</p>
+                <modal [display]="isShoppingCartOpen" (closed)="isShoppingCartOpen = false" [modalTitle]="'Shopping Cart'" [width]="'25vw'" [height]="'17vw'">
+                    <div class="bg-gray-300 rounded-full w-44 p-2 flex space-x-10 whitespace-nowrap font-bold">
+                        <p>Total Price</p>
+                        <span>{{ totalPrice | async | number: '1.1-1' }}€</span>
+                        <!-- <img class="max-h-[2rem] w-32" src="{{ item.iconUrl }}" /> -->
+                    </div>
+                    <div class="space-y-5 mt-5">
+                        <div *ngFor="let item of productList | async" class="grid gap-5 grid-cols-6 w-full items-center">
+                            <div class="col-span-1 flex items-center">
+                                <img class="rounded-full" src="../../../assets/images/cartBurgerIcon.jpg" />
+                            </div>
+                            <div class="col-span-1 block w-20 truncate">
+                                <p class="font-medium">Order Id</p>
+                                <span [matTooltip]="item.id">{{ item.id }}</span>
+                            </div>
+
+                            <div class="col-span-2 flex flex-col text-center">
+                                <p class="font-medium">Quantity</p>
+                                <span>{{ item.quantity }}</span>
+                            </div>
+                            <div class="col-span-1 flex flex-col text-center">
+                                <p class="font-medium">Price</p>
+                                <span>{{ item.orderPrice | number: '1.1-1' }}€</span>
+                            </div>
+                            <div class="col-span-1">
                                 <button (click)="removeBurgerFromCart(item.id)">
                   <mat-icon class="text-red-600">delete</mat-icon>
                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-end mr-5">
-                        <p>Total Price:{{ totalPrice | async }}</p>
-                    </div>
+                    <!-- <div *ngFor="let item of productList | async" class="flex flex-col justify-between cartMenu">
+                        <div class="flex justify-between h-[2rem] overflow-y-auto">
+                          
+                            <div class="flex items-center">
+                                <img class="h-16 rounded-full" src="../../../assets/images/cartBurgerIcon.jpg" />
+                                <div class="w-36 block truncate">
+                                    <p [matTooltip]="item.id">Order Id : {{ item.id }}</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col">
+                                <p class="ml-3">Quantity:{{ item.quantity }}</p>
+                                <p class="ml-3">Price:{{ item.orderPrice }}€</p>
+                                <button (click)="removeBurgerFromCart(item.id)">
+                  <mat-icon class="text-red-600">delete</mat-icon>
+                </button>
+                            </div>
+                        </div>
+                    </div> -->
+
                     <ng-template #footer> </ng-template>
                 </modal>
 

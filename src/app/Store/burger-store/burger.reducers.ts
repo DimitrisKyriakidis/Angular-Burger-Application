@@ -145,6 +145,7 @@ export const metaReducerLocalStorage = (
         }
       }
     }
+
     const nextState = reducer(state, action)
     localStorage.setItem('state', JSON.stringify(nextState))
     return nextState
