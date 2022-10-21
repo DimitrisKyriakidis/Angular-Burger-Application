@@ -1,50 +1,50 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
 
-import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon';
+import { AppComponent } from './app.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatMenuModule } from '@angular/material/menu'
+import { MatIconModule } from '@angular/material/icon'
 
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {HttpClientModule} from '@angular/common/http';
+import { MatListModule } from '@angular/material/list'
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { HttpClientModule } from '@angular/common/http'
 
-import {RouterModule, Routes} from '@angular/router';
-import {AuthModule} from './auth/auth.module';
-import {StoreModule} from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {environment} from '../environments/environment';
-import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
+import { RouterModule, Routes } from '@angular/router'
+import { AuthModule } from './auth/auth.module'
+import { StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { environment } from '../environments/environment'
+import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store'
 
-import {EffectsModule} from '@ngrx/effects';
-import {EntityDataModule} from '@ngrx/data';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EffectsModule } from '@ngrx/effects'
+import { EntityDataModule } from '@ngrx/data'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
-import { LoginEffects } from './Store/login-store/login.effects';
-import { reducers } from './reducers';
-import { BurgerEffects } from './Store/burger-store/burger-effects';
-
+import { LoginEffects } from './Store/login-store/login.effects'
+import { reducers } from './reducers'
+import { BurgerEffects } from './Store/burger-store/burger-effects'
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component'
+import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
+import { ModalComponent } from './shared/modal/modal.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 const routes: Routes = [
   {
     path: 'burgers',
-    loadChildren: () => import('./burgers/burgers.module').then(m => m.BurgersModule)
+    loadChildren: () =>
+      import('./burgers/burgers.module').then((m) => m.BurgersModule),
   },
- 
+
   {
     path: '**',
-    redirectTo: '/'
-  }
-];
-
-
+    redirectTo: '/',
+  },
+]
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, NavBarComponent, ModalComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -53,16 +53,19 @@ const routes: Routes = [
     MatMenuModule,
     MatIconModule,
     MatSidenavModule,
+    MatTooltipModule,
     MatProgressSpinnerModule,
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
     RouterModule.forRoot(routes),
     EffectsModule.forRoot([LoginEffects]),
-    StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreModule.forRoot(reducers, { metaReducers: [metaReducerLocalStorage] }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

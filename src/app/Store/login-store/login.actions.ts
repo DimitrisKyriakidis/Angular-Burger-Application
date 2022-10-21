@@ -7,6 +7,7 @@ export const enum ActionLoginTypes {
   loginSuccess = '[Login] login user Success',
   loginFail = '[Login] login user fail',
  logout='[User] logout',
+ userLoggedIn = '[User] Logged In',
  redirectDone='redirect page'
 }
 
@@ -32,5 +33,6 @@ export const loginFail=createAction(
 export const logout=createAction(
     ActionLoginTypes.logout,
    
-
+);
+export const userLoggedIn = createAction(ActionLoginTypes.userLoggedIn
 );

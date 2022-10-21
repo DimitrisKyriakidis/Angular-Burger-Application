@@ -1,11 +1,20 @@
-
-
-.login-page {
-  max-width: 350px;
-  margin: 50px auto 0 auto;
+.loginBackground {
+    background: url('../../../assets/images/login-bg.png');
+    /* Control the height of the image */
+    // min-height: 380px;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: auto;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
+// .login-page {
+//     max-width: 350px;
+//     //margin: 50px auto 0 auto;
+// }
+// .login-form {
+//     display: flex;
+//     flex-direction: column;
+// }

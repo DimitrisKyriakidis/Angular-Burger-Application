@@ -1,10 +1,13 @@
-<div class="w-full h-full">
-    <div class="flex justify-center">
-        <button mat-mini-fab>
-      <mat-icon class="add-course-btn" (click)="onCreateBurger()">add</mat-icon>
-    </button>
-    </div>
-    <mat-tab-group *ngIf="burgers | async as list" class="groups">
+<div class="flex justify-center">
+    <button>
+    <mat-icon
+      class="bg-gray-300 text-black rounded-full"
+      (click)="onCreateBurger()"
+      >add</mat-icon
+    >
+  </button>
+</div>
+<!-- <mat-tab-group *ngIf="burgers | async as list" class="groups">
         <mat-tab *ngFor="let tabLabel of matTabLabels" label="{{ tabLabel.displayName }}" class="sticky tabs">
             <mat-card *ngFor="let element of list[tabLabel.key]" class="space-y-4 burger-card card overflow-x-hidden">
                 <mat-card-header>
@@ -54,5 +57,70 @@
                 </div>
             </mat-card>
         </mat-tab>
-    </mat-tab-group>
+    </mat-tab-group> -->
+
+<div class="grid grid-cols-3 justify-center gap-10 mt-5">
+    <div *ngFor="let burger of burgers | async | slice: 0:counter; let i = index" class="w-2/3 mx-auto burger-card rounded bg-white border-gray-200 shadow-md overflow-hidden relative">
+        <img src="../../../../assets/images/burgerIcon.jpg" alt="" class="h-32 sm:h-48 w-full object-cover" />
+        <h3 class="font-bold flex justify-center">Ingredients</h3>
+        <div class="flex justify-center">
+            <div *ngFor="let element of burger?.ingredients">
+                <span class="font-bold text-gray-500 text-xs">{{ element.name }},</span>
+            </div>
+        </div>
+        <div class="absolute top-0 ml-2 p-2 mt-2 bg-gray-300 text-black text-xs uppercase font-bold rounded-full">
+            <span>{{ burger.orderPrice ? burger.orderPrice : 0 }}€</span>
+        </div>
+
+        <div class="flex justify-center space-x-3">
+            <button mat-mini-fab color="accent">
+        <mat-icon class="add-course-btn" (click)="onEditBurger(burger)">
+          edit
+        </mat-icon>
+      </button>
+
+            <button mat-mini-fab color="warn">
+        <mat-icon class="add-course-btn" (click)="onDeleteBurger(burger['id'])">
+          delete
+        </mat-icon>
+      </button>
+        </div>
+
+        <div class="flex justify-center">
+            <form [formGroup]="cartForm">
+                <mat-form-field>
+                    <input matInput type="number" placeholder="Quantity" formControlName="quantity" min="1" max="100" />
+                </mat-form-field>
+            </form>
+            <button class="bg-gray-300 rounded-full ml-3 my-auto text-black h-8 w-28" (click)="addBurgerToCart(burger)">
+        Add to cart
+      </button>
+        </div>
+    </div>
+
+    <!-- <mat-card *ngFor="let element of burgers | async" class="">
+            <mat-card-header>
+                <mat-card-title class="font-bold text-yellow-400">
+                    {{ element.category }}
+                </mat-card-title>
+            </mat-card-header>
+
+            <div class="flex justify-center text-center items-center rounded-md shadow-md">
+                <img class="w-32 h-full" mat-card-image [src]="element.iconUrl" />
+            </div>
+            <div>
+                <mat-card-content>
+                    <p class="text-gray-700 text-sm">{{ element.description }}</p>
+                </mat-card-content>
+            </div> -->
+    <div *ngIf="burgers | async as burger" class="flex justify-center col-span-3 space-x-4">
+        <button *ngIf="counter < burger.length" class="bg-gray-300 text-black flex items-center pr-4 pl-2 pt-2 pb-2 rounded-full" (click)="showMore()">
+      <mat-icon class="align-middle">expand_more</mat-icon>
+      Show more
+    </button>
+        <button *ngIf="counter > 6 || counter === burger.length" class="bg-gray-300 text-black flex items-center pr-4 pl-2 pt-2 pb-2 rounded-full" (click)="showLess()">
+      <mat-icon class="align-middle">expand_less</mat-icon>
+      Show less
+    </button>
+    </div>
 </div>

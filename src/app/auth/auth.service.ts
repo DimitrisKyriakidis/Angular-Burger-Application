@@ -1,72 +1,69 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { User } from './model/user.model'
-import { State } from '../reducers'
-import { Store } from '@ngrx/store'
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable, Subject } from "rxjs";
+import { User } from "./model/user.model";
+import { State } from "../reducers";
+import { Store } from "@ngrx/store";
+import { ActionLoginTypes } from "../Store/login-store/login.actions";
 
 @Injectable()
 export class AuthService {
-  timeoutInterval: any
+  private isLoggedIn = new Subject<boolean>();
+  public isLoggedIn$ = this.isLoggedIn.asObservable();
+  private tokenTimer;
   constructor(private http: HttpClient, private store: Store<State>) {}
 
   login(username: string, password: string) {
-    return this.http.post('api/users/login', { username, password })
+    return this.http.post("api/users/login", { username, password });
   }
+
   logout() {
-    localStorage.removeItem('userData')
-    if (this.timeoutInterval) {
-      clearTimeout(this.timeoutInterval)
-      this.timeoutInterval = null
+    localStorage.removeItem("userData");
+  }
+  public isAuthenticated(): boolean {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const token = !!userData ? userData["token"] : null;
+
+    return token ? true : false;
+  }
+
+  setIsLoggedIn(value: boolean) {
+    this.isLoggedIn.next(value);
+  }
+
+  formatUser(user) {
+    const expiresInDuration = 7200;
+    const now = new Date();
+    const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+    localStorage.setItem("userData", JSON.stringify(user));
+    sessionStorage.setItem("expiration", expirationDate.toString());
+    this.setAuthTimer(expiresInDuration);
+    this.isLoggedIn.next(true);
+  }
+
+  setAuthTimer(duration) {
+    this.tokenTimer = setTimeout(() => {
+      this.logout();
+    }, duration * 1000);
+  }
+
+  public getExpiration() {
+    return new Date(sessionStorage.getItem("expiration"));
+  }
+
+  checkExpiration() {
+    const authInformation = this.getExpiration();
+    if (!authInformation) {
+      return;
     }
-  }
+    const now = new Date();
+    const expiresIn = authInformation.getTime() - now.getTime();
 
-  formatUser(data: any) {
-    const expirationDate = new Date(
-      new Date().getTime() + +data.expiresIn * 1000,
-    )
-    const loggedUser = new User(data.user, data.token, expirationDate)
-    return loggedUser
-  }
-
-  getErrorMessage(message: string) {
-    switch (message) {
-      case 'EMAIL_NOT_FOUND':
-        return 'Email Not Found'
-      case 'INVALID_PASSWORD':
-        return 'Invalid Password'
-      case 'EMAIL_EXISTS':
-        return 'Email already exists'
-      default:
-        return 'Unknown error occurred. Please try again'
+    if (expiresIn > 0) {
+      this.setAuthTimer(expiresIn / 1000);
+      this.store.dispatch({ type: ActionLoginTypes.userLoggedIn });
+    } else {
+      this.logout();
     }
-  }
-
-  setUserInLocalStorage(user: User) {
-    localStorage.setItem('userData', JSON.stringify(user))
-    this.runTimeoutInterval(user)
-  }
-
-  runTimeoutInterval(user: User) {
-    const todaysDate = new Date().getTime()
-    const expirationDate = user.expireDate.getTime()
-    const timeInterval = expirationDate - todaysDate
-
-    this.timeoutInterval = setTimeout(() => {
-      //   this.store.dispatch(autoLogout());
-      //logout functionality or get the refresh token
-    }, timeInterval)
-  }
-
-  getUserFromLocalStorage() {
-    const userDataString = localStorage.getItem('userData')
-    if (userDataString) {
-      const userData = JSON.parse(userDataString)
-      const expirationDate = new Date(userData.expirationDate)
-      const user = new User(userData.user, userData.token, expirationDate)
-      this.runTimeoutInterval(user)
-      return user
-    }
-    return null
   }
 }

@@ -17,3 +17,15 @@ textarea {
     height: 100px;
     resize: vertical;
 }
+
+.mat-dialog-content {
+    min-height: 30vh !important;
+}
+
+.mat-tab-group {
+    min-height: 25vh !important;
+}
+
+.chips-container {
+    min-height: 10vh;
+}
