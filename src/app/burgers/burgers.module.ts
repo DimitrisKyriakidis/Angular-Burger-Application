@@ -30,6 +30,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatExpansionModule } from '@angular/material/expansion'
+import { CarouselComponent } from '../shared/carousel/carousel.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 export const coursesRoutes: Routes = [
   {
@@ -41,6 +43,7 @@ export const coursesRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MatProgressBarModule,
     MatExpansionModule,
     MatChipsModule,
     MatCheckboxModule,
@@ -70,8 +73,14 @@ export const coursesRoutes: Routes = [
     BurgerComponent,
     EditBurgerComponent,
     CartComponent,
+    CarouselComponent,
   ],
-  exports: [HomeComponent, BurgerComponent, EditBurgerComponent],
+  exports: [
+    HomeComponent,
+    BurgerComponent,
+    EditBurgerComponent,
+    CarouselComponent,
+  ],
   entryComponents: [EditBurgerComponent],
   providers: [BurgerService],
 })
