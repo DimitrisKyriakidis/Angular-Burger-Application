@@ -25,10 +25,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { LoginEffects } from './Store/login-store/login.effects'
 import { reducers } from './reducers'
 import { BurgerEffects } from './Store/burger-store/burger-effects'
-import { NavBarComponent } from './shared/nav-bar/nav-bar.component'
+
 import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
-import { ModalComponent } from './shared/modal/modal.component'
+
 import { MatTooltipModule } from '@angular/material/tooltip'
+
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component'
+import { ModalComponent } from './shared/modal/modal.component'
+import { CarouselComponent } from './shared/carousel/carousel.component'
 
 const routes: Routes = [
   {
@@ -47,6 +51,7 @@ const routes: Routes = [
   declarations: [AppComponent, NavBarComponent, ModalComponent],
   imports: [
     BrowserModule,
+
     BrowserAnimationsModule,
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     HttpClientModule,

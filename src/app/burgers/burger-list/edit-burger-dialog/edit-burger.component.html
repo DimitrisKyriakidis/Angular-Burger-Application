@@ -1,12 +1,22 @@
-<h2 *ngIf="createMode" mat-dialog-title>Create Burger</h2>
-<h2 *ngIf="editMode" mat-dialog-title>Edit Burger</h2>
+<h2 *ngIf="createMode" mat-dialog-title class="font-bold">Create Order</h2>
+<h2 *ngIf="editMode" mat-dialog-title class="font-bold">Edit Order</h2>
 
 <mat-dialog-content>
     <ng-container *ngIf="form">
         <div class="spinner-container" *ngIf="loading$ | async">
             <mat-spinner></mat-spinner>
         </div>
-
+        <h3>Order Status</h3>
+        <div class="flex items-center mb-6">
+            <div class="rounded-full h-3 bg-gray-300 w-2/3">
+                <div [style.width.%]="orderStatusScore" class="bg-green-600 h-3 rounded-full">
+                    <span></span>
+                </div>
+            </div>
+            <div class="ml-5">
+                <span>{{ orderStatusScore * (10 / 1000) | percent }}</span>
+            </div>
+        </div>
         <ng-container [formGroup]="form">
             <mat-tab-group>
                 <mat-tab label="Bun" class="flex flex-col items-center">
@@ -105,6 +115,7 @@
                     <textarea matInput placeholder=""></textarea>
                 </mat-form-field>
             </div>
+
             <!-- <ng-container *ngIf="createMode || editMode">
 
                 <mat-form-field>
@@ -143,10 +154,14 @@
         </mat-chip-list>
     </div>
 </mat-dialog-content>
-<div class="flex justify-end mt-20">
+<div class="flex justify-end space-x-3 mt-20">
     <mat-dialog-actions>
-        <button mat-raised-button (click)="onClose()">Close</button>
+        <button class="mr-3 w-28 inline-flex justify-center rounded-sm font-medium hover:bg-gray-300 bg-white border border-yellow-500 text-yellow-500 focus:outline-none items-center py-0.5 px-2" (click)="onClose()">
+      Close
+    </button>
 
-        <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+        <button class="w-28 inline-flex justify-center rounded-sm hover:bg-gray-300 font-medium bg-yellow-500 text-white focus:outline-none items-center py-1 px-2" (click)="onSave()">
+      Save
+    </button>
     </mat-dialog-actions>
 </div>
