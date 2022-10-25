@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { Burgers } from '../../../models/burger'
+
 import {
   FormArray,
   FormBuilder,
@@ -9,13 +9,12 @@ import {
   Validators,
 } from '@angular/forms'
 import { Observable } from 'rxjs'
-import { BurgerService } from '../../../services/burger.service'
+import { BurgerService } from '../../services/burger.service'
+
+import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
+import { ingredientsData } from '../../shared/models/ingredientsData'
 import { Store } from '@ngrx/store'
-import { State } from '../../../reducers'
-import { ActionBurgerTypes } from '../../../Store/burger-store/burger-actions'
-import { ingredientsData } from '../../../shared/ingredientsData'
-import { element } from 'protractor'
-import { pairwise, startWith } from 'rxjs/operators'
+import { State } from '../../reducers'
 
 @Component({
   selector: 'burger-dialog',

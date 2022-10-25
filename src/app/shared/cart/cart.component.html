@@ -1,0 +1,42 @@
+<button (click)="openShoppingCart()" class="focus:outline-none flex justify-end mr-5">
+  <span class="material-icons text-white"> shopping_cart </span>
+  <span
+    class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
+  >
+    {{ totalCartItems | async }}
+  </span>
+</button>
+
+<modal [display]="isShoppingCartOpen" (closed)="isShoppingCartOpen = false" [modalTitle]="'Shopping Cart'" [width]="'25vw'" [height]="'17vw'">
+    <div class="bg-gray-300 rounded-md w-44 p-2 flex space-x-10 whitespace-nowrap font-bold">
+        <p>Total Price</p>
+        <span>{{ totalPrice | async | number: '1.1-1' }}€</span>
+    </div>
+    <div class="space-y-5 mt-5">
+        <div *ngFor="let item of productList | async" class="grid gap-5 grid-cols-6 w-full items-center">
+            <div class="col-span-1 flex items-center">
+                <img class="rounded-full" src="../../../assets/images/cartBurgerIcon.jpg" />
+            </div>
+            <div class="col-span-1 block w-20 truncate">
+                <p class="font-medium">Order Id</p>
+                <span [matTooltip]="item.id">{{ item.id }}</span>
+            </div>
+
+            <div class="col-span-2 flex flex-col text-center">
+                <p class="font-medium">Quantity</p>
+                <span>{{ item.quantity }}</span>
+            </div>
+            <div class="col-span-1 flex flex-col text-center">
+                <p class="font-medium">Price</p>
+                <span>{{ item.orderPrice | number: '1.1-1' }}€</span>
+            </div>
+            <div class="col-span-1">
+                <button (click)="removeBurgerFromCart(item.id)">
+          <mat-icon class="text-red-600">delete</mat-icon>
+        </button>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #footer> </ng-template>
+</modal>

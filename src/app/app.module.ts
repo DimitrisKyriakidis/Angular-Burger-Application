@@ -3,68 +3,39 @@ import { NgModule } from '@angular/core'
 
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatMenuModule } from '@angular/material/menu'
-import { MatIconModule } from '@angular/material/icon'
 
-import { MatListModule } from '@angular/material/list'
-import { MatSidenavModule } from '@angular/material/sidenav'
-import { MatToolbarModule } from '@angular/material/toolbar'
 import { HttpClientModule } from '@angular/common/http'
 
-import { RouterModule, Routes } from '@angular/router'
-import { AuthModule } from './auth/auth.module'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment'
-import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store'
 
 import { EffectsModule } from '@ngrx/effects'
-import { EntityDataModule } from '@ngrx/data'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 import { LoginEffects } from './Store/login-store/login.effects'
-import { reducers } from './reducers'
+
 import { BurgerEffects } from './Store/burger-store/burger-effects'
 
 import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
 
-import { MatTooltipModule } from '@angular/material/tooltip'
+import { SharedModule } from './shared/modules/shared.module'
 
-import { NavBarComponent } from './shared/nav-bar/nav-bar.component'
-import { ModalComponent } from './shared/modal/modal.component'
-import { CarouselComponent } from './shared/carousel/carousel.component'
-
-const routes: Routes = [
-  {
-    path: 'burgers',
-    loadChildren: () =>
-      import('./burgers/burgers.module').then((m) => m.BurgersModule),
-  },
-
-  {
-    path: '**',
-    redirectTo: '/',
-  },
-]
+import { reducers } from './reducers'
+import { AppRoutingModule } from './routing/app-routing.module'
+import { LoginModule } from './login/login.module'
+import { BurgersModule } from './burgers/burgers.module'
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, ModalComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-
+    SharedModule,
+    LoginModule,
+    BurgersModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+    AppRoutingModule,
     HttpClientModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatListModule,
-    MatToolbarModule,
-    AuthModule.forRoot(),
-    RouterModule.forRoot(routes),
-    EffectsModule.forRoot([LoginEffects]),
+    EffectsModule.forRoot([LoginEffects, BurgerEffects]),
     StoreModule.forRoot(reducers, { metaReducers: [metaReducerLocalStorage] }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

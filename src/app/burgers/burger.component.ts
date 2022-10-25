@@ -8,28 +8,20 @@ import {
 } from '@angular/core'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
-import { EditBurgerComponent } from './edit-burger-dialog/edit-burger.component'
 
-import { select, Store } from '@ngrx/store'
-import { State } from '../../reducers'
-import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
-import {
-  selectBurger,
-  selectTotalCartItems,
-} from '../../Store/burger-store/burger.selector'
 import { Observable, Subject } from 'rxjs'
-import { map, take } from 'rxjs/operators'
-import { filter } from '@angular-devkit/schematics'
-import { defaultDialogConfig } from '../../shared/default-dialog-config'
-import { Burgers } from '../../models/burger'
-import { BurgerService } from '../../services/burger.service'
+
 import { Router } from '@angular/router'
-import { CartComponent } from '../shopping-cart/cart/cart.component'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { BurgerService } from '../services/burger.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { AuthService } from '../../auth/auth.service'
-import { data } from 'autoprefixer'
-import { element } from 'protractor'
+import { AuthService } from '../services/auth.service'
+import { ActionBurgerTypes } from '../Store/burger-store/burger-actions'
+import { selectBurger } from '../Store/burger-store/burger.selector'
+import { EditBurgerComponent } from './edit-burger-dialog/edit-burger.component'
+import { defaultDialogConfig } from '../shared/models/default-dialog-config'
+import { Store } from '@ngrx/store'
+import { State } from '../reducers'
 
 @Component({
   selector: 'app-burger',

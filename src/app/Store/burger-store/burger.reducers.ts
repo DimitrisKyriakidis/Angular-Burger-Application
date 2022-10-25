@@ -1,7 +1,5 @@
 import { ActionReducer, createReducer, INIT, on, UPDATE } from '@ngrx/store'
-import { element } from 'protractor'
 
-import { User } from '../../auth/model/user.model'
 import {
   createBurger,
   editBurger,
@@ -16,30 +14,10 @@ import {
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
-export const burgerReducer = createReducer(
+export const _burgerReducer = createReducer(
   initialBurgersState,
 
   on(getAllBurgersSuccess, (state, { burgers }) => {
-    // let allBurgers = action['burgers']
-    // let deluxeBurgers = []
-    // let simpleBurgers = []
-    // let cheeseBurger = []
-
-    // for (let burger of allBurgers) {
-    //   switch (burger['category']) {
-    //     case 'DeluxeBurger':
-    //       deluxeBurgers.push(burger)
-    //       break
-    //     case 'SimpleBurger':
-    //       simpleBurgers.push(burger)
-    //       break
-    //     case 'CheeseBurger':
-    //       cheeseBurger.push(burger)
-    //       break
-    //     default:
-    //       false
-    //   }
-    // }
     return {
       ...state,
       burgers: burgers,
@@ -130,6 +108,10 @@ export const burgerReducer = createReducer(
     }
   })
 )
+
+export function burgerReducer(state, action) {
+  return _burgerReducer(state, action)
+}
 
 export const metaReducerLocalStorage = (
   reducer: ActionReducer<any>

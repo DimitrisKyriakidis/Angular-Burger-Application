@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { element } from 'protractor'
 import { BurgersState } from './burger.state'
 
 export const burgerState = createFeatureSelector<BurgersState>('burger')
