@@ -23,12 +23,6 @@ main {
     margin-top: 100px;
 }
 
-.cartMenu {
-    /* min-height: 11rem;
-    overflow: auto; */
+.links-container {
+    margin-bottom: 6px;
 }
-
-
-/* .modal-class {
-    overflow-y: scroll;
-} */

@@ -12,7 +12,7 @@ import {
 import { State } from './reducers'
 import { logout } from './Store/login-store/login.actions'
 import { ActionBurgerTypes } from './Store/burger-store/burger-actions'
-import { AuthService } from './auth/auth.service'
+import { AuthService } from './services/auth.service'
 
 @Component({
   selector: 'app-root',
@@ -20,14 +20,11 @@ import { AuthService } from './auth/auth.service'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
-
-  constructor(private authService: AuthService,) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     // if (this.authService.isAuthenticated()) {
     //   this.authService.checkExpiration();
     // }
   }
-
 }

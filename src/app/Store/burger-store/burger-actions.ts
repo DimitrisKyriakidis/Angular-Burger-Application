@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store'
-import { Burgers } from '../../models/burger'
+import { Burgers } from '../../shared/models/burger'
 
 export const enum ActionBurgerTypes {
   getAllBurgers = '[Burgers] get All',
@@ -25,31 +25,31 @@ export const enum ActionBurgerTypes {
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
-  props<{ }>(),
+  props<{}>()
 )
 
 export const getAllBurgersSuccess = createAction(
   ActionBurgerTypes.getAllBurgersSuccess,
-  props<{ burgers:any[] }>(),
+  props<{ burgers: any[] }>()
 )
 
 export const getAllBurgersFail = createAction(
   ActionBurgerTypes.getAllBurgersFail,
-  props<{ error: string }>(),
+  props<{ error: string }>()
 )
 
 export const createBurger = createAction(
   ActionBurgerTypes.createBurger,
-  props<{ burger:any }>(),
+  props<{ burger: any }>()
 )
 
 export const createBurgerSuccess = createAction(
   ActionBurgerTypes.createBurgerSuccess,
-  props<{ any }>(),
+  props<{ any }>()
 )
 export const createBurgerFail = createAction(
   ActionBurgerTypes.createBurgerSuccess,
-  props<{ error: string }>(),
+  props<{ error: string }>()
 )
 
 export const editBurger = createAction(
@@ -59,42 +59,42 @@ export const editBurger = createAction(
     iconUrl: string
     description: string
     category: string
-  }>(),
+  }>()
 )
 
 export const editBurgerSuccess = createAction(
   ActionBurgerTypes.editBurgerSuccess,
-  props<{ burgerID: string }>(),
+  props<{ burgerID: string }>()
 )
 export const editBurgerFail = createAction(
   ActionBurgerTypes.editBurgerFail,
-  props<{ error: string }>(),
+  props<{ error: string }>()
 )
 
 export const deleteBurger = createAction(
   ActionBurgerTypes.deleteBurger,
-  props<{ id: number }>(),
+  props<{ id: number }>()
 )
 
 export const deleteBurgerSuccess = createAction(
   ActionBurgerTypes.deleteBurgerSuccess,
-  props<{ any }>(),
+  props<{ any }>()
 )
 export const deleteBurgerFail = createAction(
   ActionBurgerTypes.deleteBurgerFail,
-  props<{ error: string }>(),
+  props<{ error: string }>()
 )
 export const setBurgerToState = createAction(
   ActionBurgerTypes.setBurgerToState,
-  props<{ burger: Burgers }>(),
+  props<{ burger: Burgers }>()
 )
 
 export const addBurgerToCart = createAction(
   ActionBurgerTypes.addBurgerToCart,
-  props<{ payload: Burgers }>(),
+  props<{ payload: Burgers }>()
 )
 
 export const removeBurgerFromCart = createAction(
   ActionBurgerTypes.removeBurgerFromCart,
-  props<{ id: number }>(),
+  props<{ id: number }>()
 )

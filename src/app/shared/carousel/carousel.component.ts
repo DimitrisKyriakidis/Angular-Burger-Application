@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { EditBurgerComponent } from '../../burgers/edit-burger-dialog/edit-burger.component'
+import { defaultDialogConfig } from '../models/default-dialog-config'
 
 @Component({
   selector: 'carousel',
@@ -34,7 +37,7 @@ export class CarouselComponent implements OnInit {
     },
   ]
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     if (this.autoSlide) {
@@ -54,5 +57,13 @@ export class CarouselComponent implements OnInit {
       }
       this.selectedIndex++
     }
+  }
+  createOrder() {
+    this.dialogInfo({ dialogTitle: '', create: true }, EditBurgerComponent)
+  }
+  dialogInfo(dialogData: any, Component) {
+    const dialogConfig = defaultDialogConfig()
+    dialogConfig.data = { dialogData }
+    this.dialog.open(Component, dialogConfig)
   }
 }

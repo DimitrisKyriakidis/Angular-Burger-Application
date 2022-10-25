@@ -4,8 +4,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 
 import { of } from 'rxjs'
 import { catchError, map, mergeMap } from 'rxjs/operators'
-import { AuthService } from '../../auth/auth.service'
-import { Burgers } from '../../models/burger'
+import { AuthService } from '../../services/auth.service'
+import { Burgers } from '../../shared/models/burger'
 import { BurgerService } from '../../services/burger.service'
 import { ActionBurgerTypes } from './burger-actions'
 
@@ -24,9 +24,9 @@ export class BurgerEffects {
           }),
           catchError(() => {
             return of({ type: ActionBurgerTypes.getAllBurgersFail })
-          }),
-        ),
-      ),
+          })
+        )
+      )
     )
   })
 
@@ -36,13 +36,14 @@ export class BurgerEffects {
       mergeMap((payload) =>
         this.burgerService.saveBurger(payload).pipe(
           map(() => {
+            this.router.navigate(['/burgers'])
             return { type: ActionBurgerTypes.getAllBurgers }
           }),
           catchError(() => {
             return of({ type: ActionBurgerTypes.createBurgerFail })
-          }),
-        ),
-      ),
+          })
+        )
+      )
     )
   })
 
@@ -55,7 +56,7 @@ export class BurgerEffects {
             payload['id'],
             payload['iconUrl'],
             payload['description'],
-            payload['category'],
+            payload['category']
           )
           .pipe(
             map((response) => {
@@ -65,9 +66,9 @@ export class BurgerEffects {
             }),
             catchError(() => {
               return of({ type: ActionBurgerTypes.editBurgerFail })
-            }),
-          ),
-      ),
+            })
+          )
+      )
     )
   })
 
@@ -81,15 +82,15 @@ export class BurgerEffects {
           }),
           catchError(() => {
             return of({ type: ActionBurgerTypes.deleteBurgerFail })
-          }),
-        ),
-      ),
+          })
+        )
+      )
     )
   })
 
   constructor(
     private burgerService: BurgerService,
     private actions$: Actions,
-    private router: Router,
+    private router: Router
   ) {}
 }

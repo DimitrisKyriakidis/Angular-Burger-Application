@@ -9,13 +9,13 @@ import {
 
 import { Store } from '@ngrx/store'
 
-import { AuthService } from '../auth.service'
+import { AuthService } from '../services/auth.service'
 import { tap } from 'rxjs/operators'
 import { noop, Observable } from 'rxjs'
 import { Router } from '@angular/router'
-import { State } from '../../reducers'
-import { ActionLoginTypes, login } from '../../Store/login-store/login.actions'
-import { selectUser } from '../../Store/login-store/login.selector'
+import { State } from '../reducers'
+import { ActionLoginTypes, login } from '../Store/login-store/login.actions'
+import { selectUser } from '../Store/login-store/login.selector'
 
 @Component({
   selector: 'login',
