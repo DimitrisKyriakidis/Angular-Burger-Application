@@ -51,23 +51,16 @@ export class BurgerEffects {
     return this.actions$.pipe(
       ofType(ActionBurgerTypes.editBurger),
       mergeMap((payload) =>
-        this.burgerService
-          .editBurger(
-            payload['id'],
-            payload['iconUrl'],
-            payload['description'],
-            payload['category']
-          )
-          .pipe(
-            map((response) => {
-              console.log(response)
+        this.burgerService.editBurger(payload['id'], payload['burger']).pipe(
+          map((response) => {
+            console.log(response)
 
-              return { type: ActionBurgerTypes.getAllBurgers }
-            }),
-            catchError(() => {
-              return of({ type: ActionBurgerTypes.editBurgerFail })
-            })
-          )
+            return { type: ActionBurgerTypes.getAllBurgers }
+          }),
+          catchError(() => {
+            return of({ type: ActionBurgerTypes.editBurgerFail })
+          })
+        )
       )
     )
   })
