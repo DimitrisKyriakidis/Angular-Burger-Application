@@ -56,15 +56,12 @@ export const editBurger = createAction(
   ActionBurgerTypes.editBurger,
   props<{
     id: string
-    iconUrl: string
-    description: string
-    category: string
+    burger: any
   }>()
 )
 
 export const editBurgerSuccess = createAction(
-  ActionBurgerTypes.editBurgerSuccess,
-  props<{ burgerID: string }>()
+  ActionBurgerTypes.editBurgerSuccess
 )
 export const editBurgerFail = createAction(
   ActionBurgerTypes.editBurgerFail,
@@ -73,7 +70,7 @@ export const editBurgerFail = createAction(
 
 export const deleteBurger = createAction(
   ActionBurgerTypes.deleteBurger,
-  props<{ id: number }>()
+  props<{ id: string }>()
 )
 
 export const deleteBurgerSuccess = createAction(

@@ -2,7 +2,7 @@
 <h2 *ngIf="editMode" mat-dialog-title class="font-bold">Edit Order</h2>
 
 <mat-dialog-content>
-    <ng-container *ngIf="form">
+    <ng-container *ngIf="ingredientsForm">
         <div class="spinner-container" *ngIf="loading$ | async">
             <mat-spinner></mat-spinner>
         </div>
@@ -17,7 +17,7 @@
                 <span>{{ orderStatusScore * (10 / 1000) | percent }}</span>
             </div>
         </div>
-        <ng-container [formGroup]="form">
+        <ng-container [formGroup]="ingredientsForm">
             <mat-tab-group>
                 <mat-tab label="Bun" class="flex flex-col items-center">
                     <ng-container>
@@ -40,6 +40,25 @@
                                 </mat-radio-button>
                             </mat-radio-group>
                         </div>
+                        <!-- <mat-radio-group *ngFor="let element of ingredients?.Bun; let i = index" [formControlName]="element.name" [name]="element.name" [id]="element.id" (change)="onRadioChange($event, element)" class="flex flex-col mt-5"> -->
+                        <!-- <mat-radio-button [value]="element">
+                                    <div class="flex">
+                                        <div class="image-container">
+                                            <img class="w-2/3" src="{{ element.icon }}" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <div>
+                                                <span>{{ element.name }}</span>
+                                            </div>
+                                            <div>
+                                                <span>{{ element.price }}€</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-radio-button>
+                            </mat-radio-group> -->
+
+                        <p>{{ ingredientsForm.value | json }}</p>
                     </ng-container>
                 </mat-tab>
                 <mat-tab label="Cheese">
@@ -109,10 +128,10 @@
                 </mat-tab>
                 <!-- <mat-tab label="Sauce">Content 5</mat-tab> -->
             </mat-tab-group>
-            <div class="mt-4">
+            <div [formGroup]="commentForm" class="mt-4">
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Leave a comment</mat-label>
-                    <textarea matInput placeholder=""></textarea>
+                    <textarea matInput placeholder="" formControlName="comment"></textarea>
                 </mat-form-field>
             </div>
 

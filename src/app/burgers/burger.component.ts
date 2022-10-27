@@ -82,14 +82,14 @@ export class BurgerComponent implements OnInit {
   }
 
   onEditBurger(burger) {
+    console.log('activeBurger==', burger)
+
     this.dialogInfo(
       {
         dialogTitle: '',
         update: true,
         id: burger.id,
-        description: burger.description,
-        iconUrl: burger.iconUrl,
-        category: burger.category,
+        burger: burger,
       },
       EditBurgerComponent
     )

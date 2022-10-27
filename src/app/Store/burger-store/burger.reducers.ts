@@ -37,9 +37,9 @@ export const _burgerReducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(editBurgerSuccess, (state, { burgerID }) => ({
+  on(editBurgerSuccess, (state) => ({
     ...state,
-    burgerID: burgerID,
+
     loading: false,
   })),
   on(deleteBurger, (state, action) => ({
