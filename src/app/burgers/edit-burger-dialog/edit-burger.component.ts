@@ -1,4 +1,13 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core'
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 
 import {
@@ -25,13 +34,13 @@ export class EditBurgerComponent implements OnInit {
   ingredientsForm: FormGroup
   burgers: any
   dialogTitle: string
-  submitted: boolean
+  submitted: boolean = false
 
   commentForm: FormGroup
 
   editMode: false
   createMode: false
-  burgerID: string
+  burgerId: string
   description: string
   iconUrl: string
   category: string
@@ -50,6 +59,8 @@ export class EditBurgerComponent implements OnInit {
   cheeseValueChangeCounter: number = 0 //to count how many times the category cheese control has been checked
   vegetablesValueChangeCounter: number = 0 //to count how many times the category vegetables controls has been checked
 
+  vegetables: any[] = []
+
   constructor(
     private dialogRef: MatDialogRef<EditBurgerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -57,15 +68,14 @@ export class EditBurgerComponent implements OnInit {
     private store: Store<State>,
     private fb: FormBuilder
   ) {
-    this.burgerID = data.dialogData.id
-    this.description = data.dialogData.description
-    this.category = data.dialogData.category
-    this.iconUrl = data.dialogData.iconUrl
+    this.burgerId = data.dialogData.burger?.id
   }
 
   ngOnInit() {
     console.log(this.ingredients)
     this.initForm()
+    //  this.addCheckboxes()
+
     this.editMode = this.data.dialogData['update']
     this.createMode = this.data.dialogData['create']
 
@@ -75,44 +85,42 @@ export class EditBurgerComponent implements OnInit {
 
     if (this.editMode) {
       console.log('dataForEdit==', this.data)
-      // this.ingredientsForm.patchValue({
-      //   BrownBread: 'BrownBread',
-      // })
 
       let activeIngredients = this.data.dialogData.burger.ingredients
-      let activeVegetables = []
-      let activeBread = {}
 
       for (let ing of activeIngredients) {
+        const activeVegetables = []
         switch (ing.category) {
           case 'vegetables':
             activeVegetables.push(ing)
+            for (let data of activeVegetables) {
+              this.ingredients.Vegetables = this.ingredients.Vegetables.map(
+                (veg) => {
+                  if (veg.name === data.name) {
+                    return { ...veg, selected: true }
+                  }
+                  return veg
+                }
+              )
+            }
             break
           case 'bread':
-            activeBread = ing
-            //  this.activeBread={
-            //   name:"WhiteBread"
-            //  }
-            //   this.ingredientsForm.patchValue({
-            //     bread: this.activeBread,
-            //   })
+            const activeBread = ing
+            this.bread.patchValue(activeBread.name)
+            break
+          case 'cheese':
+            const activeCheese = ing
+            this.cheese.patchValue(activeCheese.name)
+            break
+          case 'meat':
+            const activeMeat = ing
+            this.meat.patchValue(activeMeat.name)
             break
           default:
             false
         }
       }
-      console.log('activeBread==', activeBread)
-
-      console.log('activeVegetables=', activeVegetables)
     }
-
-    //else {
-    //   this.form.patchValue({
-    //     description: this.data.dialogData['description'],
-    //     category: this.data.dialogData['category'],
-    //     iconUrl: this.data.dialogData['iconUrl'],
-    //   })
-    // }
   }
 
   initForm() {
@@ -120,14 +128,14 @@ export class EditBurgerComponent implements OnInit {
       bread: new FormControl(null, {
         validators: [Validators.required],
       }),
-      // bread: this.fb.array([this.creadBreadControls()]),
+
       meat: new FormControl(null, {
         validators: [Validators.required],
       }),
       cheese: new FormControl(null, {
         validators: [Validators.required],
       }),
-      vegetables: this.fb.array([]),
+      //   vegetables: this.fb.array([]),
     })
 
     this.commentForm = new FormGroup({
@@ -135,30 +143,13 @@ export class EditBurgerComponent implements OnInit {
         validators: [Validators.required],
       }),
     })
-    // this.currentFormStatus = Object.keys(this.form.value).every(
-    //   (k) => !!this.form.value[k]
-    // )
+    this.ingredients.Vegetables = this.ingredients.Vegetables.map((veg) => {
+      return { ...veg, selected: false }
+    })
 
     console.log('bread==', this.bread)
 
     console.log('Meat==', this.meat)
-
-    // this.ingredients.Vegetables.forEach((element) => {
-    //   this.vegetables.push(
-    //     this.fb.group({
-    //       name: element.name,
-    //       price: element.price,
-    //       quantity: element.quantity,
-    //       icon: element.icon,
-    //     })
-    //   )
-    // })
-    //let breadForm = {}
-    // this.ingredients.Bun.forEach((element) => {
-    //   this.ingredientsForm.addControl(element.name, this.fb.control(null))
-    //   // breadForm[element.name] = new FormControl(null)
-    // })
-    // console.log('breadForm', breadForm)
 
     console.log('form value==', this.ingredientsForm)
     console.log('vegetables==', this.vegetables)
@@ -168,16 +159,6 @@ export class EditBurgerComponent implements OnInit {
     return this.ingredientsForm.get('bread')
   }
 
-  // creadBreadControls() {
-  //   this.fb.group({
-  //     WhiteBread: [],
-  //     BrownBread: [],
-  //   })
-  // }
-  // get bread(): FormArray {
-  //   return (<FormArray>this.ingredientsForm.get('bread')) as FormArray
-  // }
-
   get meat() {
     return this.ingredientsForm.get('meat')
   }
@@ -186,102 +167,76 @@ export class EditBurgerComponent implements OnInit {
     return this.ingredientsForm.get('cheese')
   }
 
-  get vegetables(): FormArray {
-    return (<FormArray>this.ingredientsForm.get('vegetables')) as FormArray
-  }
+  // get vegetables(): FormArray {
+  //   return (<FormArray>this.ingredientsForm.get('vegetables')) as FormArray
+  // }
   onClose() {
     this.dialogRef.close()
   }
 
   onRadioChange(event) {
+    //console.log('ing==', ing)
+    console.log('form value2==', this.ingredientsForm)
+
     console.log(event)
     if (event) {
-      this.breadCheeseMeatChips.push(event.value.name)
+      this.breadCheeseMeatChips.push(event.name)
     }
-    if (
-      event.value.category === 'bread' &&
-      this.breadValueChangeCounter === 0
-    ) {
+    if (event.category === 'bread' && this.breadValueChangeCounter === 0) {
       this.breadValueChangeCounter++
       this.orderStatusScore += 25
+      // this.bread.valueChanges.subscribe((val) => (val = event))
+      // console.log('breadAfterChange==', this.bread.value)
+
       console.log('currentStatus', this.orderStatusScore)
     }
-    if (event.value.category === 'meat' && this.meatValueChangeCounter === 0) {
+    if (event.category === 'meat' && this.meatValueChangeCounter === 0) {
       this.meatValueChangeCounter++
       this.orderStatusScore += 25
       console.log('currentStatus', this.orderStatusScore)
     }
-    if (
-      event.value.category === 'cheese' &&
-      this.cheeseValueChangeCounter === 0
-    ) {
+    if (event.category === 'cheese' && this.cheeseValueChangeCounter === 0) {
       this.cheeseValueChangeCounter++
       this.orderStatusScore += 25
       console.log('currentStatus', this.orderStatusScore)
     }
-
-    //console.log('radioArrays==', this.breadCheeseMeatChips)
   }
-  checkedValues = []
+
   onVegetablesChange(event, index: number) {
-    let controls: any = {}
+    console.log('list event==', event)
+
     if (
       this.vegetablesValueChangeCounter === 0 &&
-      this.vegetables.value.length >= 0
+      this.vegetables.length >= 0
     ) {
       this.vegetablesValueChangeCounter++
       this.orderStatusScore += 25
     }
 
-    if (event.checked) {
-      console.log('event==', event)
-      //checkedValues.push(event.source.value.name)
+    if (event) {
+      this.vegetables = event._value
+      this.vegetables = this.vegetables.map((value) => {
+        if (value.selected === false) {
+          return { ...value, selected: true }
+        }
+        return value
+      })
+      console.log('selectedVegetables==', this.vegetables)
 
-      // this.checkedValues = [...this.checkedValues, event.source.value.name]
-      // this.checkedValues.push(event.source.value.name.toLowerCase())
-      // this.checkedValues.forEach((key) => {
-      //   controls[key] = new FormControl(event.source.value)
-      // })
-
-      // this.vegetables.controls = controls
-      // this.vegetables.value.push(event.source.value)
-      // console.log('controls==', controls)
-
-      // console.log('checkedValues==', this.checkedValues)
-
-      this.vegetables.push(new FormControl(event.source.value))
-      // this.vegetables.push({
-      //   ...event.source.value.name:new FormControl(event.source.value)
-      // })
-
-      // this.vegetables.controls.push(event.source.value)
-
-      // this.vegetables.controls.forEach((element)=>{
-      // controls[event.source.value.name] =
-      // })
-      // console.log('VEGETABLES=', this.vegetables)
-
-      // let createFormArray = Object.keys(this.vegetables).forEach((key) => {
-      //   console.log('kkey==', key)
-      // })
-      // this.vegetables.push(
-      //   this.fb.group({
-      //     controls[event.source.value.name]: new FormControl(event.source.value)
-      //   })
-      // );
-
-      this.vegetableChips = this.vegetables.value.map((veg) => {
+      this.vegetableChips = this.vegetables.map((veg) => {
         return veg.name
       })
     } else {
-      this.vegetables.removeAt(index)
+      this.vegetables.splice(this.vegetables.indexOf(event.value), 1)
+      // this.vegetables.removeAt(index)
       this.onVegetableChipsRemoved(index)
     }
-    console.log('event==', event)
+
     console.log('vegetables==', this.vegetables)
   }
 
   onSave() {
+    this.ingredientsForm.value.vegetables = this.vegetables
     let formValues = {
       ...this.ingredientsForm.value,
       ...this.commentForm.value,
@@ -289,29 +244,23 @@ export class EditBurgerComponent implements OnInit {
     console.log('formValues==', formValues)
 
     console.log('ingredientsFormValues==', this.ingredientsForm.value)
-    this.store.dispatch({
-      type: ActionBurgerTypes.createBurger,
-      burger: formValues,
-    })
+    // this.store.dispatch({
+    //   type: ActionBurgerTypes.createBurger,
+    //   burger: formValues,
+    // })
     // this.onClose()
-    // if (this.createMode) {
-    //   this.store.dispatch({
-    //     type: ActionBurgerTypes.createBurger,
-    //     iconUrl: this.form.value.iconUrl,
-    //     description: this.form.value.description,
-    //     category: this.form.value.category,
-    //   })
-    //   this.dialogRef.close()
-    // } else {
-    //   this.store.dispatch({
-    //     type: ActionBurgerTypes.editBurger,
-    //     id: this.burgerID,
-    //     iconUrl: this.form.value.iconUrl,
-    //     description: this.form.value.description,
-    //     category: this.form.value.category,
-    //   })
-    //   this.dialogRef.close()
-    // }
+    if (this.editMode) {
+      this.store.dispatch({
+        type: ActionBurgerTypes.editBurger,
+        id: this.burgerId,
+        burger: formValues,
+      })
+    } else {
+      this.store.dispatch({
+        type: ActionBurgerTypes.createBurger,
+        burger: formValues,
+      })
+    }
   }
 
   onBreadCheeseMeatChipsRemoved(index: number) {

@@ -47,10 +47,29 @@ export class BurgerService {
   }
 
   public editBurger(id: string, updateData: any) {
+    console.log('ID==', id)
+
     console.log('updateData=', updateData)
 
+    let finalReqBody
+    // let temp = Object.keys(body.burger).map((key) => body.burger[key])
+    // console.log('temp==', temp)
+
+    const { bread, cheese, meat, comment } = updateData
+    const sliced = updateData.vegetables?.slice()
+
+    // finalReqBody.push(bread, cheese, meat, { comment: comment })
+    finalReqBody = {
+      ...finalReqBody,
+      bread,
+      cheese,
+      meat,
+      ...sliced,
+      comment: comment ? comment : null,
+    }
+
     const apiUrl = `api/burgers/editOrder/${id}`
-    return this.http.put(apiUrl, updateData)
+    return this.http.put(apiUrl, finalReqBody)
   }
 
   public deleteBurger(id: string) {

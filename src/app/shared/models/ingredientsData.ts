@@ -6,7 +6,6 @@ export const ingredientsData = {
       price: 0.5,
       quantity: 0,
       icon: '../../../../assets/images/whiteBread.jpg',
-      selected: false,
     },
     {
       category: 'bread',
@@ -14,7 +13,6 @@ export const ingredientsData = {
       price: 0.7,
       quantity: 0,
       icon: '../../../../assets/images/brownBread.jpg',
-      selected: false,
     },
   ],
   Vegetables: [
@@ -24,6 +22,7 @@ export const ingredientsData = {
       price: 0.4,
       quantity: 0,
       icon: '../../../../assets/images/cucumber.jpg',
+      selected: false,
     },
     {
       category: 'vegetables',
@@ -31,6 +30,7 @@ export const ingredientsData = {
       price: 0.3,
       quantity: 0,
       icon: '../../../../assets/images/letuce.jpg',
+      selected: false,
     },
     {
       category: 'vegetables',
@@ -38,6 +38,7 @@ export const ingredientsData = {
       price: 0.5,
       quantity: 0,
       icon: '../../../../assets/images/tomato.jpg',
+      selected: false,
     },
     {
       category: 'vegetables',
@@ -45,6 +46,7 @@ export const ingredientsData = {
       price: 0.5,
       quantity: 0,
       icon: '../../../../assets/images/onion.jpg',
+      selected: false,
     },
   ],
   Cheese: [
