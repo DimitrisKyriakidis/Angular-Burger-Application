@@ -22,12 +22,8 @@
                 <mat-tab label="Bun" class="flex flex-col items-center">
                     <ng-container>
                         <div class="space-y-3">
-                            <mat-radio-group #myInp formControlName="bread" class="flex flex-col mt-5">
-                                <mat-radio-button *ngFor="let element of ingredients?.Bun; let i = index" [value]="
-                    editMode && !ingredientsForm.touched
-                      ? element.name
-                      : element
-                  " (change)="onRadioChange(element)">
+                            <mat-radio-group formControlName="bread" class="flex flex-col mt-5">
+                                <mat-radio-button *ngFor="let element of ingredients?.Bun; let i = index" [value]="element" (change)="onRadioChange(element)" [checked]="ingredients.Bun[i].name == selectedBread">
                                     <div class="flex">
                                         <div class="image-container">
                                             <img class="w-2/3" src="{{ element.icon }}" />
@@ -49,9 +45,9 @@
                 <mat-tab label="Cheese">
                     <ng-container>
                         <mat-radio-group formControlName="cheese" class="flex flex-col mt-5">
-                            <mat-radio-button *ngFor="let element of ingredients?.Cheese; let i = index" [value]="
-                  editMode && !ingredientsForm.touched ? element.name : element
-                " (change)="onRadioChange(element)">
+                            <mat-radio-button *ngFor="let element of ingredients?.Cheese; let i = index" [value]="element" (change)="onRadioChange(element)" [checked]="
+                  ingredients.Cheese[i].name?.length == selectedCheese?.length
+                ">
                                 <div class="flex space-y-3">
                                     <div class="image-container">
                                         <img class="w-2/3" src="{{ element.icon }}" />
@@ -65,6 +61,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <p>names={{ ingredients.Cheese[i].name == selectedValue }}</p>
                             </mat-radio-button>
                         </mat-radio-group>
                     </ng-container>
@@ -114,9 +111,7 @@
                 <mat-tab label="Meat">
                     <ng-container>
                         <mat-radio-group formControlName="meat" class="flex flex-col mt-5 space-y-3">
-                            <mat-radio-button *ngFor="let element of ingredients?.Meat; let i = index" [value]="
-                  editMode && !ingredientsForm.touched ? element.name : element
-                " (change)="onRadioChange(element)">
+                            <mat-radio-button *ngFor="let element of ingredients?.Meat; let i = index" [value]="element" (change)="onRadioChange(element)" [checked]="ingredients.Meat[i].name == selectedMeat">
                                 <div class="flex space-y-3">
                                     <div class="image-container">
                                         <img class="w-2/3" src="{{ element.icon }}" />
@@ -167,6 +162,10 @@
                 </mat-form-field>
             </ng-container> -->
         </ng-container>
+        <div class="flex flex-col">
+            <p>{{ ingredientsForm.value | json }}</p>
+            <p>touched:{{ ingredientsForm.touched }}</p>
+        </div>
     </ng-container>
     <div class="chips-container mt-3">
         <mat-chip-list>

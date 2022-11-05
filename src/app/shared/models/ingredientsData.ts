@@ -59,7 +59,7 @@ export const ingredientsData = {
     },
     {
       category: 'cheese',
-      name: 'Yellow Cheese',
+      name: 'YellowCheese',
       price: 1.1,
       quantity: 0,
       icon: '../../../../assets/images/yellow-cheese.jpg',

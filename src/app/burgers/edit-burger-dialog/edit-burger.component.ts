@@ -24,6 +24,7 @@ import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
 import { ingredientsData } from '../../shared/models/ingredientsData'
 import { Store } from '@ngrx/store'
 import { State } from '../../reducers'
+import { threadId } from 'worker_threads'
 
 @Component({
   selector: 'burger-dialog',
@@ -61,6 +62,9 @@ export class EditBurgerComponent implements OnInit {
 
   vegetables: any[] = []
 
+  selectedBread: string
+  selectedCheese: string
+  selectedMeat: string
   constructor(
     private dialogRef: MatDialogRef<EditBurgerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -106,20 +110,38 @@ export class EditBurgerComponent implements OnInit {
             break
           case 'bread':
             const activeBread = ing
-            this.bread.patchValue(activeBread.name)
+            this.bread.patchValue(activeBread)
+            this.selectedBread = activeBread.name
+
+            // this.bread.patchValue(activeBread.name)
             break
           case 'cheese':
             const activeCheese = ing
-            this.cheese.patchValue(activeCheese.name)
+            this.cheese.patchValue(activeCheese)
+            console.log('activeChesse', activeCheese)
+
+            this.selectedCheese = activeCheese.name
+            // this.selectedValue.trim()
+            console.log('TYPE', typeof this.selectedCheese)
+
+            console.log('selectedCheeseVal==', this.selectedCheese)
+            console.log('selectedCheeseValTrim==', this.selectedCheese)
+
+            // this.cheese.patchValue(activeCheese.name)
             break
           case 'meat':
             const activeMeat = ing
-            this.meat.patchValue(activeMeat.name)
+            this.meat.patchValue(activeMeat)
+            this.selectedMeat = activeMeat.name
+            //this.meat.patchValue(activeMeat.name)
             break
           default:
             false
         }
       }
+      this.commentForm.patchValue({
+        comment: this.data.dialogData.burger?.comment,
+      })
     }
   }
 
