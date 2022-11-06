@@ -33,18 +33,18 @@ import { threadId } from 'worker_threads'
 })
 export class EditBurgerComponent implements OnInit {
   ingredientsForm: FormGroup
-  burgers: any
+
   dialogTitle: string
   submitted: boolean = false
 
   commentForm: FormGroup
 
-  editMode: false
-  createMode: false
+  vegetables: any[] = []
+
+  editMode: boolean = false
+  createMode: boolean = false
   burgerId: string
-  description: string
-  iconUrl: string
-  category: string
+
   loading$: Observable<boolean>
 
   ingredients = ingredientsData
@@ -55,16 +55,21 @@ export class EditBurgerComponent implements OnInit {
 
   orderStatusScore: number = 0 //overall progress at percentages(%) of the current order
 
-  breadValueChangeCounter: number = 0 //to count how many times the category bread control has been checked
-  meatValueChangeCounter: number = 0 //to count how many times the category meat control has been checked
-  cheeseValueChangeCounter: number = 0 //to count how many times the category cheese control has been checked
-  vegetablesValueChangeCounter: number = 0 //to count how many times the category vegetables controls has been checked
+  /*
+ to count how many times each category control has been checked(helper for create the order status)
+ */
+  breadValueChangeCounter: number = 0
+  meatValueChangeCounter: number = 0
+  cheeseValueChangeCounter: number = 0
+  vegetablesValueChangeCounter: number = 0
 
-  vegetables: any[] = []
-
+  /*
+  to set the selected radio button when edit the form
+ */
   selectedBread: string
   selectedCheese: string
   selectedMeat: string
+
   constructor(
     private dialogRef: MatDialogRef<EditBurgerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -76,73 +81,13 @@ export class EditBurgerComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.ingredients)
-    this.initForm()
-    //  this.addCheckboxes()
-
     this.editMode = this.data.dialogData['update']
     this.createMode = this.data.dialogData['create']
 
-    console.log('editMode==', this.editMode)
-
-    console.log('createMode==', this.createMode)
+    this.initForm()
 
     if (this.editMode) {
-      console.log('dataForEdit==', this.data)
-      this.orderStatusScore = this.data.dialogData.burger.status
-
-      let activeIngredients = this.data.dialogData.burger.ingredients
-
-      for (let ing of activeIngredients) {
-        const activeVegetables = []
-        switch (ing.category) {
-          case 'vegetables':
-            activeVegetables.push(ing)
-            for (let data of activeVegetables) {
-              this.ingredients.Vegetables = this.ingredients.Vegetables.map(
-                (veg) => {
-                  if (veg.name === data.name) {
-                    return { ...veg, selected: true }
-                  }
-                  return veg
-                }
-              )
-            }
-            break
-          case 'bread':
-            const activeBread = ing
-            this.bread.patchValue(activeBread)
-            this.selectedBread = activeBread.name
-
-            // this.bread.patchValue(activeBread.name)
-            break
-          case 'cheese':
-            const activeCheese = ing
-            this.cheese.patchValue(activeCheese)
-            console.log('activeChesse', activeCheese)
-
-            this.selectedCheese = activeCheese.name
-            // this.selectedValue.trim()
-            console.log('TYPE', typeof this.selectedCheese)
-
-            console.log('selectedCheeseVal==', this.selectedCheese)
-            console.log('selectedCheeseValTrim==', this.selectedCheese)
-
-            // this.cheese.patchValue(activeCheese.name)
-            break
-          case 'meat':
-            const activeMeat = ing
-            this.meat.patchValue(activeMeat)
-            this.selectedMeat = activeMeat.name
-            //this.meat.patchValue(activeMeat.name)
-            break
-          default:
-            false
-        }
-      }
-      this.commentForm.patchValue({
-        comment: this.data.dialogData.burger?.comment,
-      })
+      this.editForm()
     }
   }
 
@@ -158,7 +103,6 @@ export class EditBurgerComponent implements OnInit {
       cheese: new FormControl(null, {
         validators: [Validators.required],
       }),
-      //   vegetables: this.fb.array([]),
     })
 
     this.commentForm = new FormGroup({
@@ -169,46 +113,89 @@ export class EditBurgerComponent implements OnInit {
     this.ingredients.Vegetables = this.ingredients.Vegetables.map((veg) => {
       return { ...veg, selected: false }
     })
-
-    console.log('bread==', this.bread)
-
-    console.log('Meat==', this.meat)
-
-    console.log('form value==', this.ingredientsForm)
-    console.log('vegetables==', this.vegetables)
   }
 
-  get bread() {
-    return this.ingredientsForm.get('bread')
-  }
+  editForm() {
+    this.orderStatusScore = this.data.dialogData.burger.status
 
-  get meat() {
-    return this.ingredientsForm.get('meat')
-  }
+    let activeIngredients = this.data.dialogData.burger.ingredients
 
-  get cheese() {
-    return this.ingredientsForm.get('cheese')
-  }
-
-  // get vegetables(): FormArray {
-  //   return (<FormArray>this.ingredientsForm.get('vegetables')) as FormArray
-  // }
-  onClose() {
-    this.dialogRef.close()
+    for (let ing of activeIngredients) {
+      const activeVegetables = []
+      switch (ing.category) {
+        case 'vegetables':
+          activeVegetables.push(ing)
+          for (let data of activeVegetables) {
+            this.ingredients.Vegetables = this.ingredients.Vegetables.map(
+              (veg) => {
+                if (veg.name === data.name) {
+                  return { ...veg, selected: true }
+                }
+                return veg
+              }
+            )
+          }
+          break
+        case 'bread':
+          const activeBread = ing
+          this.bread.patchValue(activeBread)
+          this.selectedBread = activeBread.name
+          break
+        case 'cheese':
+          const activeCheese = ing
+          this.cheese.patchValue(activeCheese)
+          this.selectedCheese = activeCheese.name
+          break
+        case 'meat':
+          const activeMeat = ing
+          this.meat.patchValue(activeMeat)
+          this.selectedMeat = activeMeat.name
+          break
+        default:
+          false
+      }
+    }
+    this.commentForm.patchValue({
+      comment: this.data.dialogData.burger?.comment,
+    })
   }
 
   onRadioChange(event) {
-    console.log('form value2==', this.ingredientsForm)
+    this.radioButtonsChipsHandler(event)
 
-    console.log(event)
+    if (
+      event.value.category === 'bread' &&
+      this.breadValueChangeCounter === 0 &&
+      this.orderStatusScore < 100
+    ) {
+      this.breadValueChangeCounter++
+      this.orderStatusScore += 25
+    }
+    if (
+      event.value.category === 'meat' &&
+      this.meatValueChangeCounter === 0 &&
+      this.orderStatusScore < 100
+    ) {
+      this.meatValueChangeCounter++
+      this.orderStatusScore += 25
+    }
+    if (
+      event.value.category === 'cheese' &&
+      this.cheeseValueChangeCounter === 0 &&
+      this.orderStatusScore < 100
+    ) {
+      this.cheeseValueChangeCounter++
+      this.orderStatusScore += 25
+    }
+  }
 
+  /* 
+  update the chips value when new value selected 
+  */
+  radioButtonsChipsHandler(event) {
     this.ingredientsForm.valueChanges.subscribe((item) => {
-      console.log('changeVal=', item)
-
-      this.breadCheeseMeatChips?.splice(
-        this.breadCheeseMeatChips.indexOf(event.value.name),
-        1
-      )
+      const index = this.breadCheeseMeatChips.indexOf(event.value.name)
+      this.breadCheeseMeatChips?.splice(index, 1)
 
       this.breadCheeseMeatChips.push(
         item.bread?.name,
@@ -222,46 +209,30 @@ export class EditBurgerComponent implements OnInit {
       this.breadCheeseMeatChips = filtered
 
       this.breadCheeseMeatChips = [...new Set(this.breadCheeseMeatChips)] //use Set to keep unique values and remove duplicates
-
-      console.log('breadMeatChips', this.breadCheeseMeatChips)
     })
+  }
 
-    if (
-      event.value.category === 'bread' &&
-      this.breadValueChangeCounter === 0 &&
-      this.orderStatusScore < 100
-    ) {
-      this.breadValueChangeCounter++
-      this.orderStatusScore += 25
+  onVegetablesChange(event) {
+    this.vegetables = event._value
+    this.countOrderStatusVegetablesTab()
 
-      console.log('currentStatus', this.orderStatusScore)
-    }
-    if (
-      event.value.category === 'meat' &&
-      this.meatValueChangeCounter === 0 &&
-      this.orderStatusScore < 100
-    ) {
-      this.meatValueChangeCounter++
-      this.orderStatusScore += 25
-      console.log('currentStatus', this.orderStatusScore)
-    }
-    if (
-      event.value.category === 'cheese' &&
-      this.cheeseValueChangeCounter === 0 &&
-      this.orderStatusScore < 100
-    ) {
-      this.cheeseValueChangeCounter++
-      this.orderStatusScore += 25
-      console.log('currentStatus', this.orderStatusScore)
+    if (event) {
+      this.vegetables = this.vegetables.map((value) => {
+        if (value.selected === false) {
+          return { ...value, selected: true }
+        }
+        return value
+      })
+
+      this.vegetableChips = this.vegetables.map((veg) => {
+        return veg.name
+      })
+    } else {
+      this.vegetables.splice(this.vegetables.indexOf(event.value), 1)
     }
   }
 
-  onVegetablesChange(event, index: number) {
-    console.log('list event==', event)
-    // if (this.orderStatusScore >= 100) {
-    //   this.orderStatusScore = 100
-    // }
-    this.vegetables = event._value
+  countOrderStatusVegetablesTab() {
     if (this.editMode) {
       if (
         this.vegetablesValueChangeCounter === 0 &&
@@ -299,26 +270,6 @@ export class EditBurgerComponent implements OnInit {
     ) {
       this.orderStatusScore += 25
     }
-
-    if (event) {
-      this.vegetables = this.vegetables.map((value) => {
-        if (value.selected === false) {
-          return { ...value, selected: true }
-        }
-        return value
-      })
-      console.log('selectedVegetables==', this.vegetables)
-
-      this.vegetableChips = this.vegetables.map((veg) => {
-        return veg.name
-      })
-    } else {
-      this.vegetables.splice(this.vegetables.indexOf(event.value), 1)
-      // this.vegetables.removeAt(index)
-      this.onVegetableChipsRemoved(index)
-    }
-
-    console.log('vegetables==', this.vegetables)
   }
 
   onSave() {
@@ -328,14 +279,7 @@ export class EditBurgerComponent implements OnInit {
       ...this.commentForm.value,
       status: this.orderStatusScore,
     }
-    console.log('formValues==', formValues)
 
-    console.log('ingredientsFormValues==', this.ingredientsForm.value)
-    // this.store.dispatch({
-    //   type: ActionBurgerTypes.createBurger,
-    //   burger: formValues,
-    // })
-    // this.onClose()
     if (this.editMode) {
       this.store.dispatch({
         type: ActionBurgerTypes.editBurger,
@@ -348,19 +292,20 @@ export class EditBurgerComponent implements OnInit {
         burger: formValues,
       })
     }
+    this.onClose()
+  }
+  onClose() {
+    this.dialogRef.close()
+  }
+  get bread() {
+    return this.ingredientsForm.get('bread')
   }
 
-  onBreadCheeseMeatChipsRemoved(index: number) {
-    this.removeFirst(this.breadCheeseMeatChips, index)
-    // this.form.setValue(toppings) // To trigger change detection
-  }
-  onVegetableChipsRemoved(index: number) {
-    this.removeFirst(this.vegetableChips, index)
-    // this.form.setValue(toppings) // To trigger change detection
+  get meat() {
+    return this.ingredientsForm.get('meat')
   }
 
-  private removeFirst<T>(array: T[], index: number): void {
-    //const index = array.indexOf(toRemove);
-    array.splice(index, 1)
+  get cheese() {
+    return this.ingredientsForm.get('cheese')
   }
 }

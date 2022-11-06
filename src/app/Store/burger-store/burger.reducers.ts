@@ -11,6 +11,7 @@ import {
   editBurgerSuccess,
   addBurgerToCart,
   removeBurgerFromCart,
+  deleteBurgerSuccess,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
@@ -39,13 +40,32 @@ export const _burgerReducer = createReducer(
   })),
   on(editBurgerSuccess, (state) => ({
     ...state,
+    loading: false,
+  })),
 
-    loading: false,
-  })),
-  on(deleteBurger, (state, action) => ({
-    ...state,
-    loading: false,
-  })),
+  /*delete from database and check if exists in the shopping cart.
+  If exists remove it and update the cart 
+  */
+  on(deleteBurger, (state, { id }) => {
+    const products = [...state.cart.products]
+    products.forEach((prod, index) => {
+      if (prod.id === id) {
+        products.splice(index, 1)
+      }
+    })
+
+    return {
+      ...state,
+      loading: false,
+      cart: {
+        products: products,
+      },
+    }
+  }),
+
+  /*
+  add only to cart
+  */
   on(addBurgerToCart, (state, action) => {
     let products: any = []
     products = [...state.cart.products]
@@ -80,6 +100,9 @@ export const _burgerReducer = createReducer(
     }
   }),
 
+  /*
+ remove only from cart
+  */
   on(removeBurgerFromCart, (state: any, action) => {
     let products = []
     products = [...state.cart.products]

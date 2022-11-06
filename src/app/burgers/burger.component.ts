@@ -41,6 +41,10 @@ export class BurgerComponent implements OnInit {
 
   counter: number = 6
 
+  deleteOrderModal: boolean = false
+
+  burgerId: string
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -95,15 +99,16 @@ export class BurgerComponent implements OnInit {
     )
   }
 
-  view(burger) {
-    // this.router.navigate(['/burgers',burger.id])
+  deleteBurger(id) {
+    this.deleteOrderModal = true
+    this.burgerId = id
   }
-
-  onDeleteBurger(id) {
+  onConfirmDelete() {
     this.store.dispatch({
       type: ActionBurgerTypes.deleteBurger,
-      id: id,
+      id: this.burgerId,
     })
+    this.deleteOrderModal = false
   }
 
   addBurgerToCart(burger) {
