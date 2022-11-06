@@ -24,7 +24,7 @@ export class BurgerService {
     // let temp = Object.keys(body.burger).map((key) => body.burger[key])
     // console.log('temp==', temp)
 
-    const { bread, cheese, meat, comment } = body.burger
+    const { bread, cheese, meat, comment, status } = body.burger
     const sliced = body.burger.vegetables?.slice()
 
     // finalReqBody.push(bread, cheese, meat, { comment: comment })
@@ -35,6 +35,7 @@ export class BurgerService {
       meat,
       ...sliced,
       comment: comment ? comment : null,
+      status: status ? status : null,
     }
     // finalReqBody = {
     //   ...finalReqBody,

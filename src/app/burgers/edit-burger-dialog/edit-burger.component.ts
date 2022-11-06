@@ -89,6 +89,7 @@ export class EditBurgerComponent implements OnInit {
 
     if (this.editMode) {
       console.log('dataForEdit==', this.data)
+      this.orderStatusScore = this.data.dialogData.burger.status
 
       let activeIngredients = this.data.dialogData.burger.ingredients
 
@@ -197,27 +198,58 @@ export class EditBurgerComponent implements OnInit {
   }
 
   onRadioChange(event) {
-    //console.log('ing==', ing)
     console.log('form value2==', this.ingredientsForm)
 
     console.log(event)
-    if (event) {
-      this.breadCheeseMeatChips.push(event.name)
-    }
-    if (event.category === 'bread' && this.breadValueChangeCounter === 0) {
+
+    this.ingredientsForm.valueChanges.subscribe((item) => {
+      console.log('changeVal=', item)
+
+      this.breadCheeseMeatChips?.splice(
+        this.breadCheeseMeatChips.indexOf(event.value.name),
+        1
+      )
+
+      this.breadCheeseMeatChips.push(
+        item.bread?.name,
+        item.cheese?.name,
+        item.meat?.name
+      )
+      const filtered = this.breadCheeseMeatChips.filter(
+        (val) => val !== undefined
+      )
+
+      this.breadCheeseMeatChips = filtered
+
+      this.breadCheeseMeatChips = [...new Set(this.breadCheeseMeatChips)] //use Set to keep unique values and remove duplicates
+
+      console.log('breadMeatChips', this.breadCheeseMeatChips)
+    })
+
+    if (
+      event.value.category === 'bread' &&
+      this.breadValueChangeCounter === 0 &&
+      this.orderStatusScore < 100
+    ) {
       this.breadValueChangeCounter++
       this.orderStatusScore += 25
-      // this.bread.valueChanges.subscribe((val) => (val = event))
-      // console.log('breadAfterChange==', this.bread.value)
 
       console.log('currentStatus', this.orderStatusScore)
     }
-    if (event.category === 'meat' && this.meatValueChangeCounter === 0) {
+    if (
+      event.value.category === 'meat' &&
+      this.meatValueChangeCounter === 0 &&
+      this.orderStatusScore < 100
+    ) {
       this.meatValueChangeCounter++
       this.orderStatusScore += 25
       console.log('currentStatus', this.orderStatusScore)
     }
-    if (event.category === 'cheese' && this.cheeseValueChangeCounter === 0) {
+    if (
+      event.value.category === 'cheese' &&
+      this.cheeseValueChangeCounter === 0 &&
+      this.orderStatusScore < 100
+    ) {
       this.cheeseValueChangeCounter++
       this.orderStatusScore += 25
       console.log('currentStatus', this.orderStatusScore)
@@ -226,17 +258,49 @@ export class EditBurgerComponent implements OnInit {
 
   onVegetablesChange(event, index: number) {
     console.log('list event==', event)
-
-    if (
+    // if (this.orderStatusScore >= 100) {
+    //   this.orderStatusScore = 100
+    // }
+    this.vegetables = event._value
+    if (this.editMode) {
+      if (
+        this.vegetablesValueChangeCounter === 0 &&
+        this.vegetables.length >= 0 &&
+        this.orderStatusScore < 100
+      ) {
+        this.vegetablesValueChangeCounter++
+        this.orderStatusScore += 25
+      } else if (
+        this.vegetablesValueChangeCounter === 1 &&
+        this.orderStatusScore < 75
+      ) {
+        this.orderStatusScore -= 25
+      } else if (
+        this.orderStatusScore === 100 &&
+        this.vegetables.length === 0
+      ) {
+        this.orderStatusScore = 75
+      } else if (this.orderStatusScore === 75 && this.vegetables.length > 0) {
+        this.orderStatusScore = 100
+      }
+    } else if (
       this.vegetablesValueChangeCounter === 0 &&
-      this.vegetables.length >= 0
+      this.vegetables.length >= 0 &&
+      this.orderStatusScore < 100
     ) {
       this.vegetablesValueChangeCounter++
+      this.orderStatusScore += 25
+    } else if (this.vegetables.length === 0) {
+      this.orderStatusScore -= 25
+    } else if (
+      this.vegetables.length === 1 &&
+      this.vegetablesValueChangeCounter === 1 &&
+      this.orderStatusScore < 100
+    ) {
       this.orderStatusScore += 25
     }
 
     if (event) {
-      this.vegetables = event._value
       this.vegetables = this.vegetables.map((value) => {
         if (value.selected === false) {
           return { ...value, selected: true }
@@ -262,6 +326,7 @@ export class EditBurgerComponent implements OnInit {
     let formValues = {
       ...this.ingredientsForm.value,
       ...this.commentForm.value,
+      status: this.orderStatusScore,
     }
     console.log('formValues==', formValues)
 
