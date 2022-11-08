@@ -85,6 +85,7 @@ export class EditBurgerComponent implements OnInit {
     this.createMode = this.data.dialogData['create']
 
     this.initForm()
+    console.log('breadControlInit', this.bread)
 
     if (this.editMode) {
       this.editForm()
@@ -159,9 +160,10 @@ export class EditBurgerComponent implements OnInit {
       comment: this.data.dialogData.burger?.comment,
     })
   }
-
+  valueChanges: boolean
   onRadioChange(event) {
     this.radioButtonsChipsHandler(event)
+    console.log(event)
 
     if (
       event.value.category === 'bread' &&

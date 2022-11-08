@@ -18,6 +18,8 @@ import { getAllBurgers } from '../../../server/get-courses.route'
 import { ActionBurgerTypes } from '../Store/burger-store/burger-actions'
 import { selectBurger } from '../Store/burger-store/burger.selector'
 import { defaultDialogConfig } from '../shared/models/default-dialog-config'
+import { AuthService } from '../services/auth.service'
+import { ActionLoginTypes } from '../Store/login-store/login.actions'
 
 @Component({
   selector: 'home',
@@ -25,31 +27,13 @@ import { defaultDialogConfig } from '../shared/models/default-dialog-config'
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  promoTotal$: Observable<number>
-
   loading$: Observable<boolean>
 
-  burgers: Observable<any[]>
+  constructor(private store: Store<State>, private authService: AuthService) {}
 
-  constructor(
-    private dialog: MatDialog,
-    private burgerService: BurgerService,
-    private store: Store<State>
-  ) {}
-
-  ngOnInit() {}
-
-  reload() {}
-
-  editCourse(course: Burgers) {
-    const dialogConfig = defaultDialogConfig()
-
-    dialogConfig.data = {
-      dialogTitle: 'Edit Course',
-      course,
-      mode: 'update',
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     }
   }
-
-  onDeleteCourse(course: Burgers) {}
 }

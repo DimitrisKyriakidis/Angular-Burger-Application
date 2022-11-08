@@ -142,6 +142,7 @@ export const metaReducerLocalStorage = (
   return (state, action) => {
     if (action.type === INIT || action.type == UPDATE) {
       const storageValue = localStorage.getItem('state')
+
       if (storageValue) {
         try {
           return JSON.parse(storageValue)
@@ -152,7 +153,8 @@ export const metaReducerLocalStorage = (
     }
 
     const nextState = reducer(state, action)
-    localStorage.setItem('state', JSON.stringify(nextState))
+
+    localStorage.setItem('state', JSON.stringify(nextState.burger))
     return nextState
   }
 }

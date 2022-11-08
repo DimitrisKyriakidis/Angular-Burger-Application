@@ -22,6 +22,7 @@ import { EditBurgerComponent } from './edit-burger-dialog/edit-burger.component'
 import { defaultDialogConfig } from '../shared/models/default-dialog-config'
 import { Store } from '@ngrx/store'
 import { State } from '../reducers'
+import { ActionLoginTypes } from '../Store/login-store/login.actions'
 
 @Component({
   selector: 'app-burger',
@@ -57,6 +58,7 @@ export class BurgerComponent implements OnInit {
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
       this.authService.checkExpiration()
+      this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     }
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
     this.burgers = this.store.select(selectBurger)

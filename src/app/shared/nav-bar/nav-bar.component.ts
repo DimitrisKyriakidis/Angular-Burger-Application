@@ -5,12 +5,9 @@ import { Store } from '@ngrx/store'
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs'
 import { AuthService } from '../../services/auth.service'
 import { State } from '../../reducers'
-import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
-import {
-  selectCartTotalPrice,
-  selectTotalCartItems,
-} from '../../Store/burger-store/burger.selector'
+
 import { logout } from '../../Store/login-store/login.actions'
+import { selectIsLoggenIn } from '../../Store/login-store/login.selector'
 
 @Component({
   selector: 'nav-bar',
@@ -19,7 +16,6 @@ import { logout } from '../../Store/login-store/login.actions'
 })
 export class NavBarComponent implements OnInit {
   loading = true
-
   isLoggedIn: Observable<boolean>
 
   checkOpenCart: boolean = false
@@ -31,7 +27,11 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.store.select((state) => state.login.isLoggedIn)
+    // this.isLoggedIn = this.authService.isLoggedIn$
+    this.isLoggedIn = this.store.select(selectIsLoggenIn)
+    this.isLoggedIn.subscribe((data) => {
+      console.log('isLoggenIn=', data)
+    })
   }
 
   onOpenCart(event: boolean) {
