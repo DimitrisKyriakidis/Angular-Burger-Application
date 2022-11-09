@@ -9,20 +9,27 @@ import {
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 
-import { Observable, Subject } from 'rxjs'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 
 import { Router } from '@angular/router'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { BurgerService } from '../services/burger.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AuthService } from '../services/auth.service'
-import { ActionBurgerTypes } from '../Store/burger-store/burger-actions'
-import { selectBurger } from '../Store/burger-store/burger.selector'
+import {
+  ActionBurgerTypes,
+  setLoader,
+} from '../Store/burger-store/burger-actions'
+import {
+  selectBurger,
+  selectLoading,
+} from '../Store/burger-store/burger.selector'
 import { EditBurgerComponent } from './edit-burger-dialog/edit-burger.component'
 import { defaultDialogConfig } from '../shared/models/default-dialog-config'
 import { Store } from '@ngrx/store'
 import { State } from '../reducers'
 import { ActionLoginTypes } from '../Store/login-store/login.actions'
+import { debounceTime, take, timeout } from 'rxjs/operators'
 
 @Component({
   selector: 'app-burger',
@@ -38,13 +45,16 @@ export class BurgerComponent implements OnInit {
 
   cartForm: FormGroup
 
-  burgers: Observable<any[]>
+  burgers$: Observable<any[]>
 
   counter: number = 6
 
   deleteOrderModal: boolean = false
 
   burgerId: string
+
+  public loading = new BehaviorSubject<boolean>(false)
+  public loading$ = this.loading.asObservable()
 
   constructor(
     private dialog: MatDialog,
@@ -60,9 +70,12 @@ export class BurgerComponent implements OnInit {
       this.authService.checkExpiration()
       this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     }
+
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
-    this.burgers = this.store.select(selectBurger)
-    this.burgers.subscribe((data) => {
+    this.burgers$ = this.store.select(selectBurger)
+    this.loading$ = this.store.select(selectLoading)
+
+    this.burgers$.subscribe((data) => {
       console.log('burgerData==', data)
     })
 
@@ -77,11 +90,19 @@ export class BurgerComponent implements OnInit {
     })
   }
   showMore() {
-    this.counter += 6
+    this.loading.next(true)
+    setTimeout(() => {
+      this.counter += 6
+      this.loading.next(false)
+    }, 500)
   }
 
   showLess() {
-    this.counter -= 6
+    this.loading.next(true)
+    setTimeout(() => {
+      this.counter -= 6
+      this.loading.next(false)
+    }, 500)
   }
   onCreateBurger() {
     this.dialogInfo({ dialogTitle: '', create: true }, EditBurgerComponent)

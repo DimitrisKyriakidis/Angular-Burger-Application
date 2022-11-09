@@ -1,0 +1,10 @@
+.chips {
+    --tw-bg-opacity: 1;
+    background-color: rgba(245, 158, 11, var(--tw-bg-opacity)) !important;
+    color: white !important;
+}
+
+mat-icon {
+    color: white !important;
+    opacity: 1 !important;
+}

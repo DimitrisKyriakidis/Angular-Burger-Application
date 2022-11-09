@@ -7,11 +7,14 @@
     >
   </button>
 </div>
+<ng-container>
+    <mat-spinner class="mx-auto mt-48" [mode]="determinate" *ngIf="loading$ | async"></mat-spinner>
+</ng-container>
 
 <div class="grid grid-cols-3 justify-center gap-10 mt-5">
-    <div *ngFor="let burger of burgers | async | slice: 0:counter; let i = index" class="w-2/3 mx-auto burger-card rounded bg-white border-gray-200 shadow-md overflow-hidden relative">
-        <img [src]="burger.image" alt="logo" class="h-32 sm:h-48 w-full object-cover" />
-        <!-- <img src="../../../../assets/images/burgerIcon.jpg" alt="" class="h-32 sm:h-48 w-full object-cover" /> -->
+    <div *ngFor="let burger of burgers$ | async | slice: 0:counter; let i = index" class="w-2/3 mx-auto burger-card rounded bg-white border-gray-200 shadow-md overflow-hidden relative">
+        <img *ngIf="burger.image" [src]="burger.image" alt="logo" class="h-32 sm:h-48 w-full object-cover" />
+        <img *ngIf="!burger.image" src="../../../../assets/images/burgerIcon.jpg" alt="" class="h-32 sm:h-48 w-full object-cover" />
         <h3 class="font-bold flex justify-center">Ingredients</h3>
         <div class="flex justify-center">
             <div *ngFor="let element of burger?.ingredients">
@@ -43,16 +46,18 @@
       </button>
         </div>
     </div>
-
-    <div *ngIf="burgers | async as burger" class="flex justify-center col-span-3 space-x-4">
-        <button *ngIf="counter < burger.length" class="bg-gray-300 text-black flex items-center pr-4 pl-2 pt-2 pb-2 rounded-full" (click)="showMore()">
-      <mat-icon class="align-middle">expand_more</mat-icon>
-      Show more
-    </button>
-        <button *ngIf="counter > 6" class="bg-gray-300 text-black flex items-center pr-4 pl-2 pt-2 pb-2 rounded-full" (click)="showLess()">
-      <mat-icon class="align-middle">expand_less</mat-icon>
-      Show less
-    </button>
+</div>
+<div *ngIf="burgers$ | async as burger" class="flex justify-center items-center col-span-3 gap-4 mt-5">
+    <button *ngIf="counter < burger.length" class="bg-gray-300 hover:bg-gray-400 text-black flex items-center pr-4 pl-2 pt-2 pb-2 rounded-full" (click)="showMore()">
+    <mat-icon class="align-middle">expand_more</mat-icon>
+    Show more
+  </button>
+    <button *ngIf="counter > 6" class="bg-gray-300 hover:bg-gray-400 text-black flex items-center pr-4 pl-2 pt-2 pb-2 rounded-full" (click)="showLess()">
+    <mat-icon class="align-middle">expand_less</mat-icon>
+    Show less
+  </button>
+    <div *ngIf="loading | async">
+        <mat-spinner class="mx-auto" [diameter]="30" [mode]="determinate"></mat-spinner>
     </div>
 </div>
 <modal [display]="deleteOrderModal" [deleteAction]="true" (closed)="deleteOrderModal = false" [height]="'17rem'" [width]="'30rem'">

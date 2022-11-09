@@ -12,11 +12,20 @@ import {
   addBurgerToCart,
   removeBurgerFromCart,
   deleteBurgerSuccess,
+  setLoader,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
 export const _burgerReducer = createReducer(
   initialBurgersState,
+
+  on(getAllBurgers, (state, action) => {
+    return {
+      ...state,
+
+      loading: true,
+    }
+  }),
 
   on(getAllBurgersSuccess, (state, { burgers }) => {
     return {
@@ -56,7 +65,7 @@ export const _burgerReducer = createReducer(
 
     return {
       ...state,
-      loading: false,
+      loading: true,
       cart: {
         products: products,
       },
@@ -129,7 +138,11 @@ export const _burgerReducer = createReducer(
         products: products,
       },
     }
-  })
+  }),
+  on(setLoader, (state) => ({
+    ...state,
+    loading: true,
+  }))
 )
 
 export function burgerReducer(state, action) {

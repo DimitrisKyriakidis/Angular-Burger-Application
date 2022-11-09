@@ -22,6 +22,8 @@ export const enum ActionBurgerTypes {
 
   addBurgerToCart = '[Burger] add burger to cart',
   removeBurgerFromCart = '[Burger] remove burger from cart',
+
+  setLoader = 'set loader ',
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
@@ -95,3 +97,5 @@ export const removeBurgerFromCart = createAction(
   ActionBurgerTypes.removeBurgerFromCart,
   props<{ id: number }>()
 )
+
+export const setLoader = createAction(ActionBurgerTypes.setLoader)

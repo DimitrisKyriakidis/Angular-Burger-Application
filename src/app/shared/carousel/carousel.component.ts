@@ -15,6 +15,7 @@ export class CarouselComponent implements OnInit {
   @Input() autoSlide: boolean = false
   @Input() slideInderval: number = 3000
 
+  @Input()
   images: any[] = [
     {
       imageSrc:
