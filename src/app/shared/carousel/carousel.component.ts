@@ -19,7 +19,7 @@ export class CarouselComponent implements OnInit {
   images: any[] = [
     {
       imageSrc:
-        'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+        'https://www.missionburgers.com.au/themes/mission-burgers/assets/images/carousel/carousel4.jpg',
       imageAlt: 'person2',
     },
 
@@ -34,6 +34,10 @@ export class CarouselComponent implements OnInit {
     {
       imageSrc: '../../../assets/carouselImages/banner3.png',
       imageAlt: 'person1',
+    },
+    {
+      imageSrc: 'https://images4.alphacoders.com/913/913175.jpg',
+      imageAlt: 'person9',
     },
   ]
 

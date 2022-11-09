@@ -1,0 +1,10 @@
+<mat-chip-list>
+    <mat-chip *ngFor="let item of breadCheeseMeatNameChips; let i = index" [removable]="true" (removed)="breadCheeseMeatChipsRemoved(i)" class="chips">
+        {{ item }}
+        <mat-icon class="mat-icon" matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngFor="let item of vegetableNameChips; let i = index" [removable]="true" (removed)="vegetableChipsRemoved(i)" class="chips">
+        {{ item }}
+        <mat-icon class="mat-icon" matChipRemove>cancel</mat-icon>
+    </mat-chip>
+</mat-chip-list>

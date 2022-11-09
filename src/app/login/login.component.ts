@@ -37,7 +37,10 @@ export class LoginComponent implements OnInit {
       password: new FormControl('1234', [Validators.required]),
     })
     this.loggedIn = this.store.select(selectUser)
-    console.log(this.loggedIn)
+    this.loggedIn.subscribe((data) => {
+      console.log(data)
+    })
+    // console.log(this.loggedIn)
   }
 
   login() {

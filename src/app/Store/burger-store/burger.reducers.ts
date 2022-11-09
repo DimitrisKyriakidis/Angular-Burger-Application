@@ -11,11 +11,21 @@ import {
   editBurgerSuccess,
   addBurgerToCart,
   removeBurgerFromCart,
+  deleteBurgerSuccess,
+  setLoader,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
 export const _burgerReducer = createReducer(
   initialBurgersState,
+
+  on(getAllBurgers, (state, action) => {
+    return {
+      ...state,
+
+      loading: true,
+    }
+  }),
 
   on(getAllBurgersSuccess, (state, { burgers }) => {
     return {
@@ -39,13 +49,32 @@ export const _burgerReducer = createReducer(
   })),
   on(editBurgerSuccess, (state) => ({
     ...state,
+    loading: false,
+  })),
 
-    loading: false,
-  })),
-  on(deleteBurger, (state, action) => ({
-    ...state,
-    loading: false,
-  })),
+  /*delete from database and check if exists in the shopping cart.
+  If exists remove it and update the cart 
+  */
+  on(deleteBurger, (state, { id }) => {
+    const products = [...state.cart.products]
+    products.forEach((prod, index) => {
+      if (prod.id === id) {
+        products.splice(index, 1)
+      }
+    })
+
+    return {
+      ...state,
+      loading: true,
+      cart: {
+        products: products,
+      },
+    }
+  }),
+
+  /*
+  add only to cart
+  */
   on(addBurgerToCart, (state, action) => {
     let products: any = []
     products = [...state.cart.products]
@@ -80,6 +109,9 @@ export const _burgerReducer = createReducer(
     }
   }),
 
+  /*
+ remove only from cart
+  */
   on(removeBurgerFromCart, (state: any, action) => {
     let products = []
     products = [...state.cart.products]
@@ -106,7 +138,11 @@ export const _burgerReducer = createReducer(
         products: products,
       },
     }
-  })
+  }),
+  on(setLoader, (state) => ({
+    ...state,
+    loading: true,
+  }))
 )
 
 export function burgerReducer(state, action) {
@@ -119,6 +155,7 @@ export const metaReducerLocalStorage = (
   return (state, action) => {
     if (action.type === INIT || action.type == UPDATE) {
       const storageValue = localStorage.getItem('state')
+
       if (storageValue) {
         try {
           return JSON.parse(storageValue)
@@ -129,7 +166,8 @@ export const metaReducerLocalStorage = (
     }
 
     const nextState = reducer(state, action)
-    localStorage.setItem('state', JSON.stringify(nextState))
+
+    localStorage.setItem('state', JSON.stringify(nextState.burger))
     return nextState
   }
 }

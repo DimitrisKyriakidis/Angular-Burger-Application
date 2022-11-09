@@ -20,6 +20,8 @@ export class ModalComponent implements OnInit {
   @Input() width: string
   @Input() height: string
 
+  @Input() deleteAction: boolean = false
+
   @Output() closed = new EventEmitter<boolean>()
   @ContentChild('footer') footer: TemplateRef<any>
 

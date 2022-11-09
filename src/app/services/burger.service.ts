@@ -21,13 +21,10 @@ export class BurgerService {
     console.log('bodyService=', body)
 
     let finalReqBody
-    // let temp = Object.keys(body.burger).map((key) => body.burger[key])
-    // console.log('temp==', temp)
 
     const { bread, cheese, meat, comment, status } = body.burger
     const sliced = body.burger.vegetables?.slice()
 
-    // finalReqBody.push(bread, cheese, meat, { comment: comment })
     finalReqBody = {
       ...finalReqBody,
       bread,
@@ -37,10 +34,7 @@ export class BurgerService {
       comment: comment ? comment : null,
       status: status ? status : null,
     }
-    // finalReqBody = {
-    //   ...finalReqBody,
-    //   ...temp,
-    // }
+
     console.log('finalReqBody==', finalReqBody)
 
     const apiUrl = `api/burgers/createOrder`
@@ -56,7 +50,7 @@ export class BurgerService {
     // let temp = Object.keys(body.burger).map((key) => body.burger[key])
     // console.log('temp==', temp)
 
-    const { bread, cheese, meat, comment } = updateData
+    const { bread, cheese, meat, comment, status } = updateData
     const sliced = updateData.vegetables?.slice()
 
     // finalReqBody.push(bread, cheese, meat, { comment: comment })
@@ -67,6 +61,7 @@ export class BurgerService {
       meat,
       ...sliced,
       comment: comment ? comment : null,
+      status: status ? status : null,
     }
 
     const apiUrl = `api/burgers/editOrder/${id}`
@@ -74,7 +69,7 @@ export class BurgerService {
   }
 
   public deleteBurger(id: string) {
-    const apiUrl = `api/course/${id}`
+    const apiUrl = `api/burgers/deleteOrder/${id}`
     return this.http.delete(apiUrl)
   }
 }

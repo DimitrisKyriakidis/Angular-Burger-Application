@@ -68,7 +68,7 @@
                 <mat-tab label="Vegetables">
                     <div class="grid grid-cols-2 gap-10 mt-5 items-center">
                         <mat-selection-list #list>
-                            <mat-list-option *ngFor="let element of ingredients?.Vegetables; let i = index" [selected]="element.selected" [value]="element" (click)="onVegetablesChange(list, i)">
+                            <mat-list-option *ngFor="let element of ingredients?.Vegetables; let i = index" [selected]="element.selected" [value]="element" (click)="onVegetablesChange(list)">
                                 <div class="flex flex-row items-center">
                                     <div class="image-container">
                                         <img class="w-2/3" src="{{ element.icon }}" />
@@ -85,27 +85,6 @@
                             </mat-list-option>
                         </mat-selection-list>
                     </div>
-                    <!-- <div formArrayName="vegetables" class="grid grid-cols-2 gap-10 mt-5 items-center">
-                        <ng-container *ngFor="let element of ingredients?.Vegetables; let i = index">
-                            <div class="flex items-center">
-                                <mat-checkbox (change)="onVegetablesChange($event, i)" [formControlName]="i" [value]="element.name">
-                                    <div class="flex flex-row items-center">
-                                        <div class="image-container">
-                                            <img class="w-2/3" src="{{ element.icon }}" />
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <div>
-                                                <span class="text-md">{{ element.name }}</span>
-                                            </div>
-                                            <div>
-                                                <span class="text-sm">{{ element.price }}€</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </mat-checkbox>
-                            </div>
-                        </ng-container>
-                    </div> -->
                 </mat-tab>
                 <mat-tab label="Meat">
                     <ng-container>
@@ -128,7 +107,6 @@
                         </mat-radio-group>
                     </ng-container>
                 </mat-tab>
-                <!-- <mat-tab label="Sauce">Content 5</mat-tab> -->
             </mat-tab-group>
             <div [formGroup]="commentForm" class="mt-4">
                 <mat-form-field class="example-full-width" appearance="fill">
@@ -136,46 +114,13 @@
                     <textarea matInput placeholder="" formControlName="comment"></textarea>
                 </mat-form-field>
             </div>
-
-            <!-- <ng-container *ngIf="createMode || editMode">
-
-                <mat-form-field>
-                    <input matInput placeholder="Burger Description" formControlName="description" />
-                </mat-form-field>
-
-                <mat-form-field>
-                    <input matInput placeholder="Burger Icon Url" formControlName="iconUrl" />
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-select placeholder="Select category" formControlName="category">
-                        <mat-option value="SimpleBurger">
-                            SimpleBurger
-                        </mat-option>
-                        <mat-option value="CheeseBurger">
-                            CheeseBurger
-                        </mat-option>
-                        <mat-option value="DeluxeBurger">
-                            DeluxeBurger
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </ng-container> -->
         </ng-container>
     </ng-container>
     <div class="chips-container mt-3">
-        <mat-chip-list>
-            <mat-chip *ngFor="let item of breadCheeseMeatChips; let i = index" [removable]="true" (removed)="onBreadCheeseMeatChipsRemoved(i)">
-                {{ item }}
-                <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <mat-chip *ngFor="let item of vegetableChips; let i = index" [removable]="true" (removed)="onVegetableChipsRemoved(i)">
-                {{ item }}
-                <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
+        <app-chips [vegetableNameChips]="vegetableChips" [breadCheeseMeatNameChips]="breadCheeseMeatChips"></app-chips>
     </div>
 </mat-dialog-content>
-<div class="flex justify-end space-x-3 mt-20">
+<div class="flex justify-end space-x-3 mt-14">
     <mat-dialog-actions>
         <button class="mr-3 w-28 inline-flex justify-center rounded-sm font-medium hover:bg-gray-300 bg-white border border-yellow-500 text-yellow-500 focus:outline-none items-center py-0.5 px-2" (click)="onClose()">
       Close

@@ -7,6 +7,11 @@ export const selectBurger = createSelector(
   (state) => state.burgers
 )
 
+export const selectLoading = createSelector(
+  burgerState,
+  (state) => state.loading
+)
+
 export const selectBurgerID = createSelector(
   burgerState,
   (state) => state.burgerID

@@ -10,8 +10,12 @@ import { RouterModule, Routes } from '@angular/router'
 import { AngularMaterialModule } from '../shared/modules/angular-material.module'
 import { SharedModule } from '../shared/modules/shared.module'
 import { BurgerComponent } from './burger.component'
+import { ChipsComponent } from './chips/chips.component'
 
-const routes = [{ path: '', component: BurgerComponent }]
+const routes = [
+  { path: '', component: BurgerComponent },
+  { path: 'chips', component: ChipsComponent },
+]
 
 @NgModule({
   imports: [
@@ -20,8 +24,8 @@ const routes = [{ path: '', component: BurgerComponent }]
     SharedModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [BurgerComponent, EditBurgerComponent],
-  exports: [BurgerComponent, EditBurgerComponent],
+  declarations: [BurgerComponent, EditBurgerComponent, ChipsComponent],
+  exports: [BurgerComponent, EditBurgerComponent, ChipsComponent],
 
   providers: [BurgerService],
 })

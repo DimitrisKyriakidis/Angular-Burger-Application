@@ -7,7 +7,8 @@
 @import 'tailwindcss/utilities';
 // Include non-theme styles for core.
 @include mat.core();
-$mat-custom-theme: ( 100: gray, contrast: ( 50: rgba(black, 0.87), 100: rgba(black, 0.87), 200: rgba(black, 0.87), 300: rgba(black, 0.87), 400: rgba(black, 0.87), 500: white, 600: white, 700: white, 800: white, 900: white, A100: rgba(black, 0.87), A200: white, A400: white, A700: white, ), );
+$mat-custom-theme: ( 50: #fff3e0, 100: #ffe0b2, 200: #ffcc80, 300: #ffb74d, 400: #ffa726, 500: rgba(255, 152, 0, 0.8), 600: #fb8c00, 700: #f57c00, 800: #ef6c00, //   900: #e65100,
+A100: #ffd180, A200: #ffab40, A400: #ff9100, A700: #ff6d00, contrast: ( 50: rgba(black, 0.87), 100: rgba(black, 0.87), 200: rgba(black, 0.87), 300: rgba(black, 0.87), 400: rgba(black, 0.87), 500: white, 600: white, 700: white, 800: white, 900: white, A100: rgba(black, 0.87), A200: white, A400: white, A700: white, ), );
 // Define a theme.
 $primary: mat.define-palette($mat-custom-theme);
 $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
@@ -24,6 +25,11 @@ $theme: mat.define-light-theme($primary, $accent);
     z-index: 1;
     opacity: 0.5;
     justify-content: center;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: rgba(245, 158, 11);
 }
 
 ::-webkit-scrollbar {

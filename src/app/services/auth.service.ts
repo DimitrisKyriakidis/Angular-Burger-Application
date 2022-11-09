@@ -19,6 +19,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('userData')
+    this.isLoggedIn.next(false)
   }
   public isAuthenticated(): boolean {
     const userData = JSON.parse(localStorage.getItem('userData'))
