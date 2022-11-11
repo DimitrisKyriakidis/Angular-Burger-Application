@@ -6,6 +6,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component'
 import { CarouselComponent } from '../carousel/carousel.component'
 import { ModalComponent } from '../modal/modal.component'
 import { CartComponent } from '../cart/cart.component'
+import { FooterComponent } from '../footer/footer.component'
 
 @NgModule({
   declarations: [
@@ -13,8 +14,15 @@ import { CartComponent } from '../cart/cart.component'
     CarouselComponent,
     ModalComponent,
     CartComponent,
+    FooterComponent,
   ],
   imports: [AngularMaterialModule, CommonModule],
-  exports: [NavBarComponent, CarouselComponent, ModalComponent, CartComponent],
+  exports: [
+    NavBarComponent,
+    CarouselComponent,
+    ModalComponent,
+    CartComponent,
+    FooterComponent,
+  ],
 })
 export class SharedModule {}

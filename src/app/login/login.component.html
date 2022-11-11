@@ -1,19 +1,19 @@
 <div style="background-image: url('../../assets/images/login-bg.jpg')" class="w-screen h-screen flex justify-center items-center bg-no-repeat bg-cover bg-center">
-    <form [formGroup]="form" class="w-1/4 p-10 bg-inherit rounded-xl drop-shadow-lg space-y-5 border-2 border-white" action="">
-        <h1 class="text-center text-yellow-500 text-2xl">Login</h1>
+    <form [formGroup]="form" class="w-1/4 p-10 bg-white rounded-xl drop-shadow-lg space-y-5 border-2 border-white" action="">
+        <h1 class="text-center text-primary text-2xl">Login</h1>
         <div class="flex flex-col space-y-2">
             <mat-form-field class="flex flex-col space-y-2">
-                <mat-label class="text-yellow-500 text-sm font-light">Username</mat-label>
+                <mat-label class="text-primary text-sm font-light">Username</mat-label>
                 <input matInput type="text" placeholder="Username" formControlName="username" class="text-white w-96 px-3 py-2 rounded-md" />
             </mat-form-field>
 
             <mat-form-field class="flex flex-col space-y-2">
-                <mat-label class="text-yellow-500 text-sm font-light">Password</mat-label>
+                <mat-label class="text-primary text-sm font-light">Password</mat-label>
                 <input matInput type="password" placeholder="Password" formControlName="password" class="text-white w-96 px-3 py-2 rounded-md" />
             </mat-form-field>
         </div>
 
-        <button (click)="login()" [disabled]="!form.valid" class="w-full px-10 py-2 bg-yellow-500 text-white rounded-md hover:bg-blue-500 hover:drop-shadow-md duration-300 ease-in" type="submit">
+        <button (click)="login()" [disabled]="!form.valid" class="w-full px-10 py-2 bg-primary text-white rounded-md hover:bg-blue-500 hover:drop-shadow-md duration-300 ease-in" type="submit">
       Sign In
     </button>
 

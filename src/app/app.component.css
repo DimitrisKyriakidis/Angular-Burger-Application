@@ -2,6 +2,10 @@ body {
     margin: 0;
 }
 
+.appplication-container {
+    height: 100vh;
+}
+
 .tool-div {
     background: black;
 }
