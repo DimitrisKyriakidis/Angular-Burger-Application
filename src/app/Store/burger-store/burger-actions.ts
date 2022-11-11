@@ -90,12 +90,12 @@ export const setBurgerToState = createAction(
 
 export const addBurgerToCart = createAction(
   ActionBurgerTypes.addBurgerToCart,
-  props<{ payload: Burgers }>()
+  props<{ payload: Burgers; increaseOnlyQuantity: boolean }>()
 )
 
 export const removeBurgerFromCart = createAction(
   ActionBurgerTypes.removeBurgerFromCart,
-  props<{ id: number }>()
+  props<{ id: string; decreaseOnlyQuantity: boolean }>()
 )
 
 export const setLoader = createAction(ActionBurgerTypes.setLoader)

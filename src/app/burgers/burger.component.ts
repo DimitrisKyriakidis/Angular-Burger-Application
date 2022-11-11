@@ -91,18 +91,24 @@ export class BurgerComponent implements OnInit {
   }
   showMore() {
     this.loading.next(true)
+
     setTimeout(() => {
       this.counter += 6
       this.loading.next(false)
     }, 500)
+    //this.counter += 6
+    console.log('counter==', this.counter)
   }
 
   showLess() {
     this.loading.next(true)
+
     setTimeout(() => {
       this.counter -= 6
       this.loading.next(false)
     }, 500)
+    //this.counter -= 6
+    console.log('counter==', this.counter)
   }
   onCreateBurger() {
     this.dialogInfo({ dialogTitle: '', create: true }, EditBurgerComponent)

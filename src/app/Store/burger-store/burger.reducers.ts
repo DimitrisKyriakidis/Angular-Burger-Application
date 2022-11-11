@@ -76,29 +76,36 @@ export const _burgerReducer = createReducer(
   add only to cart
   */
   on(addBurgerToCart, (state, action) => {
-    let products: any = []
-    products = [...state.cart.products]
+    const products = [...state.cart.products]
 
-    let foundIndex = products.findIndex(
+    const foundIndex = products.findIndex(
       (product) => product.id === action.payload.id
     )
 
-    if (foundIndex !== -1) {
-      products[foundIndex] = {
-        id: action.payload.id,
-        category: action.payload.category,
-        iconUrl: action.payload.iconUrl,
-        description: action.payload.description,
-        price: products[foundIndex].price,
-        quantity: (products[foundIndex].quantity += action.payload.quantity),
-      }
-    } else {
-      products.push({
-        ...action.payload,
-        quantity: action.payload.quantity,
-        price: action.payload.price,
-      })
+    if (action.increaseOnlyQuantity) {
+      products[foundIndex].quantity += 1
     }
+
+    if (!action.increaseOnlyQuantity) {
+      if (foundIndex !== -1) {
+        products[foundIndex] = {
+          id: action.payload.id,
+          category: action.payload.category,
+          iconUrl: action.payload.iconUrl,
+          description: action.payload.description,
+          price: products[foundIndex].price,
+          quantity: (products[foundIndex].quantity += action.payload.quantity),
+        }
+      } else {
+        products.push({
+          ...action.payload,
+          quantity: action.payload.quantity,
+          price: action.payload.price,
+        })
+      }
+    }
+
+    localStorage.setItem('cart', JSON.stringify(products))
 
     return {
       ...state,
@@ -113,15 +120,14 @@ export const _burgerReducer = createReducer(
  remove only from cart
   */
   on(removeBurgerFromCart, (state: any, action) => {
-    let products = []
-    products = [...state.cart.products]
+    const products = [...state.cart.products]
     const foundIndex = products.findIndex((product) => product.id === action.id)
 
     for (let product of products) {
-      if (product.id === action.id) {
+      if (product.id === action.id && action.decreaseOnlyQuantity) {
         product.quantity -= 1
       }
-      if (product.quantity === 0) {
+      if (product.quantity === 0 || !action.decreaseOnlyQuantity) {
         products.splice(foundIndex, 1)
       }
     }
@@ -138,36 +144,32 @@ export const _burgerReducer = createReducer(
         products: products,
       },
     }
-  }),
-  on(setLoader, (state) => ({
-    ...state,
-    loading: true,
-  }))
+  })
 )
 
 export function burgerReducer(state, action) {
   return _burgerReducer(state, action)
 }
 
-export const metaReducerLocalStorage = (
-  reducer: ActionReducer<any>
-): ActionReducer<any> => {
-  return (state, action) => {
-    if (action.type === INIT || action.type == UPDATE) {
-      const storageValue = localStorage.getItem('state')
+// export const metaReducerLocalStorage = (
+//   reducer: ActionReducer<any>
+// ): ActionReducer<any> => {
+//   return (state, action) => {
+//     if (action.type === INIT || action.type == UPDATE) {
+//       const storageValue = localStorage.getItem('state')
 
-      if (storageValue) {
-        try {
-          return JSON.parse(storageValue)
-        } catch {
-          localStorage.removeItem('state')
-        }
-      }
-    }
+//       if (storageValue) {
+//         try {
+//           return JSON.parse(storageValue)
+//         } catch {
+//           localStorage.removeItem('state')
+//         }
+//       }
+//     }
 
-    const nextState = reducer(state, action)
+//     const nextState = reducer(state, action)
 
-    localStorage.setItem('state', JSON.stringify(nextState))
-    return nextState
-  }
-}
+//     localStorage.setItem('state', JSON.stringify(nextState.burger))
+//     return nextState
+//   }
+// }

@@ -41,12 +41,31 @@ export class CartComponent implements OnInit {
     this.totalPrice = this.store.select(selectCartTotalPrice)
     this.totalCartItems = this.store.select(selectTotalCartItems)
   }
+
+  decreaseQuantity(id) {
+    this.dispatchRemoveAction(id, true)
+  }
+
+  increaseQuantity(burger) {
+    this.store.dispatch({
+      type: ActionBurgerTypes.addBurgerToCart,
+      payload: burger,
+      increaseOnlyQuantity: true,
+    })
+  }
+
   removeBurgerFromCart(id) {
+    this.dispatchRemoveAction(id, false)
+  }
+
+  dispatchRemoveAction(id: string, decreaseOnlyQuantity: boolean) {
     this.store.dispatch({
       type: ActionBurgerTypes.removeBurgerFromCart,
       id: id,
+      decreaseOnlyQuantity: decreaseOnlyQuantity,
     })
   }
+
   openShoppingCart() {
     this.isShoppingCartOpen = true
     this.openShoppingCartModal.emit(this.isShoppingCartOpen)

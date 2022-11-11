@@ -1,22 +1,5 @@
-<!-- <div *ngIf="images && images.length > 0" class="carousel-container">
-    <img *ngFor="let image of images; let i = index" [src]="image.imageSrc" [alt]="image.alt" [ngClass]="{ 'image-active': selectedIndex === i }" />
-    <div class="border-4 h-32 border-white absolute top-56 left-56 bottom-0">
-        <div class="p-6 space-y-1">
-            <p class="text-white text-2xl">Choose your own burger</p>
-
-            <button (click)="createOrder()" class="w-28 inline-flex justify-center focus:ring-2 ring-white rounded-sm font-medium bg-primary text-white focus:outline-none items-center py-1 px-2">
-        ORDER NOW
-      </button>
-        </div>
-    </div>
-    <div *ngIf="indicators" class="carousel-dot-container">
-        <span *ngFor="let dot of images; let i = index" class="dot" [ngClass]="{ active: selectedIndex === i }" (click)="changeImages()"></span>
-    </div>
-</div> -->
 <main>
-    <!-- Hero section -->
     <div *ngIf="images && images.length > 0" class="carousel-container">
-        <!-- <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100"></div> -->
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="shadow-xl height sm:overflow-hidden sm:rounded-2xl">
                 <div class="absolute inset-0">
@@ -37,7 +20,7 @@
                 Create
               </button>
                             <a href="/burgers" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-500 bg-opacity-60 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-opacity-70 sm:px-8">
-                See menu
+                Menu
               </a>
                         </div>
                     </div>

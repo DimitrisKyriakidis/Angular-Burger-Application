@@ -3,7 +3,7 @@ body {
 }
 
 .appplication-container {
-    height: 100vh;
+    height: auto;
 }
 
 .tool-div {
@@ -25,9 +25,4 @@ main {
 .spinner-container {
     width: 100%;
     margin-top: 100px;
-}
-
-.cartMenu {
-    min-height: 11rem;
-    overflow: auto;
 }

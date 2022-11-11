@@ -16,8 +16,6 @@ import { LoginEffects } from './Store/login-store/login.effects'
 
 import { BurgerEffects } from './Store/burger-store/burger-effects'
 
-import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
-
 import { SharedModule } from './shared/modules/shared.module'
 
 import { reducers } from './reducers'
@@ -36,7 +34,7 @@ import { BurgersModule } from './burgers/burgers.module'
     AppRoutingModule,
     HttpClientModule,
     EffectsModule.forRoot([LoginEffects, BurgerEffects]),
-    StoreModule.forRoot(reducers, { metaReducers: [metaReducerLocalStorage] }),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

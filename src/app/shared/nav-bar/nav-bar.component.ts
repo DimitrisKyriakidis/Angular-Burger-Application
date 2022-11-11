@@ -15,7 +15,6 @@ import { selectIsLoggenIn } from '../../Store/login-store/login.selector'
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  loading = true
   isLoggedIn: Observable<boolean>
 
   checkOpenCart: boolean = false
