@@ -43,3 +43,22 @@ $theme: mat.define-light-theme($primary, $accent);
     background: #4f46e5;
     border-radius: 10px;
 }
+
+.mat-pseudo-checkbox-checked,
+.mat-pseudo-checkbox-indeterminate,
+.mat-accent .mat-pseudo-checkbox-checked,
+.mat-accent .mat-pseudo-checkbox-indeterminate {
+    background: #4f46e5;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #4f46e5;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background: #4f46e5;
+}
+
+.mat-tab-label {
+    color: #4f46e5;
+}

@@ -22,6 +22,7 @@ import { reducers } from './reducers'
 import { AppRoutingModule } from './routing/app-routing.module'
 import { LoginModule } from './login/login.module'
 import { BurgersModule } from './burgers/burgers.module'
+import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +35,7 @@ import { BurgersModule } from './burgers/burgers.module'
     AppRoutingModule,
     HttpClientModule,
     EffectsModule.forRoot([LoginEffects, BurgerEffects]),
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, { metaReducers: [metaReducerLocalStorage] }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

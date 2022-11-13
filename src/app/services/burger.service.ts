@@ -11,8 +11,15 @@ export class BurgerService {
   public getBurgerId() {
     return this.burgerId
   }
-  public getAllBurgers() {
-    const apiUrl = '/api/burgers/getAllBurgers'
+  public getAllBurgers(searchString?: string) {
+    if (
+      searchString !== '' &&
+      searchString !== null &&
+      searchString !== undefined
+    ) {
+      var getString = `searchString=${encodeURIComponent(searchString)}`
+    }
+    const apiUrl = `/api/burgers/getAllBurgers?${getString}`
     return this.http.get(apiUrl)
   }
 

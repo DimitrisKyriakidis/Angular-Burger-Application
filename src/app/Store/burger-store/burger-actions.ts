@@ -27,7 +27,7 @@ export const enum ActionBurgerTypes {
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
-  props<{}>()
+  props<{ searchString: string }>()
 )
 
 export const getAllBurgersSuccess = createAction(

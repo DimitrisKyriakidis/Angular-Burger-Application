@@ -14,8 +14,8 @@ export class BurgerEffects {
   getAllBurgersEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ActionBurgerTypes.getAllBurgers),
-      mergeMap(() =>
-        this.burgerService.getAllBurgers().pipe(
+      mergeMap((payload) =>
+        this.burgerService.getAllBurgers(payload['searchString']).pipe(
           map((response) => {
             return {
               type: ActionBurgerTypes.getAllBurgersSuccess,

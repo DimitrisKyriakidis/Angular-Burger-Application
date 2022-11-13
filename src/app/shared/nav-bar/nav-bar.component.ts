@@ -8,6 +8,9 @@ import { State } from '../../reducers'
 
 import { logout } from '../../Store/login-store/login.actions'
 import { selectIsLoggenIn } from '../../Store/login-store/login.selector'
+import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
+import { debounceTime } from 'rxjs/operators'
+import { FormControl } from '@angular/forms'
 
 @Component({
   selector: 'nav-bar',
@@ -18,6 +21,12 @@ export class NavBarComponent implements OnInit {
   isLoggedIn: Observable<boolean>
 
   checkOpenCart: boolean = false
+
+  searchByName = new FormControl(null)
+
+  searchTerm = null
+
+  debounceTime: number = 1000
 
   constructor(
     private router: Router,
@@ -31,6 +40,16 @@ export class NavBarComponent implements OnInit {
     this.isLoggedIn.subscribe((data) => {
       console.log('isLoggenIn=', data)
     })
+
+    this.searchByName?.valueChanges
+      .pipe(debounceTime(this.debounceTime))
+      .subscribe((res) => {
+        this.searchTerm = res
+        this.store.dispatch({
+          type: ActionBurgerTypes.getAllBurgers,
+          searchString: this.searchTerm,
+        })
+      })
   }
 
   onOpenCart(event: boolean) {

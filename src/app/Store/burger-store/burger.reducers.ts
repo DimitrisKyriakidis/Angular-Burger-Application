@@ -105,7 +105,7 @@ export const _burgerReducer = createReducer(
       }
     }
 
-    localStorage.setItem('cart', JSON.stringify(products))
+    //localStorage.setItem('cart', JSON.stringify(products))
 
     return {
       ...state,
@@ -151,25 +151,25 @@ export function burgerReducer(state, action) {
   return _burgerReducer(state, action)
 }
 
-// export const metaReducerLocalStorage = (
-//   reducer: ActionReducer<any>
-// ): ActionReducer<any> => {
-//   return (state, action) => {
-//     if (action.type === INIT || action.type == UPDATE) {
-//       const storageValue = localStorage.getItem('state')
+export const metaReducerLocalStorage = (
+  reducer: ActionReducer<any>
+): ActionReducer<any> => {
+  return (state, action) => {
+    if (action.type === INIT || action.type == UPDATE) {
+      const storageValue = localStorage.getItem('state')
 
-//       if (storageValue) {
-//         try {
-//           return JSON.parse(storageValue)
-//         } catch {
-//           localStorage.removeItem('state')
-//         }
-//       }
-//     }
+      if (storageValue) {
+        try {
+          return JSON.parse(storageValue)
+        } catch {
+          localStorage.removeItem('state')
+        }
+      }
+    }
 
-//     const nextState = reducer(state, action)
+    const nextState = reducer(state, action)
 
-//     localStorage.setItem('state', JSON.stringify(nextState.burger))
-//     return nextState
-//   }
-// }
+    localStorage.setItem('state', JSON.stringify(nextState))
+    return nextState
+  }
+}
