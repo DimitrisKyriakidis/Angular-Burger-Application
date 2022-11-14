@@ -16,10 +16,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { BurgerService } from '../services/burger.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AuthService } from '../services/auth.service'
-import {
-  ActionBurgerTypes,
-  setLoader,
-} from '../Store/burger-store/burger-actions'
+import { ActionBurgerTypes } from '../Store/burger-store/burger-actions'
 import {
   selectBurger,
   selectLoading,
@@ -96,8 +93,6 @@ export class BurgerComponent implements OnInit {
       this.counter += 6
       this.loading.next(false)
     }, 500)
-    //this.counter += 6
-    console.log('counter==', this.counter)
   }
 
   showLess() {
@@ -107,8 +102,6 @@ export class BurgerComponent implements OnInit {
       this.counter -= 6
       this.loading.next(false)
     }, 500)
-    //this.counter -= 6
-    console.log('counter==', this.counter)
   }
   onCreateBurger() {
     this.dialogInfo({ dialogTitle: '', create: true }, EditBurgerComponent)

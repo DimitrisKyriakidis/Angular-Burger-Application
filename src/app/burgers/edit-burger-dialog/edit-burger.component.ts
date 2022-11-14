@@ -117,7 +117,7 @@ export class EditBurgerComponent implements OnInit {
   }
 
   editForm() {
-    this.orderStatusScore = this.data.dialogData.burger.status
+    this.orderStatusScore = this.data.dialogData.burger.progress
 
     let activeIngredients = this.data.dialogData.burger.ingredients
 
@@ -160,7 +160,7 @@ export class EditBurgerComponent implements OnInit {
       comment: this.data.dialogData.burger?.comment,
     })
   }
-  valueChanges: boolean
+
   onRadioChange(event) {
     this.radioButtonsChipsHandler(event)
     console.log(event)
@@ -279,7 +279,7 @@ export class EditBurgerComponent implements OnInit {
     let formValues = {
       ...this.ingredientsForm.value,
       ...this.commentForm.value,
-      status: this.orderStatusScore,
+      progress: this.orderStatusScore,
     }
 
     if (this.editMode) {

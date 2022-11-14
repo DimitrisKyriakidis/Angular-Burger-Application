@@ -81,6 +81,24 @@ export class BurgerEffects {
     )
   })
 
+  sendOrderToHistory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ActionBurgerTypes.sendOrderTohistory),
+      mergeMap((payload) =>
+        this.burgerService.sendOrderToHistory(payload['ids']).pipe(
+          map((response) => {
+            return {
+              type: ActionBurgerTypes.sendOrderTohistorySuccess,
+            }
+          }),
+          catchError(() => {
+            return of({ type: ActionBurgerTypes.sendOrderTohistoryFail })
+          })
+        )
+      )
+    )
+  })
+
   constructor(
     private burgerService: BurgerService,
     private actions$: Actions,

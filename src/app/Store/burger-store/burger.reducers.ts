@@ -12,7 +12,6 @@ import {
   addBurgerToCart,
   removeBurgerFromCart,
   deleteBurgerSuccess,
-  setLoader,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 

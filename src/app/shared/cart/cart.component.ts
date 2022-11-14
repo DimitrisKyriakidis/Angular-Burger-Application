@@ -23,11 +23,11 @@ import {
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  productList: Observable<any[]>
+  productList$: Observable<any[]>
 
-  totalPrice: Observable<number>
+  totalPrice$: Observable<number>
 
-  totalCartItems: Observable<number>
+  totalCartItems$: Observable<number>
 
   isShoppingCartOpen: boolean = false
 
@@ -42,9 +42,9 @@ export class CartComponent implements OnInit {
     // this.productList = storageValue
     // console.log('productList=', this.productList)
 
-    this.productList = this.store.select((state) => state.burger.cart.products)
-    this.totalPrice = this.store.select(selectCartTotalPrice)
-    this.totalCartItems = this.store.select(selectTotalCartItems)
+    this.productList$ = this.store.select((state) => state.burger.cart.products)
+    this.totalPrice$ = this.store.select(selectCartTotalPrice)
+    this.totalCartItems$ = this.store.select(selectTotalCartItems)
   }
 
   decreaseQuantity(id) {
@@ -69,6 +69,16 @@ export class CartComponent implements OnInit {
       id: id,
       decreaseOnlyQuantity: decreaseOnlyQuantity,
     })
+  }
+
+  sendOrderToHistory(cartData) {
+    console.log('cartData=', cartData)
+    const cartIds = cartData.map((data) => data.id)
+    this.store.dispatch({
+      type: ActionBurgerTypes.sendOrderTohistory,
+      ids: cartIds,
+    })
+    console.log(cartIds)
   }
 
   openShoppingCart() {

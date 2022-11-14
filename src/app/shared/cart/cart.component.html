@@ -3,7 +3,7 @@
   <span
     class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
   >
-    {{ totalCartItems | async }}
+    {{ totalCartItems$ | async }}
   </span>
 </button>
 <div *ngIf="isShoppingCartOpen" class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
 
-                            <div *ngIf="(productList | async).length === 0" class="text-center mt-28">
+                            <div *ngIf="(productList$ | async).length === 0" class="text-center mt-28">
                                 <div class="material-icons text-gray-500">shopping_bag</div>
                                 <h3 class="mt-2 text-sm font-medium text-gray-900">
                                     No items in the cart
@@ -52,7 +52,7 @@
                                 </p>
                             </div>
 
-                            <div *ngFor="let item of productList | async" class="mt-8">
+                            <div *ngFor="let item of productList$ | async" class="mt-8">
                                 <div class="flow-root">
                                     <ul role="list" class="-my-6 divide-y divide-gray-200">
                                         <li class="flex py-6">
@@ -164,14 +164,14 @@
                             </div>
                         </div>
 
-                        <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+                        <div *ngIf="productList$ | async as list" class="border-t border-gray-200 py-6 px-4 sm:px-6">
                             <div class="flex justify-between text-base font-medium text-gray-900">
                                 <p>Total Price</p>
-                                <p>{{ totalPrice | async | number: '1.1-1' }}€</p>
+                                <p>{{ totalPrice$ | async | number: '1.1-1' }}€</p>
                             </div>
 
-                            <div [disabled]="(productList | async).length === 0" class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
-                                Checkout
+                            <div (click)="sendOrderToHistory(list)" type="submit" [disabled]="list.length === 0" class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                                Send Order
                             </div>
                             <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                 <p>

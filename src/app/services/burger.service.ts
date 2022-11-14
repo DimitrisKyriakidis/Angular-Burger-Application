@@ -29,7 +29,7 @@ export class BurgerService {
 
     let finalReqBody
 
-    const { bread, cheese, meat, comment, status } = body.burger
+    const { bread, cheese, meat, comment, progress } = body.burger
     const sliced = body.burger.vegetables?.slice()
 
     finalReqBody = {
@@ -39,7 +39,7 @@ export class BurgerService {
       meat,
       ...sliced,
       comment: comment ? comment : null,
-      status: status ? status : null,
+      progress: progress ? progress : null,
     }
 
     console.log('finalReqBody==', finalReqBody)
@@ -57,7 +57,7 @@ export class BurgerService {
     // let temp = Object.keys(body.burger).map((key) => body.burger[key])
     // console.log('temp==', temp)
 
-    const { bread, cheese, meat, comment, status } = updateData
+    const { bread, cheese, meat, comment, progress } = updateData
     const sliced = updateData.vegetables?.slice()
 
     // finalReqBody.push(bread, cheese, meat, { comment: comment })
@@ -68,7 +68,7 @@ export class BurgerService {
       meat,
       ...sliced,
       comment: comment ? comment : null,
-      status: status ? status : null,
+      progress: progress ? progress : null,
     }
 
     const apiUrl = `api/burgers/editOrder/${id}`
@@ -78,5 +78,12 @@ export class BurgerService {
   public deleteBurger(id: string) {
     const apiUrl = `api/burgers/deleteOrder/${id}`
     return this.http.delete(apiUrl)
+  }
+
+  public sendOrderToHistory(ids: []) {
+    console.log('ids==', ids)
+
+    const apiUrl = `api/burgers/sendOrderToHistory`
+    return this.http.post(apiUrl, ids)
   }
 }

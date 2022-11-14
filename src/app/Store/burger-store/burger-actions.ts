@@ -23,7 +23,9 @@ export const enum ActionBurgerTypes {
   addBurgerToCart = '[Burger] add burger to cart',
   removeBurgerFromCart = '[Burger] remove burger from cart',
 
-  setLoader = 'set loader ',
+  sendOrderTohistory = '[Burger] sendOrderTohistory ',
+  sendOrderTohistorySuccess = '[Burger] sendOrderTohistory Success',
+  sendOrderTohistoryFail = '[Burger] sendOrderTohistory Fail',
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
@@ -98,4 +100,17 @@ export const removeBurgerFromCart = createAction(
   props<{ id: string; decreaseOnlyQuantity: boolean }>()
 )
 
-export const setLoader = createAction(ActionBurgerTypes.setLoader)
+export const sendOrderTohistory = createAction(
+  ActionBurgerTypes.sendOrderTohistory,
+  props<{ ids: [] }>()
+)
+
+export const sendOrderTohistorySuccess = createAction(
+  ActionBurgerTypes.sendOrderTohistorySuccess,
+  props<{}>()
+)
+
+export const sendOrderTohistoryFail = createAction(
+  ActionBurgerTypes.sendOrderTohistoryFail,
+  props<{ error: string }>()
+)
