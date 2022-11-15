@@ -16,14 +16,13 @@ import { LoginEffects } from './Store/login-store/login.effects'
 
 import { BurgerEffects } from './Store/burger-store/burger-effects'
 
-import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
-
 import { SharedModule } from './shared/modules/shared.module'
 
 import { reducers } from './reducers'
 import { AppRoutingModule } from './routing/app-routing.module'
 import { LoginModule } from './login/login.module'
 import { BurgersModule } from './burgers/burgers.module'
+import { metaReducerLocalStorage } from './Store/burger-store/burger.reducers'
 
 @NgModule({
   declarations: [AppComponent],

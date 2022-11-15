@@ -14,8 +14,8 @@ export class BurgerEffects {
   getAllBurgersEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ActionBurgerTypes.getAllBurgers),
-      mergeMap(() =>
-        this.burgerService.getAllBurgers().pipe(
+      mergeMap((payload) =>
+        this.burgerService.getAllBurgers(payload['searchString']).pipe(
           map((response) => {
             return {
               type: ActionBurgerTypes.getAllBurgersSuccess,
@@ -75,6 +75,43 @@ export class BurgerEffects {
           }),
           catchError(() => {
             return of({ type: ActionBurgerTypes.deleteBurgerFail })
+          })
+        )
+      )
+    )
+  })
+
+  sendOrderToHistory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ActionBurgerTypes.sendOrderTohistory),
+      mergeMap((payload) =>
+        this.burgerService.sendOrderToHistory(payload['ids']).pipe(
+          map((response) => {
+            return {
+              type: ActionBurgerTypes.sendOrderTohistorySuccess,
+            }
+          }),
+          catchError(() => {
+            return of({ type: ActionBurgerTypes.sendOrderTohistoryFail })
+          })
+        )
+      )
+    )
+  })
+
+  getAllHistoryOrders$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ActionBurgerTypes.getAllHistoryOrders),
+      mergeMap((payload) =>
+        this.burgerService.getAllHistoryOrders().pipe(
+          map((response) => {
+            return {
+              type: ActionBurgerTypes.getAllHistoryOrdersSuccess,
+              historyOrdersData: response['data'],
+            }
+          }),
+          catchError(() => {
+            return of({ type: ActionBurgerTypes.getAllHistoryOrdersFail })
           })
         )
       )

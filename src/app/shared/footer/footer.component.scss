@@ -1,0 +1,21 @@
+.footer {
+    flex: none;
+    position: fixed;
+    background: #4f46e5;
+    bottom: 0;
+    width: 100%;
+    justify-content: flex-end;
+    z-index: 9;
+    align-items: center;
+    height: 5vh;
+}
+
+.text {
+    font-size: 10px;
+}
+
+// .mat-default-header-color {
+//   color: white;
+//   --tw-bg-opacity: 1;
+//   background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
+// }

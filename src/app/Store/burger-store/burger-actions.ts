@@ -23,11 +23,17 @@ export const enum ActionBurgerTypes {
   addBurgerToCart = '[Burger] add burger to cart',
   removeBurgerFromCart = '[Burger] remove burger from cart',
 
-  setLoader = 'set loader ',
+  sendOrderTohistory = '[Burger] sendOrderTohistory ',
+  sendOrderTohistorySuccess = '[Burger] sendOrderTohistory Success',
+  sendOrderTohistoryFail = '[Burger] sendOrderTohistory Fail',
+
+  getAllHistoryOrders = '[Burger] getAllHistoryOrders ',
+  getAllHistoryOrdersSuccess = '[Burger] getAllHistoryOrders Success',
+  getAllHistoryOrdersFail = '[Burger] getAllHistoryOrders Fail',
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
-  props<{}>()
+  props<{ searchString: string }>()
 )
 
 export const getAllBurgersSuccess = createAction(
@@ -90,12 +96,38 @@ export const setBurgerToState = createAction(
 
 export const addBurgerToCart = createAction(
   ActionBurgerTypes.addBurgerToCart,
-  props<{ payload: Burgers }>()
+  props<{ payload: Burgers; increaseOnlyQuantity: boolean }>()
 )
 
 export const removeBurgerFromCart = createAction(
   ActionBurgerTypes.removeBurgerFromCart,
-  props<{ id: number }>()
+  props<{ id: string; decreaseOnlyQuantity: boolean }>()
 )
 
-export const setLoader = createAction(ActionBurgerTypes.setLoader)
+export const sendOrderTohistory = createAction(
+  ActionBurgerTypes.sendOrderTohistory,
+  props<{ ids: [] }>()
+)
+
+export const sendOrderTohistorySuccess = createAction(
+  ActionBurgerTypes.sendOrderTohistorySuccess
+)
+
+export const sendOrderTohistoryFail = createAction(
+  ActionBurgerTypes.sendOrderTohistoryFail,
+  props<{ error: string }>()
+)
+
+export const getAllHistoryOrders = createAction(
+  ActionBurgerTypes.getAllHistoryOrders
+)
+
+export const getAllHistoryOrdersSuccess = createAction(
+  ActionBurgerTypes.getAllHistoryOrdersSuccess,
+  props<{ historyOrdersData: [] }>()
+)
+
+export const getAllHistoryOrdersFail = createAction(
+  ActionBurgerTypes.getAllHistoryOrdersFail,
+  props<{ error: string }>()
+)

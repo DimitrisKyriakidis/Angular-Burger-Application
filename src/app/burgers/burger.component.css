@@ -1,33 +1,11 @@
-.burger-card {
-    /* box-shadow: 0px 0px 7px 0px black; */
-}
-
 ::ng-deep .snackbarClass {
     background: white;
     color: green;
     margin-top: 4rem !important;
+    margin-right: 12rem !important;
     text-align: center !important;
 }
 
-
-/* .tabs{
-  width: 45vw;
-} */
-
-
-/* .card{
-
-} */
-
-
-/* .material-symbols-rounded {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-} */
-
-.course-actions {
-    text-align: center;
-}
-
-.course-actions button {
-    margin-right: 10px;
+.height {
+    height: 81vh;
 }

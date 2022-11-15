@@ -5,6 +5,7 @@ export interface BurgersState {
   cart: {
     products?: any[]
   }
+  historyOrdersData: []
 }
 export const initialBurgersState: BurgersState = {
   burgers: [],
@@ -13,4 +14,5 @@ export const initialBurgersState: BurgersState = {
   cart: {
     products: [],
   },
+  historyOrdersData: [],
 }

@@ -11,10 +11,12 @@ import { AngularMaterialModule } from '../shared/modules/angular-material.module
 import { SharedModule } from '../shared/modules/shared.module'
 import { BurgerComponent } from './burger.component'
 import { ChipsComponent } from './chips/chips.component'
+import { OrderHistoryComponent } from './order-history/order-history.component'
 
 const routes = [
   { path: '', component: BurgerComponent },
   { path: 'chips', component: ChipsComponent },
+  { path: 'order-history', component: OrderHistoryComponent },
 ]
 
 @NgModule({
@@ -24,8 +26,18 @@ const routes = [
     SharedModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [BurgerComponent, EditBurgerComponent, ChipsComponent],
-  exports: [BurgerComponent, EditBurgerComponent, ChipsComponent],
+  declarations: [
+    BurgerComponent,
+    EditBurgerComponent,
+    ChipsComponent,
+    OrderHistoryComponent,
+  ],
+  exports: [
+    BurgerComponent,
+    EditBurgerComponent,
+    ChipsComponent,
+    OrderHistoryComponent,
+  ],
 
   providers: [BurgerService],
 })

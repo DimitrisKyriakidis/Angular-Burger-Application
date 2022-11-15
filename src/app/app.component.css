@@ -2,6 +2,10 @@ body {
     margin: 0;
 }
 
+.appplication-container {
+    height: auto;
+}
+
 .tool-div {
     background: black;
 }
@@ -21,9 +25,4 @@ main {
 .spinner-container {
     width: 100%;
     margin-top: 100px;
-}
-
-.cartMenu {
-    min-height: 11rem;
-    overflow: auto;
 }

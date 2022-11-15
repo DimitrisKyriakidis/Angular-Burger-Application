@@ -1,42 +1,191 @@
 <button (click)="openShoppingCart()" class="focus:outline-none flex justify-end mr-5">
-  <span class="material-icons text-white"> shopping_cart </span>
+  <span class="material-icons text-white">shopping_bag </span>
   <span
     class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
   >
-    {{ totalCartItems | async }}
+    {{ totalCartItems$ | async }}
   </span>
 </button>
+<div *ngIf="isShoppingCartOpen" class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-<modal [display]="isShoppingCartOpen" (closed)="isShoppingCartOpen = false" [modalTitle]="'Shopping Cart'" [width]="'25vw'" [height]="'17vw'">
-    <div class="bg-gray-300 rounded-md w-44 p-2 flex space-x-10 whitespace-nowrap font-bold">
-        <p>Total Price</p>
-        <span>{{ totalPrice | async | number: '1.1-1' }}€</span>
-    </div>
-    <div class="space-y-5 mt-5">
-        <div *ngFor="let item of productList | async" class="grid gap-5 grid-cols-6 w-full items-center">
-            <div class="col-span-1 flex items-center">
-                <img class="rounded-full" src="../../../assets/images/cartBurgerIcon.jpg" />
-            </div>
-            <div class="col-span-1 block w-20 truncate">
-                <p class="font-medium">Order Id</p>
-                <span [matTooltip]="item.id">{{ item.id }}</span>
-            </div>
+    <div class="fixed inset-0 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                <div class="pointer-events-auto w-screen h-2/3 max-w-md">
+                    <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                        <div class="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
+                            <div class="flex items-start justify-between">
+                                <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                                    Shopping cart
+                                </h2>
+                                <div class="ml-3 flex h-7 items-center">
+                                    <button type="button" (click)="isShoppingCartOpen = false" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                    <span class="sr-only">Close panel</span>
 
-            <div class="col-span-2 flex flex-col text-center">
-                <p class="font-medium">Quantity</p>
-                <span>{{ item.quantity }}</span>
-            </div>
-            <div class="col-span-1 flex flex-col text-center">
-                <p class="font-medium">Price</p>
-                <span>{{ item.orderPrice | number: '1.1-1' }}€</span>
-            </div>
-            <div class="col-span-1">
-                <button (click)="removeBurgerFromCart(item.id)">
-          <mat-icon class="text-red-600">delete</mat-icon>
-        </button>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                                </div>
+                            </div>
+
+                            <div *ngIf="(productList$ | async).length === 0" class="text-center mt-28">
+                                <div class="material-icons text-gray-500">shopping_bag</div>
+                                <h3 class="mt-2 text-sm font-medium text-gray-900">
+                                    No items in the cart
+                                </h3>
+                                <p class="mt-1 text-sm text-gray-500">
+                                    Get started by creating a new order.
+                                </p>
+                            </div>
+
+                            <div *ngFor="let item of productList$ | async" class="mt-8">
+                                <div class="flow-root">
+                                    <ul role="list" class="-my-6 divide-y divide-gray-200">
+                                        <li class="flex py-6">
+                                            <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                                <img *ngIf="item.image" [src]="item.image" alt="catLogo" class="h-full w-full object-cover object-center" />
+                                                <img *ngIf="!item.image" src="https://img.freepik.com/premium-vector/fastfood-burger-vector-illustration_123673-17.jpg" alt="" class="h-full w-full object-cover object-center" />
+                                            </div>
+
+                                            <div class="ml-4 flex flex-1 flex-col">
+                                                <div>
+                                                    <div class="flex justify-between text-base font-medium text-gray-900">
+                                                        <h3 [matToolTip]="item.id">
+                                                            {{ item.name ? item.name : ('Burger' + item.id | slice: 0:14) }}
+                                                        </h3>
+                                                        <p class="ml-4">
+                                                            {{ item.orderPrice | number: '1.1-1' }}€
+                                                        </p>
+                                                    </div>
+                                                    <p class="mt-1 text-sm text-gray-500">Salmon</p>
+                                                </div>
+                                                <div class="flex flex-1 items-end justify-between text-sm">
+                                                    <div class="flex items-center gap-3">
+                                                        <p class="text-gray-500">Qty</p>
+                                                        <div class="hidden items-center gap-2 lg:flex lg:items-start lg:justify-center">
+                                                            <div class="flex items-center gap-2">
+                                                                <div class="flex items-center gap-2">
+                                                                    <div class="flex items-center border">
+                                                                        <button class="hidden px-4 text-xs lg:block" (click)="decreaseQuantity(item.id)">
+                                      <svg
+                                        stroke="currentColor"
+                                        fill="currentColor"
+                                        stroke-width="0"
+                                        viewBox="0 0 448 512"
+                                        height="0.5rem"
+                                        width="0.5rem"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                        ></path>
+                                      </svg></button
+                                    ><span
+                                      class="h-full px-4 lg:border-r lg:border-l"
+                                      >{{ item.quantity }}</span
+                                    ><button
+                                      (click)="increaseQuantity(item)"
+                                      class="hidden h-full px-4 text-xs lg:block"
+                                    >
+                                      <svg
+                                        stroke="currentColor"
+                                        fill="currentColor"
+                                        stroke-width="0"
+                                        viewBox="0 0 448 512"
+                                        height="0.5rem"
+                                        width="0.5rem"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                        ></path>
+                                      </svg>
+                                    </button>
+                                                                    </div>
+                                                                    <div class="flex flex-col text-lg lg:hidden">
+                                                                        <button>
+                                      <svg
+                                        stroke="currentColor"
+                                        fill="currentColor"
+                                        stroke-width="0"
+                                        viewBox="0 0 320 512"
+                                        height="1em"
+                                        width="1em"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"
+                                        ></path>
+                                      </svg></button
+                                    ><button>
+                                      <svg
+                                        stroke="currentColor"
+                                        fill="currentColor"
+                                        stroke-width="0"
+                                        viewBox="0 0 320 512"
+                                        height="1em"
+                                        width="1em"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                                        ></path>
+                                      </svg>
+                                    </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <button type="button" (click)="removeBurgerFromCart(item.id)" class="font-medium text-indigo-600 hover:text-indigo-500">
+                              Remove
+                            </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="productList$ | async as list" class="border-t border-gray-200 py-6 px-4 sm:px-6">
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                                <p>Total Price</p>
+                                <p>{{ totalPrice$ | async | number: '1.1-1' }}€</p>
+                            </div>
+
+                            <div (click)="sendOrderToHistory(list)" type="submit" [disabled]="list.length === 0" class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                                Send Order
+                            </div>
+                            <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                                <p>
+                                    or
+                                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Continue Shopping
+                    <span aria-hidden="true"> &rarr;</span>
+                  </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <ng-template #footer> </ng-template>
-</modal>
+</div>

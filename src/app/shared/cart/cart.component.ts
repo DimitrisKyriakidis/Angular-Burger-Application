@@ -23,11 +23,11 @@ import {
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  productList: Observable<any[]>
+  productList$: Observable<any[]>
 
-  totalPrice: Observable<number>
+  totalPrice$: Observable<number>
 
-  totalCartItems: Observable<number>
+  totalCartItems$: Observable<number>
 
   isShoppingCartOpen: boolean = false
 
@@ -37,16 +37,50 @@ export class CartComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.productList = this.store.select((state) => state.burger.cart.products)
-    this.totalPrice = this.store.select(selectCartTotalPrice)
-    this.totalCartItems = this.store.select(selectTotalCartItems)
+    // const storageValue = JSON.parse(localStorage.getItem('cart'))
+    // console.log('storageValue=', storageValue)
+    // this.productList = storageValue
+    // console.log('productList=', this.productList)
+
+    this.productList$ = this.store.select((state) => state.burger.cart.products)
+    this.totalPrice$ = this.store.select(selectCartTotalPrice)
+    this.totalCartItems$ = this.store.select(selectTotalCartItems)
   }
+
+  decreaseQuantity(id) {
+    this.dispatchRemoveAction(id, true)
+  }
+
+  increaseQuantity(burger) {
+    this.store.dispatch({
+      type: ActionBurgerTypes.addBurgerToCart,
+      payload: burger,
+      increaseOnlyQuantity: true,
+    })
+  }
+
   removeBurgerFromCart(id) {
+    this.dispatchRemoveAction(id, false)
+  }
+
+  dispatchRemoveAction(id: string, decreaseOnlyQuantity: boolean) {
     this.store.dispatch({
       type: ActionBurgerTypes.removeBurgerFromCart,
       id: id,
+      decreaseOnlyQuantity: decreaseOnlyQuantity,
     })
   }
+
+  sendOrderToHistory(cartData) {
+    console.log('cartData=', cartData)
+    const cartIds = cartData.map((data) => data.id)
+    this.store.dispatch({
+      type: ActionBurgerTypes.sendOrderTohistory,
+      ids: cartIds,
+    })
+    console.log(cartIds)
+  }
+
   openShoppingCart() {
     this.isShoppingCartOpen = true
     this.openShoppingCartModal.emit(this.isShoppingCartOpen)
