@@ -59,4 +59,7 @@ export class NavBarComponent implements OnInit {
   logout() {
     this.store.dispatch(logout())
   }
+  navigateOrderHistory() {
+    this.router.navigate(['/order-history'])
+  }
 }

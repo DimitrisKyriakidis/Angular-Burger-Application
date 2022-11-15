@@ -81,9 +81,12 @@ export class BurgerService {
   }
 
   public sendOrderToHistory(ids: []) {
-    console.log('ids==', ids)
-
     const apiUrl = `api/burgers/sendOrderToHistory`
     return this.http.post(apiUrl, ids)
+  }
+
+  public getAllHistoryOrders() {
+    const apiUrl = `api/burgers/getAllHistoryOrders`
+    return this.http.get(apiUrl)
   }
 }

@@ -12,6 +12,10 @@ import {
   addBurgerToCart,
   removeBurgerFromCart,
   deleteBurgerSuccess,
+  getAllHistoryOrders,
+  getAllHistoryOrdersSuccess,
+  sendOrderTohistory,
+  sendOrderTohistorySuccess,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
@@ -142,6 +146,44 @@ export const _burgerReducer = createReducer(
       cart: {
         products: products,
       },
+    }
+  }),
+  on(sendOrderTohistory, (state) => {
+    return {
+      ...state,
+      loading: true,
+    }
+  }),
+  on(sendOrderTohistorySuccess, (state) => {
+    return {
+      ...state,
+      loading: false,
+    }
+  }),
+
+  on(getAllHistoryOrders, (state) => {
+    return {
+      ...state,
+      loading: true,
+    }
+  }),
+  on(getAllHistoryOrdersSuccess, (state, { historyOrdersData }) => {
+    // })
+    // let result = []
+
+    // historyOrdersData.forEach((r: any) => {
+    //   if (!result[r.history_id]) {
+    //     result[r.history_id] = []
+    //   }
+
+    //   result[r.history_id].push(r)
+    // })
+    // console.log('result=', result)
+
+    return {
+      ...state,
+      loading: false,
+      historyOrdersData: historyOrdersData,
     }
   })
 )

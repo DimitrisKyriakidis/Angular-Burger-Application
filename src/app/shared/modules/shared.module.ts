@@ -7,10 +7,12 @@ import { CarouselComponent } from '../carousel/carousel.component'
 import { ModalComponent } from '../modal/modal.component'
 import { CartComponent } from '../cart/cart.component'
 import { FooterComponent } from '../footer/footer.component'
+import { OrderHistoryComponent } from '../../burgers/order-history/order-history.component'
 
 @NgModule({
   declarations: [
     NavBarComponent,
+
     CarouselComponent,
     ModalComponent,
     CartComponent,
@@ -19,6 +21,7 @@ import { FooterComponent } from '../footer/footer.component'
   imports: [AngularMaterialModule, CommonModule],
   exports: [
     NavBarComponent,
+
     CarouselComponent,
     ModalComponent,
     CartComponent,

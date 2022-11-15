@@ -26,6 +26,10 @@ export const enum ActionBurgerTypes {
   sendOrderTohistory = '[Burger] sendOrderTohistory ',
   sendOrderTohistorySuccess = '[Burger] sendOrderTohistory Success',
   sendOrderTohistoryFail = '[Burger] sendOrderTohistory Fail',
+
+  getAllHistoryOrders = '[Burger] getAllHistoryOrders ',
+  getAllHistoryOrdersSuccess = '[Burger] getAllHistoryOrders Success',
+  getAllHistoryOrdersFail = '[Burger] getAllHistoryOrders Fail',
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
@@ -106,11 +110,24 @@ export const sendOrderTohistory = createAction(
 )
 
 export const sendOrderTohistorySuccess = createAction(
-  ActionBurgerTypes.sendOrderTohistorySuccess,
-  props<{}>()
+  ActionBurgerTypes.sendOrderTohistorySuccess
 )
 
 export const sendOrderTohistoryFail = createAction(
   ActionBurgerTypes.sendOrderTohistoryFail,
+  props<{ error: string }>()
+)
+
+export const getAllHistoryOrders = createAction(
+  ActionBurgerTypes.getAllHistoryOrders
+)
+
+export const getAllHistoryOrdersSuccess = createAction(
+  ActionBurgerTypes.getAllHistoryOrdersSuccess,
+  props<{ historyOrdersData: [] }>()
+)
+
+export const getAllHistoryOrdersFail = createAction(
+  ActionBurgerTypes.getAllHistoryOrdersFail,
   props<{ error: string }>()
 )

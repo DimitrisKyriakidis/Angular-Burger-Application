@@ -28,3 +28,8 @@ export const selectCartTotalPrice = createSelector(burgerState, (state) =>
     return acc + product.orderPrice * product.quantity
   }, 0)
 )
+
+export const selectHistoryOrdersData = createSelector(
+  burgerState,
+  (state) => state.historyOrdersData
+)
