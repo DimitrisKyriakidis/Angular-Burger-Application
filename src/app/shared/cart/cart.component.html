@@ -6,6 +6,8 @@
     {{ totalCartItems$ | async }}
   </span>
 </button>
+<mat-spinner *ngIf="loading$ | async" class="mt-48 flex mx-auto" mode="indeterminate">
+</mat-spinner>
 <div *ngIf="isShoppingCartOpen" class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
@@ -170,13 +172,13 @@
                                 <p>{{ totalPrice$ | async | number: '1.1-1' }}€</p>
                             </div>
 
-                            <div (click)="sendOrderToHistory(list)" type="submit" [disabled]="list.length === 0" class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                            <div *ngIf="totalPrice$ | async as total" (click)="sendOrderToHistory(list, total)" type="submit" [disabled]="list.length === 0" class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                                 Send Order
                             </div>
                             <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                 <p>
                                     or
-                                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                    <button type="button" (click)="isShoppingCartOpen = false" class="font-medium text-indigo-600 hover:text-indigo-500">
                     Continue Shopping
                     <span aria-hidden="true"> &rarr;</span>
                   </button>

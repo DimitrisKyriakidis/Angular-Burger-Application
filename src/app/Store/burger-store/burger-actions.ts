@@ -106,7 +106,7 @@ export const removeBurgerFromCart = createAction(
 
 export const sendOrderTohistory = createAction(
   ActionBurgerTypes.sendOrderTohistory,
-  props<{ ids: [] }>()
+  props<{ orderIds: []; totalPrice: number }>()
 )
 
 export const sendOrderTohistorySuccess = createAction(
@@ -124,7 +124,7 @@ export const getAllHistoryOrders = createAction(
 
 export const getAllHistoryOrdersSuccess = createAction(
   ActionBurgerTypes.getAllHistoryOrdersSuccess,
-  props<{ historyOrdersData: [] }>()
+  props<{ historyOrdersData: any[] }>()
 )
 
 export const getAllHistoryOrdersFail = createAction(

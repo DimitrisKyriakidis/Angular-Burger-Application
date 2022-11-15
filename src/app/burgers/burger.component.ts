@@ -69,6 +69,7 @@ export class BurgerComponent implements OnInit {
     }
 
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
+
     this.burgers$ = this.store.select(selectBurger)
     this.loading$ = this.store.select(selectLoading)
 
@@ -88,7 +89,6 @@ export class BurgerComponent implements OnInit {
   }
   showMore() {
     this.loading.next(true)
-
     setTimeout(() => {
       this.counter += 6
       this.loading.next(false)
@@ -97,7 +97,6 @@ export class BurgerComponent implements OnInit {
 
   showLess() {
     this.loading.next(true)
-
     setTimeout(() => {
       this.counter -= 6
       this.loading.next(false)

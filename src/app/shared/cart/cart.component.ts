@@ -14,6 +14,7 @@ import { State } from '../../reducers'
 import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
 import {
   selectCartTotalPrice,
+  selectLoading,
   selectTotalCartItems,
 } from '../../Store/burger-store/burger.selector'
 
@@ -31,6 +32,8 @@ export class CartComponent implements OnInit {
 
   isShoppingCartOpen: boolean = false
 
+  loading$: Observable<boolean>
+
   @Output()
   openShoppingCartModal = new EventEmitter<boolean>()
 
@@ -45,6 +48,7 @@ export class CartComponent implements OnInit {
     this.productList$ = this.store.select((state) => state.burger.cart.products)
     this.totalPrice$ = this.store.select(selectCartTotalPrice)
     this.totalCartItems$ = this.store.select(selectTotalCartItems)
+    this.loading$ = this.store.select(selectLoading)
   }
 
   decreaseQuantity(id) {
@@ -71,14 +75,18 @@ export class CartComponent implements OnInit {
     })
   }
 
-  sendOrderToHistory(cartData) {
+  sendOrderToHistory(cartData, totalPrice) {
+    console.log(totalPrice)
+
     console.log('cartData=', cartData)
-    const cartIds = cartData.map((data) => data.id)
+    const cartOrderIds = cartData.map((data) => data.id)
     this.store.dispatch({
       type: ActionBurgerTypes.sendOrderTohistory,
-      ids: cartIds,
+      orderIds: cartOrderIds,
+      totalPrice: totalPrice,
     })
-    console.log(cartIds)
+    console.log(cartOrderIds)
+    this.isShoppingCartOpen = false
   }
 
   openShoppingCart() {

@@ -80,9 +80,13 @@ export class BurgerService {
     return this.http.delete(apiUrl)
   }
 
-  public sendOrderToHistory(ids: []) {
+  public sendOrderToHistory(orderIds: [], totalPrice: number) {
+    let body = {
+      orderIds: orderIds,
+      totalPrice: totalPrice,
+    }
     const apiUrl = `api/burgers/sendOrderToHistory`
-    return this.http.post(apiUrl, ids)
+    return this.http.post(apiUrl, body)
   }
 
   public getAllHistoryOrders() {

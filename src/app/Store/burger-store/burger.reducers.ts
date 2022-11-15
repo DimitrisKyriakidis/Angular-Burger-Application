@@ -158,6 +158,9 @@ export const _burgerReducer = createReducer(
     return {
       ...state,
       loading: false,
+      cart: {
+        products: [],
+      },
     }
   }),
 
@@ -168,18 +171,6 @@ export const _burgerReducer = createReducer(
     }
   }),
   on(getAllHistoryOrdersSuccess, (state, { historyOrdersData }) => {
-    // })
-    // let result = []
-
-    // historyOrdersData.forEach((r: any) => {
-    //   if (!result[r.history_id]) {
-    //     result[r.history_id] = []
-    //   }
-
-    //   result[r.history_id].push(r)
-    // })
-    // console.log('result=', result)
-
     return {
       ...state,
       loading: false,
