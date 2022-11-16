@@ -16,6 +16,7 @@ import {
   getAllHistoryOrdersSuccess,
   sendOrderTohistory,
   sendOrderTohistorySuccess,
+  setActivePage,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
@@ -175,6 +176,13 @@ export const _burgerReducer = createReducer(
       ...state,
       loading: false,
       historyOrdersData: historyOrdersData,
+    }
+  }),
+  on(setActivePage, (state, { activePage }) => {
+    return {
+      ...state,
+      loading: false,
+      activePage: activePage,
     }
   })
 )

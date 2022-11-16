@@ -86,7 +86,10 @@ export class BurgerEffects {
       ofType(ActionBurgerTypes.sendOrderTohistory),
       mergeMap((payload) =>
         this.burgerService
-          .sendOrderToHistory(payload['orderIds'], payload['totalPrice'])
+          .sendOrderToHistory(
+            payload['shoppingCartData'],
+            payload['totalPrice']
+          )
           .pipe(
             map((response) => {
               return {
@@ -105,7 +108,7 @@ export class BurgerEffects {
     return this.actions$.pipe(
       ofType(ActionBurgerTypes.getAllHistoryOrders),
       mergeMap((payload) =>
-        this.burgerService.getAllHistoryOrders().pipe(
+        this.burgerService.getAllHistoryOrders(payload['searchString']).pipe(
           map((response) => {
             return {
               type: ActionBurgerTypes.getAllHistoryOrdersSuccess,

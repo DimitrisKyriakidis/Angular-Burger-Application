@@ -16,7 +16,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { BurgerService } from '../services/burger.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AuthService } from '../services/auth.service'
-import { ActionBurgerTypes } from '../Store/burger-store/burger-actions'
+import {
+  ActionBurgerTypes,
+  setActivePage,
+} from '../Store/burger-store/burger-actions'
 import {
   selectBurger,
   selectLoading,
@@ -67,7 +70,7 @@ export class BurgerComponent implements OnInit {
       this.authService.checkExpiration()
       this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     }
-
+    this.store.dispatch(setActivePage({ activePage: 'menu' }))
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
 
     this.burgers$ = this.store.select(selectBurger)

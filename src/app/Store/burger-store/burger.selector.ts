@@ -33,3 +33,8 @@ export const selectHistoryOrdersData = createSelector(
   burgerState,
   (state) => state.historyOrdersData
 )
+
+export const selectActivePage = createSelector(
+  burgerState,
+  (state) => state.activePage
+)

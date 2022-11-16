@@ -1,6 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs'
 import { AuthService } from '../../services/auth.service'
@@ -8,9 +15,14 @@ import { State } from '../../reducers'
 
 import { logout } from '../../Store/login-store/login.actions'
 import { selectIsLoggenIn } from '../../Store/login-store/login.selector'
-import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
+import {
+  ActionBurgerTypes,
+  setActivePage,
+} from '../../Store/burger-store/burger-actions'
 import { debounceTime } from 'rxjs/operators'
 import { FormControl } from '@angular/forms'
+import { selectActivePage } from '../../Store/burger-store/burger.selector'
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'nav-bar',
@@ -27,11 +39,15 @@ export class NavBarComponent implements OnInit {
   searchTerm = null
 
   debounceTime: number = 1000
+  currentUrl: string
+
+  searchPlaceholder = 'Search'
 
   constructor(
     private router: Router,
     private store: Store<State>,
-    private authService: AuthService
+    private authService: AuthService,
+    public location: Location
   ) {}
 
   ngOnInit(): void {
@@ -41,25 +57,58 @@ export class NavBarComponent implements OnInit {
       console.log('isLoggenIn=', data)
     })
 
-    this.searchByName?.valueChanges
-      .pipe(debounceTime(this.debounceTime))
-      .subscribe((res) => {
-        this.searchTerm = res
-        this.store.dispatch({
-          type: ActionBurgerTypes.getAllBurgers,
-          searchString: this.searchTerm,
+    this.currentUrl = this.location.path()
+
+    if (this.currentUrl.includes('burgers')) {
+      this.searchByName?.valueChanges
+        .pipe(debounceTime(this.debounceTime))
+        .subscribe((res) => {
+          this.searchTerm = res
+          this.store.dispatch({
+            type: ActionBurgerTypes.getAllBurgers,
+            searchString: this.searchTerm,
+          })
         })
-      })
+    } else if (this.currentUrl.includes('order-history')) {
+      this.searchByName?.valueChanges
+        .pipe(debounceTime(this.debounceTime))
+        .subscribe((res) => {
+          this.searchTerm = res
+          this.store.dispatch({
+            type: ActionBurgerTypes.getAllHistoryOrders,
+            searchString: this.searchTerm,
+          })
+        })
+    } else {
+      return
+    }
   }
 
+  onFocus(event) {
+    if (event && this.currentUrl.includes('burgers')) {
+      this.searchPlaceholder = 'Search by name'
+    } else if (event && this.currentUrl.includes('order-history')) {
+      this.searchPlaceholder = 'Search by order id'
+    } else {
+      this.searchPlaceholder = 'Search'
+    }
+  }
   onOpenCart(event: boolean) {
     this.checkOpenCart = event
   }
 
+  navigateToMenu() {
+    this.router.navigate(['/burgers']).then(() => {
+      window.location.reload()
+    })
+  }
+
+  navigateOrderHistory() {
+    this.router.navigate(['/order-history']).then(() => {
+      window.location.reload()
+    })
+  }
   logout() {
     this.store.dispatch(logout())
-  }
-  navigateOrderHistory() {
-    this.router.navigate(['/order-history'])
   }
 }

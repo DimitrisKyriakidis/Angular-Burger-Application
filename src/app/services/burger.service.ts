@@ -80,17 +80,24 @@ export class BurgerService {
     return this.http.delete(apiUrl)
   }
 
-  public sendOrderToHistory(orderIds: [], totalPrice: number) {
+  public sendOrderToHistory(shoppingCartData: [], totalPrice: number) {
     let body = {
-      orderIds: orderIds,
+      shoppingCartData: shoppingCartData,
       totalPrice: totalPrice,
     }
     const apiUrl = `api/burgers/sendOrderToHistory`
     return this.http.post(apiUrl, body)
   }
 
-  public getAllHistoryOrders() {
-    const apiUrl = `api/burgers/getAllHistoryOrders`
+  public getAllHistoryOrders(searchString?: string) {
+    if (
+      searchString !== '' &&
+      searchString !== null &&
+      searchString !== undefined
+    ) {
+      var getString = `searchString=${encodeURIComponent(searchString)}`
+    }
+    const apiUrl = `api/burgers/getAllHistoryOrders?${getString}`
     return this.http.get(apiUrl)
   }
 }

@@ -6,6 +6,7 @@ export interface BurgersState {
     products?: any[]
   }
   historyOrdersData?: any[]
+  activePage: string
 }
 export const initialBurgersState: BurgersState = {
   burgers: [],
@@ -15,4 +16,5 @@ export const initialBurgersState: BurgersState = {
     products: [],
   },
   historyOrdersData: [],
+  activePage: 'menu' || 'orderHistory',
 }

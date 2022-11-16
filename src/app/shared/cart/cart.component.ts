@@ -82,7 +82,7 @@ export class CartComponent implements OnInit {
     const cartOrderIds = cartData.map((data) => data.id)
     this.store.dispatch({
       type: ActionBurgerTypes.sendOrderTohistory,
-      orderIds: cartOrderIds,
+      shoppingCartData: cartData,
       totalPrice: totalPrice,
     })
     console.log(cartOrderIds)
