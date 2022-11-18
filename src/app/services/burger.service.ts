@@ -100,4 +100,11 @@ export class BurgerService {
     const apiUrl = `api/burgers/getAllHistoryOrders?${getString}`
     return this.http.get(apiUrl)
   }
+
+  public deleteHistoryOrders(historyOrderIds: string[]) {
+    console.log(historyOrderIds)
+
+    const apiUrl = `api/burgers/deleteHistoryOrders`
+    return this.http.post(apiUrl, historyOrderIds)
+  }
 }

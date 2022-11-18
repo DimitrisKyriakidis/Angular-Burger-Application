@@ -122,6 +122,21 @@ export class BurgerEffects {
       )
     )
   })
+  deleteHistoryOrdersEffect$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ActionBurgerTypes.deleteOrdersHistory),
+      mergeMap((payload) =>
+        this.burgerService.deleteHistoryOrders(payload['historyOrderIds']).pipe(
+          map(() => {
+            return { type: ActionBurgerTypes.getAllHistoryOrders }
+          }),
+          catchError(() => {
+            return of({ type: ActionBurgerTypes.deleteOrdersHistoryFail })
+          })
+        )
+      )
+    )
+  })
 
   constructor(
     private burgerService: BurgerService,

@@ -37,12 +37,6 @@ import { debounceTime, take, timeout } from 'rxjs/operators'
   styleUrls: ['./burger.component.css'],
 })
 export class BurgerComponent implements OnInit {
-  matTabLabels = [
-    { displayName: 'Burger', key: 'simpleBurgers' },
-    { displayName: 'CheeseBurger', key: 'cheeseBurger' },
-    { displayName: 'DeluxeBurger', key: 'deluxeBurgers' },
-  ]
-
   cartForm: FormGroup
 
   burgers$: Observable<any[]>
@@ -70,7 +64,7 @@ export class BurgerComponent implements OnInit {
       this.authService.checkExpiration()
       this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     }
-    this.store.dispatch(setActivePage({ activePage: 'menu' }))
+
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
 
     this.burgers$ = this.store.select(selectBurger)
@@ -110,8 +104,6 @@ export class BurgerComponent implements OnInit {
   }
 
   onEditBurger(burger) {
-    console.log('activeBurger==', burger)
-
     this.dialogInfo(
       {
         dialogTitle: '',

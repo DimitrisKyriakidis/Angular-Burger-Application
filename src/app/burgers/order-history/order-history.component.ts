@@ -19,30 +19,28 @@ export class OrderHistoryComponent implements OnInit {
 
   selectedOrdersForDelete: any[] = []
 
+  deleteHistoryModal: boolean = false
+
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(setActivePage({ activePage: 'orderHistory' }))
     this.store.dispatch({ type: ActionBurgerTypes.getAllHistoryOrders })
     this.historyOrders$ = this.store.select(selectHistoryOrdersData)
-
-    this.historyOrders$.subscribe((data) => {
-      if (data) {
-        console.log(data)
-      }
-    })
   }
   onSelectOrdersForDelete(event) {
-    console.log(event)
-
     if (event.checked) {
       this.selectedOrdersForDelete.push(event.source.value)
     } else {
       const index = this.selectedOrdersForDelete.indexOf(event.source.value)
       this.selectedOrdersForDelete.splice(index, 1)
     }
-    console.log(this.selectedOrdersForDelete)
   }
 
-  deleteHistoryOrders() {}
+  deleteHistoryOrders() {
+    this.store.dispatch({
+      type: ActionBurgerTypes.deleteOrdersHistory,
+      historyOrderIds: this.selectedOrdersForDelete,
+    })
+    this.deleteHistoryModal = false
+  }
 }

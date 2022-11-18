@@ -6,7 +6,7 @@
                     <img class="h-full w-full object-cover" *ngFor="let image of images; let i = index" [src]="image.imageSrc" [alt]="image.alt" [ngClass]="{ 'image-active': selectedIndex === i }" />
                     <div class="absolute inset-0 bg-gradient-to-r from-purple-800 to-indigo-700 mix-blend-multiply"></div>
                 </div>
-                <div class="relative mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
+                <div class="relative mt-20 px-4 py-16 sm:px-6 sm:py-24 lg:m-auto lg:px-8">
                     <h1 class="text-center text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                         <span class="block text-white">Choose a burger</span>
                         <span class="block text-indigo-200">from our menu</span>

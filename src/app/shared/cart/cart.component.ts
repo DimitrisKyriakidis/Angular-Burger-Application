@@ -40,8 +40,8 @@ export class CartComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    // const storageValue = JSON.parse(localStorage.getItem('cart'))
-    // console.log('storageValue=', storageValue)
+    const storageValue = JSON.parse(localStorage.getItem('cart'))
+    console.log('storageValue=', storageValue)
     // this.productList = storageValue
     // console.log('productList=', this.productList)
 
@@ -76,17 +76,14 @@ export class CartComponent implements OnInit {
   }
 
   sendOrderToHistory(cartData, totalPrice) {
-    console.log(totalPrice)
-
-    console.log('cartData=', cartData)
-    const cartOrderIds = cartData.map((data) => data.id)
     this.store.dispatch({
       type: ActionBurgerTypes.sendOrderTohistory,
       shoppingCartData: cartData,
       totalPrice: totalPrice,
     })
-    console.log(cartOrderIds)
+
     this.isShoppingCartOpen = false
+    setTimeout(() => {}, 1000)
   }
 
   openShoppingCart() {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { EditBurgerComponent } from '../../burgers/edit-burger-dialog/edit-burger.component'
+import { carouselImages } from '../models/carouselPhotos'
 import { defaultDialogConfig } from '../models/default-dialog-config'
 
 @Component({
@@ -16,30 +17,7 @@ export class CarouselComponent implements OnInit {
   @Input() slideInderval: number = 3000
 
   @Input()
-  images: any[] = [
-    {
-      imageSrc:
-        'https://www.missionburgers.com.au/themes/mission-burgers/assets/images/carousel/carousel4.jpg',
-      imageAlt: 'person2',
-    },
-
-    {
-      imageSrc: '../../../assets/carouselImages/banner4.png',
-      imageAlt: 'person5',
-    },
-    {
-      imageSrc: '../../../assets/carouselImages/banner2.png',
-      imageAlt: 'nature2',
-    },
-    {
-      imageSrc: '../../../assets/carouselImages/banner3.png',
-      imageAlt: 'person1',
-    },
-    {
-      imageSrc: 'https://images4.alphacoders.com/913/913175.jpg',
-      imageAlt: 'person9',
-    },
-  ]
+  images: any[] = carouselImages
 
   constructor(private dialog: MatDialog) {}
 

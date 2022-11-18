@@ -96,14 +96,14 @@ export class EditBurgerComponent implements OnInit {
     this.ingredientsForm = this.fb.group({
       bread: new FormControl(null, {
         validators: [Validators.required],
+        // updateOn: 'blur',
       }),
 
       meat: new FormControl(null, {
         validators: [Validators.required],
+        // updateOn: 'blur',
       }),
-      cheese: new FormControl(null, {
-        validators: [Validators.required],
-      }),
+      cheese: new FormControl(null),
     })
 
     this.commentForm = new FormGroup({
@@ -275,6 +275,7 @@ export class EditBurgerComponent implements OnInit {
   }
 
   onSave() {
+    this.submitted = true
     this.ingredientsForm.value.vegetables = this.vegetables
     let formValues = {
       ...this.ingredientsForm.value,
@@ -282,19 +283,22 @@ export class EditBurgerComponent implements OnInit {
       progress: this.orderStatusScore,
     }
 
-    if (this.editMode) {
-      this.store.dispatch({
-        type: ActionBurgerTypes.editBurger,
-        id: this.burgerId,
-        burger: formValues,
-      })
-    } else {
-      this.store.dispatch({
-        type: ActionBurgerTypes.createBurger,
-        burger: formValues,
-      })
+    if (this.ingredientsForm.valid) {
+      if (this.editMode) {
+        this.store.dispatch({
+          type: ActionBurgerTypes.editBurger,
+          id: this.burgerId,
+          burger: formValues,
+        })
+      } else {
+        this.store.dispatch({
+          type: ActionBurgerTypes.createBurger,
+          burger: formValues,
+        })
+      }
+      this.onClose()
+      this.submitted = false
     }
-    this.onClose()
   }
   onClose() {
     this.dialogRef.close()

@@ -21,7 +21,7 @@ import {
 } from '../../Store/burger-store/burger-actions'
 import { debounceTime } from 'rxjs/operators'
 import { FormControl } from '@angular/forms'
-import { selectActivePage } from '../../Store/burger-store/burger.selector'
+
 import { Location } from '@angular/common'
 
 @Component({
@@ -52,12 +52,12 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     // this.isLoggedIn = this.authService.isLoggedIn$
+
     this.isLoggedIn = this.store.select(selectIsLoggenIn)
+    this.currentUrl = this.location.path()
     this.isLoggedIn.subscribe((data) => {
       console.log('isLoggenIn=', data)
     })
-
-    this.currentUrl = this.location.path()
 
     if (this.currentUrl.includes('burgers')) {
       this.searchByName?.valueChanges
