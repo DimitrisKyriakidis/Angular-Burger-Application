@@ -17,10 +17,12 @@ export const selectBurgerID = createSelector(
   (state) => state.burgerID
 )
 
-export const selectTotalCartItems = createSelector(burgerState, (state) =>
-  state.cart.products.reduce((acc, product) => {
-    return acc + product.quantity
-  }, 0)
+export const selectTotalCartItems = createSelector(
+  burgerState,
+  (state) => state.cart.products.length
+  // state.cart.products.reduce((acc, product) => {
+  //   return acc + product.quantity
+  // }, 0)
 )
 
 export const selectCartTotalPrice = createSelector(burgerState, (state) =>

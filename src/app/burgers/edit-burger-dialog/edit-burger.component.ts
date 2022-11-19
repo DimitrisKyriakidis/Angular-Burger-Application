@@ -24,7 +24,6 @@ import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
 import { ingredientsData } from '../../shared/models/ingredientsData'
 import { Store } from '@ngrx/store'
 import { State } from '../../reducers'
-import { threadId } from 'worker_threads'
 
 @Component({
   selector: 'burger-dialog',
@@ -49,11 +48,18 @@ export class EditBurgerComponent implements OnInit {
 
   ingredients = ingredientsData
 
-  vegetableChips: any[] = [] //array of chips with vegetables,form array controls values
+  /*
+  //array of chips of 
+ */
 
-  breadCheeseMeatChips: any[] = [] //array of chips with bread,cheese and meat controls values
+  vegetableChips: any[] = []
 
-  orderStatusScore: number = 0 //overall progress at percentages(%) of the current order
+  breadCheeseMeatChips: any[] = []
+
+  /*
+ //overall progress at percentages(%) of the current order
+ */
+  orderStatusScore: number = 0
 
   /*
  to count how many times each category control has been checked(helper for create the order status)
@@ -85,7 +91,6 @@ export class EditBurgerComponent implements OnInit {
     this.createMode = this.data.dialogData['create']
 
     this.initForm()
-    console.log('breadControlInit', this.bread)
 
     if (this.editMode) {
       this.editForm()
@@ -96,12 +101,10 @@ export class EditBurgerComponent implements OnInit {
     this.ingredientsForm = this.fb.group({
       bread: new FormControl(null, {
         validators: [Validators.required],
-        // updateOn: 'blur',
       }),
 
       meat: new FormControl(null, {
         validators: [Validators.required],
-        // updateOn: 'blur',
       }),
       cheese: new FormControl(null),
     })

@@ -40,11 +40,6 @@ export class CartComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    const storageValue = JSON.parse(localStorage.getItem('cart'))
-    console.log('storageValue=', storageValue)
-    // this.productList = storageValue
-    // console.log('productList=', this.productList)
-
     this.productList$ = this.store.select((state) => state.burger.cart.products)
     this.totalPrice$ = this.store.select(selectCartTotalPrice)
     this.totalCartItems$ = this.store.select(selectTotalCartItems)

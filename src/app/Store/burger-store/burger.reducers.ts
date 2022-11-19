@@ -104,12 +104,12 @@ export const _burgerReducer = createReducer(
         products.push({
           ...action.payload,
           quantity: action.payload.quantity,
-          price: action.payload.price,
+          price: action.payload.price
+            ? action.payload.price
+            : action.payload.orderPrice,
         })
       }
     }
-
-    //localStorage.setItem('cart', JSON.stringify(products))
 
     return {
       ...state,
@@ -123,7 +123,7 @@ export const _burgerReducer = createReducer(
   /*
  remove only from cart
   */
-  on(removeBurgerFromCart, (state: any, action) => {
+  on(removeBurgerFromCart, (state, action) => {
     const products = [...state.cart.products]
     const foundIndex = products.findIndex((product) => product.id === action.id)
 
@@ -131,9 +131,12 @@ export const _burgerReducer = createReducer(
       if (product.id === action.id && action.decreaseOnlyQuantity) {
         product.quantity -= 1
       }
-      if (product.quantity === 0 || !action.decreaseOnlyQuantity) {
+      if (product.quantity == 0) {
         products.splice(foundIndex, 1)
       }
+    }
+    if (!action.decreaseOnlyQuantity) {
+      products.splice(foundIndex, 1)
     }
 
     /* second solution

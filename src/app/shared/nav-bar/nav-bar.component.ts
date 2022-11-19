@@ -51,13 +51,9 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.isLoggedIn = this.authService.isLoggedIn$
-
-    this.isLoggedIn = this.store.select(selectIsLoggenIn)
+    this.isLoggedIn = this.authService.isLoggedIn
+    // this.isLoggedIn = this.store.select(selectIsLoggenIn)
     this.currentUrl = this.location.path()
-    this.isLoggedIn.subscribe((data) => {
-      console.log('isLoggenIn=', data)
-    })
 
     if (this.currentUrl.includes('burgers')) {
       this.searchByName?.valueChanges
