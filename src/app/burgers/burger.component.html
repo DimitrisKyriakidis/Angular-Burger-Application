@@ -31,7 +31,6 @@
                 <div *ngFor="let element of burger?.ingredients">
                     <span class="text-gray-400 text-xs">{{ element.name }},</span>
                 </div>
-                <!-- <span class="font-bold text-gray-500 text-xs">{{ burger.name }}</span> -->
             </div>
             <div class="absolute top-0 ml-2 p-2 mt-2 bg-white text-primary text-md uppercase font-bold border border-primary rounded-full">
                 <span>{{ burger.orderPrice ? burger.orderPrice : 0 }}€</span>
@@ -55,7 +54,13 @@
             <div class="flex justify-center">
                 <form [formGroup]="cartForm">
                     <mat-form-field>
-                        <input matInput type="number" placeholder="Quantity" formControlName="quantity" min="1" max="10" />
+                        <input [ngClass]="{
+                'border border-red-600':
+                  cartForm.get('quantity').errors?.required ||
+                  !cartForm.get('quantity').valid ||
+                  cartForm.get('quantity').touched ||
+                  cartForm.get('quantity').value == null
+              }" matInput type="number" class="inpClass" placeholder="Quantity" formControlName="quantity" min="1" max="10" required />
                     </mat-form-field>
                 </form>
                 <button class="bg-white text-primary rounded-sm border border-primary ml-3 font-medium my-auto h-8 w-28" (click)="addBurgerToCart(burger)">

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable, Subject } from 'rxjs'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 
 import { State } from '../reducers'
 import { Store } from '@ngrx/store'
@@ -8,7 +8,7 @@ import { ActionLoginTypes } from '../Store/login-store/login.actions'
 
 @Injectable()
 export class AuthService {
-  private isLoggedIn = new Subject<boolean>()
+  public isLoggedIn = new BehaviorSubject<boolean>(false)
   public isLoggedIn$ = this.isLoggedIn.asObservable()
   private tokenTimer
   constructor(private http: HttpClient, private store: Store<State>) {}
@@ -62,6 +62,7 @@ export class AuthService {
 
     if (expiresIn > 0) {
       this.setAuthTimer(expiresIn / 1000)
+      this.isLoggedIn.next(true)
       this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     } else {
       this.logout()

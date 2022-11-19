@@ -28,8 +28,6 @@ import { EditBurgerComponent } from './edit-burger-dialog/edit-burger.component'
 import { defaultDialogConfig } from '../shared/models/default-dialog-config'
 import { Store } from '@ngrx/store'
 import { State } from '../reducers'
-import { ActionLoginTypes } from '../Store/login-store/login.actions'
-import { debounceTime, take, timeout } from 'rxjs/operators'
 
 @Component({
   selector: 'app-burger',
@@ -62,17 +60,13 @@ export class BurgerComponent implements OnInit {
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
       this.authService.checkExpiration()
-      this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
+      // this.store.dispatch({ type: ActionLoginTypes.userLoggedIn })
     }
 
     this.store.dispatch({ type: ActionBurgerTypes.getAllBurgers })
 
     this.burgers$ = this.store.select(selectBurger)
     this.loading$ = this.store.select(selectLoading)
-
-    this.burgers$.subscribe((data) => {
-      console.log('burgerData==', data)
-    })
 
     this.initCartForm()
   }
@@ -81,6 +75,7 @@ export class BurgerComponent implements OnInit {
     this.cartForm = new FormGroup({
       quantity: new FormControl(null, {
         validators: [Validators.required],
+        // updateOn: 'submit',
       }),
     })
   }
@@ -128,18 +123,20 @@ export class BurgerComponent implements OnInit {
   }
 
   addBurgerToCart(burger) {
-    burger.quantity = this.cartForm.value.quantity //add quantity value to the object
-    this.store.dispatch({
-      type: ActionBurgerTypes.addBurgerToCart,
-      payload: burger,
-    })
-    this.snackBar.open('Item added succesfully', 'X', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['snackbarClass'],
-    })
-    this.cartForm.reset()
+    if (this.cartForm.valid) {
+      burger.quantity = this.cartForm.value.quantity //add quantity value to the object
+      this.store.dispatch({
+        type: ActionBurgerTypes.addBurgerToCart,
+        payload: burger,
+      })
+      this.snackBar.open('Item added succesfully', 'X', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: ['snackbarClass'],
+      })
+      this.cartForm.reset()
+    }
   }
 
   dialogInfo(dialogData: any, Component) {

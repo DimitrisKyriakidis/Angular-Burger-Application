@@ -8,6 +8,7 @@ export const _loginReducer = createReducer(
     return {
       ...state,
       isLoggedIn: false,
+      // user:null
     }
   }),
   on(loginSuccess, (state, action) => {

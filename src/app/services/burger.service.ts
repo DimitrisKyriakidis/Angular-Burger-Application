@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { element } from 'protractor'
 
 @Injectable()
 export class BurgerService {
-  burgerId: string = null
-
   constructor(private http: HttpClient) {}
 
-  public getBurgerId() {
-    return this.burgerId
-  }
   public getAllBurgers(searchString?: string) {
     if (
       searchString !== '' &&
@@ -24,9 +18,6 @@ export class BurgerService {
   }
 
   public saveBurger(body) {
-    // let reqBody = body.burger
-    console.log('bodyService=', body)
-
     let finalReqBody
 
     const { bread, cheese, meat, comment, progress } = body.burger
@@ -42,25 +33,16 @@ export class BurgerService {
       progress: progress ? progress : null,
     }
 
-    console.log('finalReqBody==', finalReqBody)
-
     const apiUrl = `api/burgers/createOrder`
     return this.http.post(apiUrl, finalReqBody)
   }
 
   public editBurger(id: string, updateData: any) {
-    console.log('ID==', id)
-
-    console.log('updateData=', updateData)
-
     let finalReqBody
-    // let temp = Object.keys(body.burger).map((key) => body.burger[key])
-    // console.log('temp==', temp)
 
     const { bread, cheese, meat, comment, progress } = updateData
     const sliced = updateData.vegetables?.slice()
 
-    // finalReqBody.push(bread, cheese, meat, { comment: comment })
     finalReqBody = {
       ...finalReqBody,
       bread,
@@ -102,8 +84,6 @@ export class BurgerService {
   }
 
   public deleteHistoryOrders(historyOrderIds: string[]) {
-    console.log(historyOrderIds)
-
     const apiUrl = `api/burgers/deleteHistoryOrders`
     return this.http.post(apiUrl, historyOrderIds)
   }

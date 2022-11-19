@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { State } from '../../reducers'
+import { AuthService } from '../../services/auth.service'
 import {
   ActionBurgerTypes,
   setActivePage,
@@ -21,9 +22,13 @@ export class OrderHistoryComponent implements OnInit {
 
   deleteHistoryModal: boolean = false
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private authService: AuthService) {}
 
   ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.authService.checkExpiration()
+    }
+
     this.store.dispatch({ type: ActionBurgerTypes.getAllHistoryOrders })
     this.historyOrders$ = this.store.select(selectHistoryOrdersData)
   }
@@ -42,5 +47,6 @@ export class OrderHistoryComponent implements OnInit {
       historyOrderIds: this.selectedOrdersForDelete,
     })
     this.deleteHistoryModal = false
+    this.selectedOrdersForDelete = []
   }
 }

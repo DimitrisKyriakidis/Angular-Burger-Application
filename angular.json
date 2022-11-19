@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "angular-ngrx-course": {
+        "burger_app": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -16,13 +16,8 @@
                         "main": "src/main.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "polyfills": "src/polyfills.ts",
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico"
-                        ],
-                        "styles": [
-                            "src/styles.scss"
-                        ],
+                        "assets": ["src/assets", "src/favicon.ico"],
+                        "styles": ["src/styles.scss"],
                         "scripts": [],
                         "vendorChunk": true,
                         "extractLicenses": false,
@@ -54,20 +49,19 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "angular-ngrx-course:build",
+                        "browserTarget": "burger_app:build",
                         "proxyConfig": "proxy.config.json"
-
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "angular-ngrx-course:build:production"
+                            "browserTarget": "burger_app:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "angular-ngrx-course:build"
+                        "browserTarget": "burger_app:build"
                     }
                 },
                 "test": {
@@ -78,30 +72,20 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.spec.json",
                         "scripts": [],
-                        "styles": [
-                            "src/styles.scss"
-                        ],
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico"
-                        ]
+                        "styles": ["src/styles.scss"],
+                        "assets": ["src/assets", "src/favicon.ico"]
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": [
-                            "src/tsconfig.app.json",
-                            "src/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
+                        "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
         },
-        "angular-ngrx-course-e2e": {
+        "burger_app-e2e": {
             "root": "",
             "sourceRoot": "",
             "projectType": "application",
@@ -110,24 +94,20 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "angular-ngrx-course:serve"
+                        "devServerTarget": "burger_app:serve"
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": [
-                            "e2e/tsconfig.e2e.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
+                        "tsConfig": ["e2e/tsconfig.e2e.json"],
+                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
         }
     },
-    "defaultProject": "angular-ngrx-course",
+    "defaultProject": "burger_app",
     "schematics": {
         "@ngrx/schematics:component": {
             "prefix": "",
