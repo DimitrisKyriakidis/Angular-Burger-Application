@@ -1,143 +1,196 @@
 <h2 *ngIf="createMode" mat-dialog-title class="font-bold text-primary">
-    Create Order
+  Create Order
 </h2>
 <h2 *ngIf="editMode" mat-dialog-title class="font-bold text-primary">
-    Edit Order
+  Edit Order
 </h2>
 
 <mat-dialog-content>
-    <ng-container *ngIf="ingredientsForm">
-        <div class="spinner-container" *ngIf="loading$ | async">
-            <mat-spinner></mat-spinner>
-        </div>
-        <!-- <h3>Order Status</h3> -->
-        <div class="flex items-center mb-6">
-            <div class="rounded-full h-3 bg-gray-300 w-2/3">
-                <div [style.width.%]="orderStatusScore" class="bg-primary h-3 max-w-full rounded-full">
-                    <span></span>
-                </div>
-            </div>
-            <div class="ml-5">
-                <span>{{ orderStatusScore * (10 / 1000) | percent }}</span>
-            </div>
-        </div>
-        <ng-container [formGroup]="ingredientsForm">
-            <mat-tab-group>
-                <mat-tab label="Bun" class="flex flex-col items-center">
-                    <ng-container>
-                        <div class="space-y-3">
-                            <mat-radio-group formControlName="bread" class="flex flex-col mt-5" required>
-                                <mat-radio-button *ngFor="let element of ingredients?.Bun; let i = index" [value]="element" (change)="onRadioChange($event)" [checked]="ingredients.Bun[i].name == selectedBread">
-                                    <div class="flex">
-                                        <div class="image-container">
-                                            <img class="w-2/3" src="{{ element.icon }}" />
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <div>
-                                                <span class="text-md">{{ element.name }}</span>
-                                            </div>
-                                            <div>
-                                                <span class="text-sm">{{ element.price }}€</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                        <mat-error class="text-xs text-red-600 mt-3" *ngIf="submitted && bread.errors?.required">
-                            This field is required.Please select an option.
-                        </mat-error>
-                    </ng-container>
-                </mat-tab>
-                <mat-tab label="Meat">
-                    <ng-container>
-                        <mat-radio-group formControlName="meat" class="flex flex-col mt-5 space-y-3" required>
-                            <mat-radio-button *ngFor="let element of ingredients?.Meat; let i = index" [value]="element" (change)="onRadioChange($event)" [checked]="ingredients.Meat[i].name == selectedMeat">
-                                <div class="flex space-y-3">
-                                    <div class="image-container">
-                                        <img class="w-2/3" src="{{ element.icon }}" />
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div>
-                                            <span class="text-md">{{ element.name }}</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-sm">{{ element.price }}€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </mat-radio-button>
-                        </mat-radio-group>
-                        <mat-error class="text-xs text-red-600 mt-3" *ngIf="submitted && meat.errors?.required">
-                            This field is required.Please select an option.
-                        </mat-error>
-                    </ng-container>
-                </mat-tab>
-                <mat-tab label="Cheese">
-                    <ng-container>
-                        <mat-radio-group formControlName="cheese" class="flex flex-col mt-5">
-                            <mat-radio-button *ngFor="let element of ingredients?.Cheese; let i = index" [value]="element" (change)="onRadioChange($event)" [checked]="
-                  ingredients.Cheese[i].name?.length == selectedCheese?.length
-                ">
-                                <div class="flex space-y-3">
-                                    <div class="image-container">
-                                        <img class="w-2/3" src="{{ element.icon }}" />
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div>
-                                            <span class="text-md">{{ element.name }}</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-sm">{{ element.price }}€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </ng-container>
-                </mat-tab>
-                <mat-tab label="Vegetables">
-                    <div class="grid grid-cols-2 gap-10 mt-5 items-center">
-                        <mat-selection-list #list>
-                            <mat-list-option *ngFor="let element of ingredients?.Vegetables; let i = index" [selected]="element.selected" [value]="element" (click)="onVegetablesChange(list)">
-                                <div class="flex flex-row items-center">
-                                    <div class="image-container">
-                                        <img class="w-2/3" src="{{ element.icon }}" />
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div>
-                                            <span class="text-md">{{ element.name }}</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-sm">{{ element.price }}€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </mat-list-option>
-                        </mat-selection-list>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-            <div [formGroup]="commentForm" class="mt-4">
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Leave a comment</mat-label>
-                    <textarea matInput placeholder="" formControlName="comment"></textarea>
-                </mat-form-field>
-            </div>
-        </ng-container>
-    </ng-container>
-    <div class="chips-container mt-3">
-        <app-chips [vegetableNameChips]="vegetableChips" [breadCheeseMeatNameChips]="breadCheeseMeatChips"></app-chips>
+  <ng-container *ngIf="ingredientsForm">
+    <div class="spinner-container" *ngIf="loading$ | async">
+      <mat-spinner></mat-spinner>
     </div>
+    <!-- <h3>Order Status</h3> -->
+    <div class="flex items-center mb-6">
+      <div class="rounded-full h-3 bg-gray-300 w-full">
+        <div
+          [style.width.%]="orderStatusScore"
+          class="bg-primary h-3 max-w-full rounded-full"
+        >
+          <span></span>
+        </div>
+      </div>
+      <div class="ml-5">
+        <span>{{ orderStatusScore * (10 / 1000) | percent }}</span>
+      </div>
+    </div>
+    <ng-container [formGroup]="ingredientsForm">
+      <mat-tab-group>
+        <mat-tab label="Bun" class="flex flex-col items-center">
+          <ng-container>
+            <div class="space-y-3">
+              <mat-radio-group
+                formControlName="bread"
+                class="flex flex-col mt-5"
+                required
+              >
+                <mat-radio-button
+                  *ngFor="let element of ingredients?.Bun; let i = index"
+                  [value]="element"
+                  (change)="onRadioChange($event)"
+                  [checked]="ingredients.Bun[i].name == selectedBread"
+                >
+                  <div class="flex">
+                    <div class="image-container">
+                      <img class="w-2/3" src="{{ element.icon }}" />
+                    </div>
+                    <div class="flex flex-col">
+                      <div>
+                        <span class="text-md">{{ element.name }}</span>
+                      </div>
+                      <div>
+                        <span class="text-sm">{{ element.price }}€</span>
+                      </div>
+                    </div>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <mat-error
+              class="text-xs text-red-600 mt-3"
+              *ngIf="submitted && bread.errors?.required"
+            >
+              This field is required.Please select an option.
+            </mat-error>
+          </ng-container>
+        </mat-tab>
+        <mat-tab label="Meat">
+          <ng-container>
+            <mat-radio-group
+              formControlName="meat"
+              class="flex flex-col mt-5 space-y-3"
+              required
+            >
+              <mat-radio-button
+                *ngFor="let element of ingredients?.Meat; let i = index"
+                [value]="element"
+                (change)="onRadioChange($event)"
+                [checked]="ingredients.Meat[i].name == selectedMeat"
+              >
+                <div class="flex space-y-3">
+                  <div class="image-container">
+                    <img class="w-2/3" src="{{ element.icon }}" />
+                  </div>
+                  <div class="flex flex-col">
+                    <div>
+                      <span class="text-md">{{ element.name }}</span>
+                    </div>
+                    <div>
+                      <span class="text-sm">{{ element.price }}€</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+            <mat-error
+              class="text-xs text-red-600 mt-3"
+              *ngIf="submitted && meat.errors?.required"
+            >
+              This field is required.Please select an option.
+            </mat-error>
+          </ng-container>
+        </mat-tab>
+        <mat-tab label="Cheese">
+          <ng-container>
+            <mat-radio-group
+              formControlName="cheese"
+              class="flex flex-col mt-5"
+            >
+              <mat-radio-button
+                *ngFor="let element of ingredients?.Cheese; let i = index"
+                [value]="element"
+                (change)="onRadioChange($event)"
+                [checked]="
+                  ingredients.Cheese[i].name?.length == selectedCheese?.length
+                "
+              >
+                <div class="flex space-y-3">
+                  <div class="image-container">
+                    <img class="w-2/3" src="{{ element.icon }}" />
+                  </div>
+                  <div class="flex flex-col">
+                    <div>
+                      <span class="text-md">{{ element.name }}</span>
+                    </div>
+                    <div>
+                      <span class="text-sm">{{ element.price }}€</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+          </ng-container>
+        </mat-tab>
+        <mat-tab label="Vegetables">
+          <div class="grid grid-cols-2 gap-10 mt-5 items-center">
+            <mat-selection-list #list>
+              <mat-list-option
+                *ngFor="let element of ingredients?.Vegetables; let i = index"
+                [selected]="element.selected"
+                [value]="element"
+                (click)="onVegetablesChange(list)"
+              >
+                <div class="flex flex-row items-center">
+                  <div class="image-container">
+                    <img class="w-2/3" src="{{ element.icon }}" />
+                  </div>
+                  <div class="flex flex-col">
+                    <div>
+                      <span class="text-md">{{ element.name }}</span>
+                    </div>
+                    <div>
+                      <span class="text-sm">{{ element.price }}€</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <div [formGroup]="commentForm" class="mt-4">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Leave a comment</mat-label>
+          <textarea
+            matInput
+            placeholder=""
+            formControlName="comment"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="chips-container mt-3">
+    <app-chips
+      [vegetableNameChips]="vegetableChips"
+      [breadCheeseMeatNameChips]="breadCheeseMeatChips"
+    ></app-chips>
+  </div>
 </mat-dialog-content>
 <div class="flex justify-end space-x-3 mt-14">
-    <mat-dialog-actions>
-        <button class="mr-3 w-28 inline-flex justify-center rounded-sm font-medium hover:bg-indigo-300 bg-white border border-primary text-primary focus:outline-none items-center py-0.5 px-2" (click)="onClose()">
+  <mat-dialog-actions>
+    <button
+      class="mr-3 w-28 inline-flex justify-center rounded-sm font-medium hover:bg-yellow-50 bg-white border border-primary text-primary focus:outline-none items-center py-0.5 px-2"
+      (click)="onClose()"
+    >
       Close
     </button>
 
-        <button class="w-28 inline-flex justify-center rounded-sm hover:bg-indigo-900 font-medium bg-primary text-white focus:outline-none items-center py-1 px-2" (click)="onSave()">
+    <button
+      class="w-28 inline-flex justify-center rounded-sm hover:bg-yellow-700 font-medium bg-primary text-white focus:outline-none items-center py-1 px-2"
+      (click)="onSave()"
+    >
       Save
     </button>
-    </mat-dialog-actions>
+  </mat-dialog-actions>
 </div>

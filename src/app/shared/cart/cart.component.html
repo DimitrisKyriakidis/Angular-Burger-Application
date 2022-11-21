@@ -1,27 +1,47 @@
-<button (click)="openShoppingCart()" class="focus:outline-none flex justify-end mr-5">
+<button
+  (click)="openShoppingCart()"
+  class="focus:outline-none flex justify-end mr-5"
+>
   <span class="material-icons text-white">shopping_bag </span>
   <span
-    class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-600 text-white rounded-full"
+    class="inline-flex justify-center items-center -ml-2 -mt-1 w-4 h-4 text-xs font-semibold bg-red-800 text-white rounded-full"
   >
     {{ totalCartItems$ | async }}
   </span>
 </button>
 
-<div *ngIf="isShoppingCartOpen" class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+<div
+  *ngIf="isShoppingCartOpen"
+  class="relative z-10"
+  aria-labelledby="slide-over-title"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-    <div class="fixed inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                <div class="pointer-events-auto w-screen h-2/3 max-w-md">
-                    <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                        <div class="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
-                            <div class="flex items-start justify-between">
-                                <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
-                                    Shopping cart
-                                </h2>
-                                <div class="ml-3 flex h-7 items-center">
-                                    <button type="button" (click)="isShoppingCartOpen = false" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div
+        class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+      >
+        <div class="pointer-events-auto w-screen h-2/3 max-w-md">
+          <div
+            class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
+          >
+            <div class="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
+              <div class="flex items-start justify-between">
+                <h2
+                  class="text-lg font-medium text-gray-900"
+                  id="slide-over-title"
+                >
+                  Shopping cart
+                </h2>
+                <div class="ml-3 flex h-7 items-center">
+                  <button
+                    type="button"
+                    (click)="isShoppingCartOpen = false"
+                    class="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                  >
                     <span class="sr-only">Close panel</span>
 
                     <svg
@@ -40,48 +60,76 @@
                       />
                     </svg>
                   </button>
-                                </div>
-                            </div>
+                </div>
+              </div>
 
-                            <div *ngIf="(productList$ | async).length === 0" class="text-center mt-28">
-                                <div class="material-icons text-gray-500">shopping_bag</div>
-                                <h3 class="mt-2 text-sm font-medium text-gray-900">
-                                    No items in the cart
-                                </h3>
-                                <p class="mt-1 text-sm text-gray-500">
-                                    Get started by creating a new order.
-                                </p>
-                            </div>
+              <div
+                *ngIf="(productList$ | async).length === 0"
+                class="text-center mt-28"
+              >
+                <div class="material-icons text-gray-500">shopping_bag</div>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">
+                  No items in the cart
+                </h3>
+                <p class="mt-1 text-sm text-gray-500">
+                  Get started by creating a new order.
+                </p>
+              </div>
 
-                            <div *ngFor="let item of productList$ | async" class="mt-8">
-                                <div class="flow-root">
-                                    <ul role="list" class="-my-6 divide-y divide-gray-200">
-                                        <li class="flex py-6">
-                                            <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                <img *ngIf="item.image" [src]="item.image" alt="catLogo" class="h-full w-full object-cover object-center" />
-                                                <img *ngIf="!item.image" src="https://img.freepik.com/premium-vector/fastfood-burger-vector-illustration_123673-17.jpg" alt="" class="h-full w-full object-cover object-center" />
-                                            </div>
+              <div *ngFor="let item of productList$ | async" class="mt-8">
+                <div class="flow-root">
+                  <ul role="list" class="-my-6 divide-y divide-gray-200">
+                    <li class="flex py-6">
+                      <div
+                        class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                      >
+                        <img
+                          *ngIf="item.image"
+                          [src]="item.image"
+                          alt="catLogo"
+                          class="h-full w-full object-cover object-center"
+                        />
+                        <img
+                          *ngIf="!item.image"
+                          src="https://img.freepik.com/premium-vector/fastfood-burger-vector-illustration_123673-17.jpg"
+                          alt=""
+                          class="h-full w-full object-cover object-center"
+                        />
+                      </div>
 
-                                            <div class="ml-4 flex flex-1 flex-col">
-                                                <div>
-                                                    <div class="flex justify-between text-base font-medium text-gray-900">
-                                                        <h3 [matToolTip]="item.id">
-                                                            {{ item.name ? item.name : ('Burger' + item.id | slice: 0:14) }}
-                                                        </h3>
-                                                        <p class="ml-4">
-                                                            {{ item.orderPrice | number: '1.1-1' }}€
-                                                        </p>
-                                                    </div>
-                                                    <p class="mt-1 text-sm text-gray-500">Salmon</p>
-                                                </div>
-                                                <div class="flex flex-1 items-end justify-between text-sm">
-                                                    <div class="flex items-center gap-3">
-                                                        <p class="text-gray-500">Qty</p>
-                                                        <div class="hidden items-center gap-2 lg:flex lg:items-start lg:justify-center">
-                                                            <div class="flex items-center gap-2">
-                                                                <div class="flex items-center gap-2">
-                                                                    <div class="flex items-center border">
-                                                                        <button class="hidden px-4 text-xs lg:block" (click)="decreaseQuantity(item.id)">
+                      <div class="ml-4 flex flex-1 flex-col">
+                        <div>
+                          <div
+                            class="flex justify-between text-base font-medium text-gray-900"
+                          >
+                            <h3 [matToolTip]="item.id">
+                              {{
+                                item.name
+                                  ? item.name
+                                  : ('Burger' + item.id | slice: 0:14)
+                              }}
+                            </h3>
+                            <p class="ml-4">
+                              {{ item.orderPrice | number: '1.1-1' }}€
+                            </p>
+                          </div>
+                          <p class="mt-1 text-sm text-gray-500">Burger</p>
+                        </div>
+                        <div
+                          class="flex flex-1 items-end justify-between text-sm"
+                        >
+                          <div class="flex items-center gap-3">
+                            <p class="text-gray-500">Qty</p>
+                            <div
+                              class="hidden items-center gap-2 lg:flex lg:items-start lg:justify-center"
+                            >
+                              <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2">
+                                  <div class="flex items-center border">
+                                    <button
+                                      class="hidden px-4 text-xs lg:block"
+                                      (click)="decreaseQuantity(item.id)"
+                                    >
                                       <svg
                                         stroke="currentColor"
                                         fill="currentColor"
@@ -116,9 +164,9 @@
                                         ></path>
                                       </svg>
                                     </button>
-                                                                    </div>
-                                                                    <div class="flex flex-col text-lg lg:hidden">
-                                                                        <button>
+                                  </div>
+                                  <div class="flex flex-col text-lg lg:hidden">
+                                    <button>
                                       <svg
                                         stroke="currentColor"
                                         fill="currentColor"
@@ -147,46 +195,67 @@
                                         ></path>
                                       </svg>
                                     </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex">
-                                                        <button type="button" (click)="removeBurgerFromCart(item.id)" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="flex">
+                            <button
+                              type="button"
+                              (click)="removeBurgerFromCart(item.id)"
+                              class="font-medium text-primary hover:text-yellow-700"
+                            >
                               Remove
                             </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                          </div>
                         </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
-                        <div *ngIf="productList$ | async as list" class="border-t border-gray-200 py-6 px-4 sm:px-6">
-                            <div class="flex justify-between text-base font-medium text-gray-900">
-                                <p>Total Price</p>
-                                <p>{{ totalPrice$ | async | number: '1.1-1' }}€</p>
-                            </div>
+            <div
+              *ngIf="productList$ | async as list"
+              class="border-t border-gray-200 py-6 px-4 sm:px-6"
+            >
+              <div
+                class="flex justify-between text-base font-medium text-gray-900"
+              >
+                <p>Total Price</p>
+                <p>{{ totalPrice$ | async | number: '1.1-1' }}€</p>
+              </div>
 
-                            <div *ngIf="totalPrice$ | async as total" (click)="sendOrderToHistory(list, total)" type="submit" [disabled]="list.length === 0" class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
-                                Send Order
-                            </div>
-                            <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                <p>
-                                    or
-                                    <button type="submit" (click)="isShoppingCartOpen = false" class="font-medium text-indigo-600 hover:text-indigo-500">
+              <div
+                *ngIf="totalPrice$ | async as total"
+                (click)="sendOrderToHistory(list, total)"
+                type="submit"
+                [disabled]="list.length === 0"
+                class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-yellow-700"
+              >
+                Send Order
+              </div>
+              <div
+                class="mt-6 flex justify-center text-center text-sm text-gray-500"
+              >
+                <p>
+                  or
+                  <button
+                    type="submit"
+                    (click)="isShoppingCartOpen = false"
+                    class="font-medium text-primary hover:text-yellow-700"
+                  >
                     Continue Shopping
                     <span aria-hidden="true"> &rarr;</span>
                   </button>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </p>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

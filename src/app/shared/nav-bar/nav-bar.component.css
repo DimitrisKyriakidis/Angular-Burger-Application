@@ -1,28 +1,4 @@
-body {
-    margin: 0;
-}
-
-.tool-div {
-    background: black;
-}
-
-main {
-    margin: 30px;
-}
-
-.menu-button {
-    background: black;
-    color: white;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
-.links-container {
-    margin-bottom: 6px;
-}
-
 .icon {
-    position: relative;
-    top: 29px;
+  position: relative;
+  top: 28px;
 }

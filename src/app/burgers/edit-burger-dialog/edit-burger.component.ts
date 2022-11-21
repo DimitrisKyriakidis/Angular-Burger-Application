@@ -17,13 +17,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms'
-import { Observable } from 'rxjs'
+import { Observable, pairs } from 'rxjs'
 import { BurgerService } from '../../services/burger.service'
 
 import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
 import { ingredientsData } from '../../shared/models/ingredientsData'
 import { Store } from '@ngrx/store'
 import { State } from '../../reducers'
+import { pairwise, startWith } from 'rxjs/operators'
 
 @Component({
   selector: 'burger-dialog',
@@ -139,21 +140,29 @@ export class EditBurgerComponent implements OnInit {
               }
             )
           }
+
+          activeVegetables.forEach((veg) => {
+            this.vegetableChips.push(veg.name)
+          })
+
           break
         case 'bread':
           const activeBread = ing
           this.bread.patchValue(activeBread)
           this.selectedBread = activeBread.name
+          this.breadCheeseMeatChips.push(this.selectedBread)
           break
         case 'cheese':
           const activeCheese = ing
           this.cheese.patchValue(activeCheese)
           this.selectedCheese = activeCheese.name
+          this.breadCheeseMeatChips.push(this.selectedCheese)
           break
         case 'meat':
           const activeMeat = ing
           this.meat.patchValue(activeMeat)
           this.selectedMeat = activeMeat.name
+          this.breadCheeseMeatChips.push(this.selectedMeat)
           break
         default:
           false
@@ -165,7 +174,7 @@ export class EditBurgerComponent implements OnInit {
   }
 
   onRadioChange(event) {
-    this.radioButtonsChipsHandler(event)
+    this.radioButtonsChipsHandler()
     console.log(event)
 
     if (
@@ -197,24 +206,18 @@ export class EditBurgerComponent implements OnInit {
   /* 
   update the chips value when new value selected 
   */
-  radioButtonsChipsHandler(event) {
-    this.ingredientsForm.valueChanges.subscribe((item) => {
-      const index = this.breadCheeseMeatChips.indexOf(event.value.name)
-      this.breadCheeseMeatChips?.splice(index, 1)
+  radioButtonsChipsHandler() {
+    this.ingredientsForm.valueChanges
+      .pipe(startWith(this.ingredientsForm.value), pairwise())
+      .subscribe(([prev, current]) => {
+        this.breadCheeseMeatChips = []
 
-      this.breadCheeseMeatChips.push(
-        item.bread?.name,
-        item.cheese?.name,
-        item.meat?.name
-      )
-      const filtered = this.breadCheeseMeatChips.filter(
-        (val) => val !== undefined
-      )
-
-      this.breadCheeseMeatChips = filtered
-
-      this.breadCheeseMeatChips = [...new Set(this.breadCheeseMeatChips)] //use Set to keep unique values and remove duplicates
-    })
+        for (let ing in current) {
+          if (current[ing]?.name) {
+            this.breadCheeseMeatChips.push(current[ing]?.name)
+          }
+        }
+      })
   }
 
   onVegetablesChange(event) {
@@ -280,7 +283,7 @@ export class EditBurgerComponent implements OnInit {
   onSave() {
     this.submitted = true
     this.ingredientsForm.value.vegetables = this.vegetables
-    let formValues = {
+    const formValues = {
       ...this.ingredientsForm.value,
       ...this.commentForm.value,
       progress: this.orderStatusScore,
