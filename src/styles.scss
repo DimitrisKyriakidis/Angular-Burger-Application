@@ -8,20 +8,10 @@
 // Include non-theme styles for core.
 @include mat.core();
 $mat-custom-theme: (
-  50: #ee7727,
-  100: #ee7727,
-  200: #ee7727,
-  300: #ee7727,
-  400: #ee7727,
-  500: #ee7727,
-  600: #ee7727,
-  700: #ee7727,
-  800: #ee7727,
-  //   900: #e65100,
-  A100: #ee7727,
-  A200: #ee7727,
-  A400: #ee7727,
-  A700: #ee7727,
+  A700:
+    variable-exists(
+      $name: --mainColor,
+    ),
   contrast: (
     50: rgba(black, 0.87),
     100: rgba(black, 0.87),

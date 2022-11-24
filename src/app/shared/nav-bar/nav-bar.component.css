@@ -2,14 +2,21 @@
   position: relative;
   top: 28px;
 }
-.orange {
+.orangeClass {
   background-color: #ee7727;
 }
-.blue {
+.blueClass {
   background-color: #0459a9;
 }
-.green {
+.greenClass {
   background-color: #066619;
+}
+.roseClass {
+  background-color: #fca5a5;
+}
+
+::ng-deep .mat-ink-bar {
+  background-color: var(--mainColor);
 }
 /* .panelContainer {
   height: 50px;

@@ -56,6 +56,7 @@ export class NavBarComponent implements OnInit {
     { id: 1, name: 'orange', color: '#ee7727' },
     { id: 2, name: 'blue', color: '#0459a9' },
     { id: 3, name: 'green', color: '#066619' },
+    { id: 4, name: 'rose', color: '#e11d48' },
   ]
 
   constructor(

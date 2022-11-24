@@ -77,6 +77,8 @@ export class EditBurgerComponent implements OnInit {
   selectedCheese: string
   selectedMeat: string
 
+  activeTab: number
+
   constructor(
     private dialogRef: MatDialogRef<EditBurgerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -182,6 +184,7 @@ export class EditBurgerComponent implements OnInit {
       this.breadValueChangeCounter === 0 &&
       this.orderStatusScore < 100
     ) {
+      this.activeTab = 0
       this.breadValueChangeCounter++
       this.orderStatusScore += 25
     }
@@ -190,6 +193,7 @@ export class EditBurgerComponent implements OnInit {
       this.meatValueChangeCounter === 0 &&
       this.orderStatusScore < 100
     ) {
+      this.activeTab = 1
       this.meatValueChangeCounter++
       this.orderStatusScore += 25
     }
@@ -198,9 +202,11 @@ export class EditBurgerComponent implements OnInit {
       this.cheeseValueChangeCounter === 0 &&
       this.orderStatusScore < 100
     ) {
+      this.activeTab = 2
       this.cheeseValueChangeCounter++
       this.orderStatusScore += 25
     }
+    console.log(this.activeTab)
   }
 
   /* 
@@ -222,6 +228,7 @@ export class EditBurgerComponent implements OnInit {
 
   onVegetablesChange(event) {
     this.vegetables = event._value
+
     this.countOrderStatusVegetablesTab()
 
     if (event) {
@@ -238,6 +245,24 @@ export class EditBurgerComponent implements OnInit {
     } else {
       this.vegetables.splice(this.vegetables.indexOf(event.value), 1)
     }
+  }
+
+  onDeleteChip(chipName) {
+    const foundChipIndex = this.breadCheeseMeatChips.findIndex(
+      (item) => item === chipName
+    )
+    for (const key in this.ingredientsForm.value) {
+      if (this.ingredientsForm.value[key]?.name === chipName) {
+        if (this.bread.value?.category === key) {
+          this.bread.reset()
+        } else if (this.cheese.value?.category === key) {
+          this.cheese.reset()
+        } else if (this.meat.value?.category === key) {
+          this.meat.reset()
+        }
+      }
+    }
+    this.breadCheeseMeatChips.splice(foundChipIndex, 1)
   }
 
   countOrderStatusVegetablesTab() {
@@ -287,6 +312,14 @@ export class EditBurgerComponent implements OnInit {
       ...this.ingredientsForm.value,
       ...this.commentForm.value,
       progress: this.orderStatusScore,
+    }
+
+    if (this.ingredientsForm.invalid) {
+      if (this.bread.errors?.required) {
+        this.activeTab = 0
+      } else if (this.meat.errors?.required) {
+        this.activeTab = 1
+      }
     }
 
     if (this.ingredientsForm.valid) {

@@ -50,6 +50,12 @@ export class AppComponent implements OnInit {
         document.documentElement.style.setProperty('--carouselText', '#bbf7d0')
         document.documentElement.style.setProperty('--coverPhoto', '#dcfce7')
         break
+      case 'rose':
+        document.documentElement.style.setProperty('--mainColor', '#e11d48')
+        document.documentElement.style.setProperty('--secondColor', '#be123c')
+        document.documentElement.style.setProperty('--carouselText', '#fb7185')
+        document.documentElement.style.setProperty('--coverPhoto', '#fda4af')
+        break
     }
   }
 }

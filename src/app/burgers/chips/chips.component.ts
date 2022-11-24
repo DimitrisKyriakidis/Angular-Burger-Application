@@ -7,23 +7,26 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
 })
 export class ChipsComponent implements OnInit {
   @Input()
-  vegetableNameChips: any[] = []
+  vegetableNameChips: string[] = []
 
   @Input()
-  breadCheeseMeatNameChips: any[] = []
+  breadCheeseMeatNameChips: string[] = []
+
+  @Output()
+  deletedChip = new EventEmitter<string>()
 
   constructor() {}
 
   ngOnInit(): void {}
 
   breadCheeseMeatChipsRemoved(index: number) {
-    this.removeFirst(this.breadCheeseMeatNameChips, index)
+    this.deletedChip.emit(this.breadCheeseMeatNameChips[index])
   }
   vegetableChipsRemoved(index: number) {
     this.removeFirst(this.vegetableNameChips, index)
   }
 
-  removeFirst<T>(array: T[], index: number): void {
+  removeFirst(array: string[], index: number): void {
     array.splice(index, 1)
   }
 }
