@@ -65,22 +65,56 @@
       <nav class="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
         <a
           href="/home"
-          class="text-white hover:bg-yellow-700 hover:text-gray-300 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+          class="text-white hover:bg-secondary hover:text-gray-300 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
           >Home</a
         >
 
         <button
           (click)="navigateToMenu()"
-          class="text-white hover:bg-yellow-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+          class="text-white hover:bg-secondary hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
         >
           Menu
         </button>
         <button
           (click)="navigateOrderHistory()"
-          class="text-white hover:bg-yellow-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+          class="text-white hover:bg-secondary hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
         >
           Order history
         </button>
+        <button
+          mat-icon-button
+          id="theme-selector"
+          [mat-menu-trigger-for]="themeMenu"
+          matTooltip="Select a theme"
+          tabindex="-1"
+        >
+          <mat-icon class="auto-flip text-white">format_color_fill</mat-icon>
+        </button>
+
+        <mat-menu #themeMenu="matMenu">
+          <mat-grid-list cols="2" class="w-56">
+            <mat-grid-tile *ngFor="let theme of themes">
+              <mat-radio-group>
+                <mat-radio-button
+                  [value]="theme.color"
+                  [checked]="activeColor === theme.color"
+                  (click)="$event.stopPropagation(); setThemeColor(theme)"
+                >
+                  <div
+                    class="w-8 h-8 border-2 rounded-full"
+                    [ngClass]="{
+                      orange: theme.name === 'orange',
+                      blue: theme.name === 'blue',
+                      green: theme.name === 'green'
+                    }"
+                  >
+                    <span></span>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-menu>
       </nav>
     </div>
   </header>

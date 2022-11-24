@@ -4,7 +4,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#ee7727',
+        //main theme colors
+        primary: 'var(--mainColor)',
+        secondary: 'var(--secondColor)',
+        carouselText: 'var(--carouselText)',
+        coverPhoto: 'var(--coverPhoto)',
+
         customGray: {
           100: '#808080',
         },

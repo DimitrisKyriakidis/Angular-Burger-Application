@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store'
 import { Burgers } from '../../shared/models/burger'
+import { Color } from '../../shared/models/color'
 
 export const enum ActionBurgerTypes {
   getAllBurgers = '[Burgers] get All',
@@ -35,7 +36,7 @@ export const enum ActionBurgerTypes {
 
   deleteOrdersHistoryFail = '[Burger]  delete orders history Fail',
 
-  setActivePage = '[Burger] active page ',
+  setThemeColor = 'set theme color',
 }
 export const getAllBurgers = createAction(
   ActionBurgerTypes.getAllBurgers,
@@ -148,7 +149,7 @@ export const deleteOrdersHistoryFail = createAction(
   props<{ error: string }>()
 )
 
-export const setActivePage = createAction(
-  ActionBurgerTypes.setActivePage,
-  props<{ activePage: string }>()
+export const setThemeColor = createAction(
+  ActionBurgerTypes.setThemeColor,
+  props<{ color: Color }>()
 )

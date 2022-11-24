@@ -1,7 +1,7 @@
 <ng-container>
-    <nav-bar></nav-bar>
-    <div class="appplication-container">
-        <router-outlet></router-outlet>
-    </div>
-    <app-footer></app-footer>
+  <nav-bar (changeTheme)="onChangeTheme($event)"></nav-bar>
+  <div class="appplication-container">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
 </ng-container>

@@ -1,3 +1,5 @@
+import { Color } from '../../shared/models/color'
+
 export interface BurgersState {
   burgers: any[]
   loading: boolean
@@ -6,7 +8,7 @@ export interface BurgersState {
     products?: any[]
   }
   historyOrdersData?: any[]
-  activePage: string
+  color: Color
 }
 export const initialBurgersState: BurgersState = {
   burgers: [],
@@ -16,5 +18,5 @@ export const initialBurgersState: BurgersState = {
     products: [],
   },
   historyOrdersData: [],
-  activePage: 'menu' || 'orderHistory',
+  color: {},
 }

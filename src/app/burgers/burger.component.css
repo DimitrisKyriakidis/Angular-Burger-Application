@@ -1,11 +1,11 @@
 ::ng-deep .snackbarClass {
-    background: white;
-    color: green;
-    margin-top: 4rem !important;
-    margin-right: 12rem !important;
-    text-align: center !important;
+  background: white;
+  color: green;
+  margin-top: 4rem !important;
+  margin-right: 12rem !important;
+  text-align: center !important;
 }
 
 .height {
-    height: 81vh;
+  height: 81vh;
 }

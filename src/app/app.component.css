@@ -1,28 +1,3 @@
-body {
-    margin: 0;
-}
-
 .appplication-container {
-    height: auto;
-}
-
-.tool-div {
-    background: black;
-}
-
-main {
-    margin: 30px;
-}
-
-.menu-button {
-    background: black;
-    color: white;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-
-.spinner-container {
-    width: 100%;
-    margin-top: 100px;
+  height: auto;
 }
