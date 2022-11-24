@@ -3,8 +3,10 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -17,12 +19,13 @@ import { logout } from '../../Store/login-store/login.actions'
 import { selectIsLoggenIn } from '../../Store/login-store/login.selector'
 import {
   ActionBurgerTypes,
-  setActivePage,
+  setThemeColor,
 } from '../../Store/burger-store/burger-actions'
 import { debounceTime } from 'rxjs/operators'
 import { FormControl } from '@angular/forms'
 
 import { Location } from '@angular/common'
+import { Color } from '../models/color'
 
 @Component({
   selector: 'nav-bar',
@@ -39,9 +42,21 @@ export class NavBarComponent implements OnInit {
   searchTerm = null
 
   debounceTime: number = 1000
+
   currentUrl: string
 
   searchPlaceholder = 'Search'
+
+  activeColor: string
+
+  @Output()
+  changeTheme = new EventEmitter<Color>()
+
+  themes: any[] = [
+    { id: 1, name: 'orange', color: '#ee7727' },
+    { id: 2, name: 'blue', color: '#0459a9' },
+    { id: 3, name: 'green', color: '#066619' },
+  ]
 
   constructor(
     private router: Router,
@@ -80,6 +95,12 @@ export class NavBarComponent implements OnInit {
     }
   }
 
+  setThemeColor(color: Color) {
+    this.store.dispatch(setThemeColor({ color }))
+    this.changeTheme.emit(color)
+    this.activeColor = color.color
+  }
+
   onFocus(event) {
     if (event && this.currentUrl.includes('burgers')) {
       this.searchPlaceholder = 'Search by name'
@@ -89,6 +110,7 @@ export class NavBarComponent implements OnInit {
       this.searchPlaceholder = 'Search'
     }
   }
+
   onOpenCart(event: boolean) {
     this.checkOpenCart = event
   }

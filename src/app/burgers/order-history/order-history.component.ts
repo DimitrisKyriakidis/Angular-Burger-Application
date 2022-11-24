@@ -3,10 +3,7 @@ import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { State } from '../../reducers'
 import { AuthService } from '../../services/auth.service'
-import {
-  ActionBurgerTypes,
-  setActivePage,
-} from '../../Store/burger-store/burger-actions'
+import { ActionBurgerTypes } from '../../Store/burger-store/burger-actions'
 import { selectHistoryOrdersData } from '../../Store/burger-store/burger.selector'
 
 @Component({

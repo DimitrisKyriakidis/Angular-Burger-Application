@@ -16,7 +16,7 @@ import {
   getAllHistoryOrdersSuccess,
   sendOrderTohistory,
   sendOrderTohistorySuccess,
-  setActivePage,
+  setThemeColor,
 } from './burger-actions'
 import { initialBurgersState } from './burger.state'
 
@@ -181,11 +181,12 @@ export const _burgerReducer = createReducer(
       historyOrdersData: historyOrdersData,
     }
   }),
-  on(setActivePage, (state, { activePage }) => {
+
+  on(setThemeColor, (state, action) => {
     return {
       ...state,
       loading: false,
-      activePage: activePage,
+      color: action.color,
     }
   })
 )

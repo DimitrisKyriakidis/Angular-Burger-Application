@@ -1,5 +1,5 @@
 .chips {
-  background-color: #ee7727 !important;
+  background-color: var(--mainColor);
   color: white !important;
 }
 

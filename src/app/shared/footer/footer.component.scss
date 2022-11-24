@@ -1,7 +1,7 @@
 .footer {
   flex: none;
   position: fixed;
-  background: #ee7727;
+  background: var(--mainColor);
   bottom: 0;
   width: 100%;
   justify-content: flex-end;
@@ -13,9 +13,3 @@
 .text {
   font-size: 10px;
 }
-
-// .mat-default-header-color {
-//   color: white;
-//   --tw-bg-opacity: 1;
-//   background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
-// }

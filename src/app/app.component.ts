@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
+import { take } from 'rxjs/operators'
 import { State } from './reducers'
 
 import { AuthService } from './services/auth.service'
+import { Color } from './shared/models/color'
+import { selectThemeColor } from './Store/burger-store/burger.selector'
 import { selectIsLoggenIn } from './Store/login-store/login.selector'
 
 @Component({
@@ -14,46 +17,39 @@ import { selectIsLoggenIn } from './Store/login-store/login.selector'
 export class AppComponent implements OnInit {
   isLoggedIn: Observable<boolean>
 
+  color: Color = {}
+
   constructor(private authService: AuthService, private store: Store<State>) {}
 
   ngOnInit() {
-    const scored = ['Lewandowski', 'Gnarbi', 'Ronaldo', 'Hummels']
+    this.store
+      .select(selectThemeColor)
+      .pipe(take(1))
+      .subscribe((color) => {
+        this.onChangeTheme(color)
+      })
+  }
 
-    const odds = {
-      team1: 1.33,
-      x: 3.25,
-      team2: 6.5,
+  onChangeTheme(color: Color) {
+    switch (color.name) {
+      case 'orange':
+        document.documentElement.style.setProperty('--mainColor', '#ee7727')
+        document.documentElement.style.setProperty('--secondColor', '#b45309')
+        document.documentElement.style.setProperty('--carouselText', '#ca8a04')
+        document.documentElement.style.setProperty('--coverPhoto', '#92400e')
+        break
+      case 'blue':
+        document.documentElement.style.setProperty('--mainColor', '#0459a9')
+        document.documentElement.style.setProperty('--secondColor', '#0284c7')
+        document.documentElement.style.setProperty('--carouselText', '#60a5fa')
+        document.documentElement.style.setProperty('--coverPhoto', '#1e40af')
+        break
+      case 'green':
+        document.documentElement.style.setProperty('--mainColor', '#066619')
+        document.documentElement.style.setProperty('--secondColor', '#059669')
+        document.documentElement.style.setProperty('--carouselText', '#bbf7d0')
+        document.documentElement.style.setProperty('--coverPhoto', '#dcfce7')
+        break
     }
-
-    // const average = Object.values(odds).reduce((acc, el) => {
-    //   return acc + el / Object.values(odds).length
-    // }, 0)
-    // console.log(average)
-
-    // let sum = 0
-    // for (const val of Object.values(odds)) {
-    //   sum += val / Object.values(odds).length
-    // }
-    // console.log(sum)
-
-    //  Object.keys(odds).reduce((sum,el)=>{
-    //    sum += el
-    //  },0)
-
-    // scored.forEach((item, index) => {
-    //   console.log(`Goal ${index + 1}: ${item} `)
-    // })
-    // for (let [i, value] of scored.entries()) {
-    //   //console.log(i, value)
-    //   console.log(`Goal ${i + 1}: ${value}`)
-    // }
-
-    // console.log('app')
-    // this.store.select(selectIsLoggenIn).subscribe((data) => {
-    //   data = false
-    // })
-    // if (this.authService.isAuthenticated()) {
-    //   this.authService.checkExpiration();
-    // }
   }
 }

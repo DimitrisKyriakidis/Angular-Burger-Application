@@ -2,3 +2,18 @@
   position: relative;
   top: 28px;
 }
+.orange {
+  background-color: #ee7727;
+}
+.blue {
+  background-color: #0459a9;
+}
+.green {
+  background-color: #066619;
+}
+/* .panelContainer {
+  height: 50px;
+}
+.panelContainer > mat-expansion-panel {
+  z-index: 1; 
+} */

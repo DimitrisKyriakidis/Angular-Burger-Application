@@ -204,7 +204,7 @@
                             <button
                               type="button"
                               (click)="removeBurgerFromCart(item.id)"
-                              class="font-medium text-primary hover:text-yellow-700"
+                              class="font-medium text-primary hover:text-secondary"
                             >
                               Remove
                             </button>
@@ -233,7 +233,7 @@
                 (click)="sendOrderToHistory(list, total)"
                 type="submit"
                 [disabled]="list.length === 0"
-                class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-yellow-700"
+                class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-secondary"
               >
                 Send Order
               </div>
@@ -245,7 +245,7 @@
                   <button
                     type="submit"
                     (click)="isShoppingCartOpen = false"
-                    class="font-medium text-primary hover:text-yellow-700"
+                    class="font-medium text-primary hover:text-secondary"
                   >
                     Continue Shopping
                     <span aria-hidden="true"> &rarr;</span>

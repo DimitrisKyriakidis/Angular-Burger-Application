@@ -36,7 +36,7 @@ export const selectHistoryOrdersData = createSelector(
   (state) => state.historyOrdersData
 )
 
-export const selectActivePage = createSelector(
+export const selectThemeColor = createSelector(
   burgerState,
-  (state) => state.activePage
+  (state) => state.color
 )

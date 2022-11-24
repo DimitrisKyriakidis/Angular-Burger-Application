@@ -16,10 +16,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { BurgerService } from '../services/burger.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { AuthService } from '../services/auth.service'
-import {
-  ActionBurgerTypes,
-  setActivePage,
-} from '../Store/burger-store/burger-actions'
+import { ActionBurgerTypes } from '../Store/burger-store/burger-actions'
 import {
   selectBurger,
   selectLoading,
@@ -75,7 +72,6 @@ export class BurgerComponent implements OnInit {
     this.cartForm = new FormGroup({
       quantity: new FormControl(null, {
         validators: [Validators.required],
-        // updateOn: 'submit',
       }),
     })
   }
