@@ -177,7 +177,6 @@ export class EditBurgerComponent implements OnInit {
 
   onRadioChange(event) {
     this.radioButtonsChipsHandler()
-    console.log(event)
 
     if (
       event.value.category === 'bread' &&
@@ -206,7 +205,6 @@ export class EditBurgerComponent implements OnInit {
       this.cheeseValueChangeCounter++
       this.orderStatusScore += 25
     }
-    console.log(this.activeTab)
   }
 
   /* 
@@ -251,18 +249,22 @@ export class EditBurgerComponent implements OnInit {
     const foundChipIndex = this.breadCheeseMeatChips.findIndex(
       (item) => item === chipName
     )
+    this.breadCheeseMeatChips.splice(foundChipIndex, 1)
+
     for (const key in this.ingredientsForm.value) {
       if (this.ingredientsForm.value[key]?.name === chipName) {
         if (this.bread.value?.category === key) {
           this.bread.reset()
+          this.orderStatusScore -= 25
         } else if (this.cheese.value?.category === key) {
           this.cheese.reset()
+          this.orderStatusScore -= 25
         } else if (this.meat.value?.category === key) {
           this.meat.reset()
+          this.orderStatusScore -= 25
         }
       }
     }
-    this.breadCheeseMeatChips.splice(foundChipIndex, 1)
   }
 
   countOrderStatusVegetablesTab() {
