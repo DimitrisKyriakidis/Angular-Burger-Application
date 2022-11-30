@@ -9,7 +9,7 @@ Instructions to run the front-end:
 •	npm install
 •	run the application with the command npm run start
 
-Back-end:https://github.com/DimitrisKyriakidis/Burger-Application-BE
+Back-end:NodeJs https://github.com/DimitrisKyriakidis/Burger-Application-BE
 
 
 
