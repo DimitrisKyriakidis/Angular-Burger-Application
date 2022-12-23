@@ -52,7 +52,7 @@ export class NavBarComponent implements OnInit {
   @Output()
   changeTheme = new EventEmitter<Color>()
 
-  themes: any[] = [
+  themes: Color[] = [
     { id: 1, name: 'orange', color: '#ee7727' },
     { id: 2, name: 'blue', color: '#0459a9' },
     { id: 3, name: 'green', color: '#066619' },

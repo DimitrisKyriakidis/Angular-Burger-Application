@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
   constructor(private store: Store<State>, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn
-    //this.isLoggedIn = this.store.select(selectIsLoggenIn)
+    // this.isLoggedIn = this.authService.isLoggedIn
+    this.isLoggedIn = this.store.select(selectIsLoggenIn)
   }
 }
