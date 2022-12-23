@@ -85,7 +85,7 @@ export class NavBarComponent implements OnInit {
       this.searchByName?.valueChanges
         .pipe(debounceTime(this.debounceTime))
         .subscribe((res) => {
-          this.searchTerm = res
+          this.searchTerm = res.toString()
           this.store.dispatch({
             type: ActionBurgerTypes.getAllHistoryOrders,
             searchString: this.searchTerm,
